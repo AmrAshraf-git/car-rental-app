@@ -1,0 +1,28 @@
+/*
+============================================How To Name============================================
+Please follow these formats when initialising new (Package, Class, Methods, and Variables): -
+use "Lower Case" for packages. e.g. com.company.project.ui
+use "Pascal Case" for classes. e.g. ThisIsAClass{}.
+use "Pascal Case" for enum class. e.g. ThisIsAnEnumClass{}
+use "Upper Case" for enum values. e.g. THIS_IS_An_Enum_Value
+use "Camel Case" for variables. e.g. thisIsAVariable
+use "Upper Case" for constants. e.g. THIS_IS_A_CONSTANT
+___________________________________________________________________________________________________
+Please follow these formats when dealing with XML files: -
+use "snake Case" for layouts.
+    The syntax for a layout is: -
+        type_name_of_layout
+            e.g. activity_this_is_a_layout.xml
+            e.g. fragment_this_is_a_layout.xml
+
+use "Mixed Case (Camel Case + snake Case)" for IDs.
+    The syntax for an ID, inside an XML tag is: -
+        activityName_tagName(Prefix)_aMeaningfulID(If necessary).
+            e.g. main_txtView_thisIsAMeaningfulID
+            e.g. main_edTxt_thisIsAMeaningfulID
+            e.g. main_btn_thisIsAMeaningfulID
+            e.g. main_imgView_thisIsAMeaningfulID
+            e.g. main_imgView_thisIsAMeaningfulID
+___________________________________________________________________________________________________
+Don't use '_' anywhere except layouts,IDs, TAGs, constants and enum values (which are constants).
+*/

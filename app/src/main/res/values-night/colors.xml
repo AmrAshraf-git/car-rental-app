@@ -6,15 +6,15 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#CECECE</color>
 
 
     <!--Custom Colors-->
     <color name="light_blue">#2196F3</color>
     <color name="blue">#0052A2</color>
-    <color name="dark_blue">#003F7E</color>
+    <color name="dark_blue">#27629E</color>
     <color name="red">#FF0000</color>
-    <color name="main_background">#FFFFFF</color>
+    <color name="main_background">#373737</color>
 
 
     <!--Gradients-->
