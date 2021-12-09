@@ -10,7 +10,7 @@ import com.google.android.material.tabs.TabLayout;
 public class EntryPage extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private ViewPagerAdapter viewPagerAdapter;
+    private EntryViewPagerAdapter entryViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,17 +18,17 @@ public class EntryPage extends AppCompatActivity {
         setContentView(R.layout.activity_entry_page);
         initialization();
 
-        viewPagerAdapter.addFragmentTab("Login",new SignIn());
-        viewPagerAdapter.addFragmentTab("Signup",new SignUp());
-        viewPager.setAdapter(viewPagerAdapter);
+        entryViewPagerAdapter.addFragmentTab("Login",new SignIn());
+        entryViewPagerAdapter.addFragmentTab("Signup",new SignUp());
+        viewPager.setAdapter(entryViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
 
     public void initialization() {
-        tabLayout=findViewById(R.id.signUp_tabLayout);
-        viewPager=findViewById(R.id.signUp_viewPager);
-        viewPagerAdapter =new ViewPagerAdapter(getSupportFragmentManager());
+        tabLayout=findViewById(R.id.entryPage_tabLayout);
+        viewPager=findViewById(R.id.entryPage_viewPager);
+        entryViewPagerAdapter =new EntryViewPagerAdapter(getSupportFragmentManager());
     }
 }

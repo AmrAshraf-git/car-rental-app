@@ -9,12 +9,12 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class EntryViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private final  List<FragmentTab> fragmentTabs;
 
 
-    public ViewPagerAdapter(@NonNull FragmentManager fm) {
+    public EntryViewPagerAdapter(@NonNull FragmentManager fm) {
         super(fm);
         fragmentTabs =new ArrayList<>();
     }

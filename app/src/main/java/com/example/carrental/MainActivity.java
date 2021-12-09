@@ -22,7 +22,14 @@ public class MainActivity extends AppCompatActivity {
             Intent intent=new Intent(MainActivity.this, EntryPage.class);
             startActivity(intent);
         });
+
+        continueGuest.setOnClickListener(v -> {
+            Intent intent=new Intent(MainActivity.this,HomePage.class);
+            startActivity(intent);
+        });
     }
+
+
 
     public void initialization() {
         continueUser =findViewById(R.id.main_btn_continue);

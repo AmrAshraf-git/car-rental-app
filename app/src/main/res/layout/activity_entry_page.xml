@@ -9,7 +9,7 @@
 
 
     <TextView
-        android:id="@+id/signUp_txtView_frgmntTitle"
+        android:id="@+id/entryPage_txtView_frgmntTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_riding"
@@ -20,7 +20,7 @@
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintVertical_bias="0.8"
         app:layout_constraintVertical_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/signUp_constraintLayout"
+        app:layout_constraintBottom_toTopOf="@+id/entryPage_constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -28,7 +28,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/signUp_constraintLayout"
+        android:id="@+id/entryPage_constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/bg_rounded_layout"
@@ -44,18 +44,18 @@
         android:backgroundTint="@color/main_background">
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/signUp_viewPager"
+            android:id="@+id/entryPage_viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintVertical_bias="0"
-            app:layout_constraintTop_toBottomOf="@id/signUp_tabLayout"
+            app:layout_constraintTop_toBottomOf="@id/entryPage_tabLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
         </androidx.viewpager.widget.ViewPager>
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/signUp_tabLayout"
+            android:id="@+id/entryPage_tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
