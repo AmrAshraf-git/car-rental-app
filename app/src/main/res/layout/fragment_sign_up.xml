@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/firstname_user_txtfield"
+                android:id="@+id/signUp_txtField_fName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -29,7 +29,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:endIconMode="clear_text">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/firstname_user_edittxt"
+                    android:id="@+id/signUp_edTxt_fName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:singleLine="true">
@@ -37,7 +37,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/lastname_user_txtfield"
+                android:id="@+id/signUp_txtField_lName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -46,13 +46,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 
                 app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/firstname_user_txtfield"
+                app:layout_constraintTop_toBottomOf="@id/signUp_txtField_fName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:endIconMode="clear_text">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/lastname_user_edittxt"
+                    android:id="@+id/signUp_edTxt_lName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:singleLine="true">
@@ -61,7 +61,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_user_txtfield"
+                android:id="@+id/signUp_txtField_usrName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -70,13 +70,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 
                 app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/lastname_user_txtfield"
+                app:layout_constraintTop_toBottomOf="@id/signUp_txtField_lName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:endIconMode="clear_text">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username_user_edittxt"
+                    android:id="@+id/signUp_edTxt_usrName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:singleLine="true"
@@ -86,7 +86,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_user_txtfield"
+                android:id="@+id/signUp_txtField_pswd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -95,13 +95,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 
                 app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/username_user_txtfield"
+                app:layout_constraintTop_toBottomOf="@id/signUp_txtField_usrName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:endIconMode="password_toggle">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password_user_edittxt"
+                    android:id="@+id/signUp_edTxt_pswd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
@@ -111,7 +111,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/cfpassword_user_txtfield"
+                android:id="@+id/signUp_txtField_cnfPswd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -120,13 +120,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
 
                 app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/password_user_txtfield"
+                app:layout_constraintTop_toBottomOf="@id/signUp_txtField_pswd"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:endIconMode="password_toggle">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/cfpassword_user_edittxt"
+                    android:id="@+id/signUp_edTxt_cnfPswd"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="textPassword"
@@ -135,7 +135,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/signup_user_btn"
+                android:id="@+id/signUp_btn_signUp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth_percent=".6"
@@ -144,7 +144,7 @@
 
                 android:clickable="true"
                 android:focusable="true"
-                app:layout_constraintTop_toBottomOf="@id/cfpassword_user_txtfield"
+                app:layout_constraintTop_toBottomOf="@id/signUp_txtField_cnfPswd"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

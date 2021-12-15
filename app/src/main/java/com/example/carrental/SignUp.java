@@ -23,12 +23,12 @@ public class SignUp extends Fragment {
                              Bundle savedInstanceState) {
 
         View view= inflater.inflate(R.layout.fragment_sign_up, container, false);
-        fName =view.findViewById(R.id.firstname_user_edittxt);
-        lName =view.findViewById(R.id.lastname_user_edittxt);
-        phone=view.findViewById(R.id.username_user_edittxt);
-        password=view.findViewById(R.id.password_user_edittxt);
-        confPassword =view.findViewById(R.id.cfpassword_user_edittxt);
-        signUp=view.findViewById(R.id.signup_user_btn);
+        fName =view.findViewById(R.id.signUp_edTxt_fName);
+        lName =view.findViewById(R.id.signUp_edTxt_lName);
+        phone=view.findViewById(R.id.signUp_edTxt_usrName);
+        password=view.findViewById(R.id.signUp_edTxt_pswd);
+        confPassword =view.findViewById(R.id.signUp_edTxt_cnfPswd);
+        signUp=view.findViewById(R.id.signUp_btn_signUp);
 
 /*
 //=========================================Animations===============================================
