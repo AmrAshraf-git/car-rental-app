@@ -1,12 +1,15 @@
 package com.example.carrental;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -74,6 +77,17 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             bookingDetails4=view.findViewById(R.id.homeListRow_txtView_bookDtls4);
             priceLabel=view.findViewById(R.id.homeListRow_txtView_lbl);
 
+            //==========
+            continuBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.getContext().startActivity(new Intent(view.getContext(),ViewAllDetailsAndBooking.class));
+                    Toast.makeText(view.getContext(), "Hi", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            //==========
+
         }
 
         void bind(HomeListItem homeListItem){
@@ -94,6 +108,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             bookingDetails4.setText(homeListItem.getBookDetails()[3]);
 
         }
+
+
     }
 
 }

@@ -9,17 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CarRental">
-
+        <activity
+            android:name=".ViewAllDetailsAndBooking"
+            android:exported="false" />
         <activity
             android:name=".HomePage"
             android:exported="true"
-            android:theme="@style/Theme.CarRental"
-            />
-
+            android:theme="@style/Theme.CarRental" />
         <activity
             android:name=".EntryPage"
             android:exported="true"
-            android:theme="@style/Theme.CarRentalNoActionBar"/>
+            android:theme="@style/Theme.CarRentalNoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
