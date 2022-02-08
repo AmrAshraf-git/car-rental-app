@@ -3,8 +3,8 @@ package com.example.carrental;
 import androidx.fragment.app.Fragment;
 
 public class FragmentTab {
-    private String title;
-    private Fragment fragment;
+    private final String title;
+    private final Fragment fragment;
 
     public FragmentTab(String title, Fragment fragment) {
         this.title = title;
@@ -18,10 +18,12 @@ public class FragmentTab {
         return fragment;
     }
 
+    /*
     public void setTitle(String title) {
         this.title = title;
     }
     public void setFragment(Fragment fragment) {
         this.fragment = fragment;
     }
+    */
 }

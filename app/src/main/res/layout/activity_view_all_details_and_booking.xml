@@ -14,9 +14,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,23 +38,24 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/viewalldetails_imgView_brandImage"
+                        android:id="@+id/viewAllDetails_imgView_brandImage"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:foregroundGravity="center"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_car_default_black" />
+                        android:src="@drawable/img_logo_test"
+                        app:tint="@color/blue" />
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_carModel"
+                        android:id="@+id/viewAllDetails_txtView_carModel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:gravity="center"
                         android:text="-Car Model-"
-                        app:layout_constraintStart_toEndOf="@+id/viewalldetails_imgView_brandImage"
+                        app:layout_constraintStart_toEndOf="@+id/viewAllDetails_imgView_brandImage"
                         app:layout_constraintTop_toTopOf="parent" />
                 </LinearLayout>
 
@@ -72,7 +71,7 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_companyName"
+                        android:id="@+id/viewAllDetails_txtView_companyName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -80,7 +79,7 @@
                         android:text="-Company Name-" />
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_companyAddress"
+                        android:id="@+id/viewAllDetails_txtView_companyAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -88,7 +87,7 @@
                         android:text="-Company Address-" />
 
                     <RatingBar
-                        android:id="@+id/viewalldetails_ratingBar_companyRating"
+                        android:id="@+id/viewAllDetails_ratingBar_companyRating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -111,14 +110,15 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/viewalldetails_imgView_carImage"
+                    android:id="@+id/viewAllDetails_imgView_carImage"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewalldetails_txtView_carModel"
-                    app:srcCompat="@drawable/ic_car_default_black" />
+                    app:layout_constraintTop_toBottomOf="@+id/viewAllDetails_txtView_carModel"
+                    android:src="@drawable/img_logo_test"
+                    app:tint="@color/blue"/>
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
@@ -132,28 +132,28 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_color"
+                        android:id="@+id/viewAllDetails_txtView_color"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="-Color-" />
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_doorsNumber"
+                        android:id="@+id/viewAllDetails_txtView_doorsNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="-Doors No.-" />
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_chairsNumber"
+                        android:id="@+id/viewAllDetails_txtView_chairsNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="-Chairs No.-" />
 
                     <RatingBar
-                        android:id="@+id/viewalldetails_ratingBar_carRating"
+                        android:id="@+id/viewAllDetails_ratingBar_carRating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
                         android:stepSize="0.1" />
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_pricePerHour"
+                        android:id="@+id/viewAllDetails_txtView_pricePerHour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -183,10 +183,10 @@
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewalldetails_imgView_carImage">
+                app:layout_constraintTop_toBottomOf="@+id/viewAllDetails_imgView_carImage">
 
                 <TextView
-                    android:id="@+id/viewalldetails_txtView_safetyDepartment"
+                    android:id="@+id/viewAllDetails_txtView_safetyDepartment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Safty:"
@@ -198,7 +198,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_airbag"
+                        android:id="@+id/viewAllDetails_txtView_airbag"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -206,7 +206,7 @@
                         android:text="Airbag" />
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_seatbelts"
+                        android:id="@+id/viewAllDetails_txtView_seatbelts"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -214,7 +214,7 @@
                         android:text="-Seatbelts?-" />
 
                     <TextView
-                        android:id="@+id/viewalldetails_txtView_ABS"
+                        android:id="@+id/viewAllDetails_txtView_ABS"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -469,16 +469,24 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/viewalldetails_btn_bookNow"
+                android:id="@+id/viewAllDetails_btn_bookNow"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
                 android:text="Book Now"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+
+                android:textColor="@color/white"
+                android:background="@drawable/bg_rounded"
 
                 />
 

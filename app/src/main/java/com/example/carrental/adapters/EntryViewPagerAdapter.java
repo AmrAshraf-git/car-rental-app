@@ -1,10 +1,12 @@
-package com.example.carrental;
+package com.example.carrental.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.carrental.FragmentTab;
 
 import java.util.ArrayList;
 import java.util.List;

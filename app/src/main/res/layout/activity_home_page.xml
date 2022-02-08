@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/Item_list"
+            android:id="@+id/homePage_recyclerView_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:animationCache="false"

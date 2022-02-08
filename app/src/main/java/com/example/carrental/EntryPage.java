@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.carrental.adapters.EntryViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 public class EntryPage extends AppCompatActivity {

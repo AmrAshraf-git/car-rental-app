@@ -68,6 +68,11 @@
             android:textColor="@color/white"
             android:text="@string/continue_as_guest"
             android:background="@drawable/bg_rounded"
+
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+
             android:textAllCaps="false">
         </androidx.appcompat.widget.AppCompatButton>
 
