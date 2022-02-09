@@ -486,7 +486,7 @@
                 android:foreground="?attr/selectableItemBackgroundBorderless"
 
                 android:textColor="@color/white"
-                android:background="@drawable/bg_rounded"
+                android:background="@drawable/bg_rounded_border"
 
                 />
 
