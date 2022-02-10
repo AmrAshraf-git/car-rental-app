@@ -17,4 +17,6 @@
     <string name="welcome_to_car_rental_app">Welcome To Car Rental App</string>
     <string name="continu">Continue</string>
     <string name="app_logo">app_logo</string>
+    <string name="content_description_for_slider_item">Car Images</string>
+
 </resources>
