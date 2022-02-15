@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CarRental">
         <activity
-            android:name=".ViewAllDetailsAndBooking"
+            android:name=".BookingActivity"
             android:exported="false" />
         <activity
-            android:name=".HomePage"
+            android:name=".HomePageActivity"
             android:exported="true"
             android:theme="@style/Theme.CarRental" />
         <activity
-            android:name=".EntryPage"
+            android:name=".EntryPageActivity"
             android:exported="true"
             android:theme="@style/Theme.CarRentalNoActionBar" />
         <activity

@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp">
-
+    tools:context=".SignUpFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,16 +42,16 @@
                 app:layout_constraintTop_toTopOf="@id/signIn_txtView_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/signIn_txtField_usrName">
+                app:layout_constraintBottom_toTopOf="@id/signIn_txtField_email">
             </TextView>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/signIn_txtField_usrName"
+                android:id="@+id/signIn_txtField_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:hint="@string/phone_number"
+                android:hint="@string/email_address"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:errorEnabled="true"
                 app:layout_constraintVertical_bias="0.1"
@@ -65,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:singleLine="true"
-                    android:inputType="phone">
+                    android:inputType="textEmailAddress">
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -80,7 +79,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:errorEnabled="true"
                 app:layout_constraintVertical_bias="0"
-                app:layout_constraintTop_toBottomOf="@id/signIn_txtField_usrName"
+                app:layout_constraintTop_toBottomOf="@id/signIn_txtField_email"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -125,16 +124,19 @@
                 app:layout_constraintBottom_toTopOf="@id/signIn_floatBtn_2"
                 android:textSize="16sp"
                 android:text="@string/sign_in"
-                android:background="@drawable/bg_rounded_btn"
+                android:background="@drawable/ic_btn_rounded"
                 android:textAllCaps="false">
             </Button>
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/signIn_floatBtn_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:src="@drawable/ic_icons8_google"
-                android:elevation="17dp"
+                android:src="@drawable/ic_google"
+                android:clickable="true"
+                android:focusable="true"
+                app:backgroundTint="@color/white"
+                app:elevation="6dp"
+                app:tint="@null"
                 app:fabSize="mini"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="5dp"
@@ -149,29 +151,35 @@
                 android:id="@+id/signIn_floatBtn_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:elevation="17dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:backgroundTint="@color/white"
+                app:elevation="6dp"
+                app:tint="@null"
                 app:fabSize="mini"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="5dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/ic_microsoft"
                 app:layout_constraintTop_toBottomOf="@id/signIn_btn_signIn"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/signIn_floatBtn_3"
                 app:layout_constraintStart_toEndOf="@id/signIn_floatBtn_1"
-                android:contentDescription="Test">
+                android:contentDescription="@string/microsoft">
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/signIn_floatBtn_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/white"
-                android:elevation="17dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:backgroundTint="@color/blue"
+                app:elevation="6dp"
+                app:tint="@color/white"
                 app:fabSize="mini"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="5dp"
-                android:src="@drawable/ic_icons8_facebook"
+                android:src="@drawable/ic_facebook"
                 app:layout_constraintTop_toBottomOf="@id/signIn_btn_signIn"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

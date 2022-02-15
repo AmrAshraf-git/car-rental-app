@@ -8,26 +8,25 @@ import android.widget.ImageView;
 import com.example.carrental.R;
 import com.smarteist.autoimageslider.SliderViewAdapter;
 
-public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder>{
+public class SliderAdapter extends SliderViewAdapter<SliderAdapter.ViewHolder>{
 
-    int[] images;
+    private final int[] images;
 
     public SliderAdapter(int[] images){
 
         this.images = images;
-
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.slider_item,parent,false);
-        return new Holder(view);
+                .inflate(R.layout.activity_slider_item,parent,false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(Holder viewHolder, int position) {
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
         viewHolder.imageView.setImageResource(images[position]);
 
@@ -38,15 +37,16 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.Holder>{
         return images.length;
     }
 
-    public class Holder extends  ViewHolder{
+    static class ViewHolder extends SliderViewAdapter.ViewHolder{
 
         ImageView imageView;
 
-        public Holder(View itemView){
+        public ViewHolder(View itemView){
             super(itemView);
-            imageView = itemView.findViewById(R.id.image_view);
-
+            imageView = itemView.findViewById(R.id.sliderItem_imgView_sliderImg);
         }
     }
+
+
 
 }

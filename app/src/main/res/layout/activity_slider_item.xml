@@ -6,11 +6,12 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/image_view"
+        android:id="@+id/sliderItem_imgView_sliderImg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:contentDescription="@string/content_description_for_slider_item"
+        app:tint="@color/blue"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_car_default_black" />
 

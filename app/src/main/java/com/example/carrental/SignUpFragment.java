@@ -9,11 +9,11 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
-public class SignUp extends Fragment {
+public class SignUpFragment extends Fragment {
 
     EditText fName;
     EditText lName;
-    EditText phone;
+    EditText email;
     EditText password;
     EditText confPassword;
     Button signUp;
@@ -25,7 +25,7 @@ public class SignUp extends Fragment {
         View view= inflater.inflate(R.layout.fragment_sign_up, container, false);
         fName =view.findViewById(R.id.signUp_edTxt_fName);
         lName =view.findViewById(R.id.signUp_edTxt_lName);
-        phone=view.findViewById(R.id.signUp_edTxt_usrName);
+        email =view.findViewById(R.id.signUp_edTxt_usrName);
         password=view.findViewById(R.id.signUp_edTxt_pswd);
         confPassword =view.findViewById(R.id.signUp_edTxt_cnfPswd);
         signUp=view.findViewById(R.id.signUp_btn_signUp);
@@ -55,4 +55,5 @@ public class SignUp extends Fragment {
 */
         return view;
     }
+
 }
