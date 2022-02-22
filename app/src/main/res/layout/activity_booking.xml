@@ -8,13 +8,10 @@
     tools:context=".BookingActivity">
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/bookingActivity_scrollView_mainScroll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:textAlignment="center">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -38,25 +35,21 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/viewAllDetails_imgView_brandImage"
+                        android:id="@+id/bookingActivity_imgView_brandImage"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:foregroundGravity="center"
                         android:src="@drawable/img_logo_test"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/blue" />
 
                     <TextView
-                        android:id="@+id/viewAllDetails_txtView_carModel"
+                        android:id="@+id/bookingActivity_txtView_carModel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="-Car Model-"
-                        app:layout_constraintStart_toEndOf="@+id/viewAllDetails_imgView_brandImage"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:text="-Car Model-" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -66,12 +59,10 @@
                     android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/viewAllDetails_txtView_companyName"
+                        android:id="@+id/bookingActivity_txtView_companyName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -79,7 +70,7 @@
                         android:text="-Company Name-" />
 
                     <TextView
-                        android:id="@+id/viewAllDetails_txtView_companyAddress"
+                        android:id="@+id/bookingActivity_txtView_companyAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -87,7 +78,7 @@
                         android:text="-Company Address-" />
 
                     <RatingBar
-                        android:id="@+id/viewAllDetails_ratingBar_companyRating"
+                        android:id="@+id/bookingActivity_ratingBar_companyRating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -108,7 +99,7 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/border"
                 android:orientation="vertical">
-<!--
+                <!--
                 <ImageView
                     android:id="@+id/viewAllDetails_imgView_carImage"
                     android:layout_width="match_parent"
@@ -121,7 +112,7 @@
                     app:tint="@color/blue"/>
 -->
                 <com.smarteist.autoimageslider.SliderView
-                    android:id="@+id/image_slider"
+                    android:id="@+id/bookingActivity_imageSlider_imagesOfCar"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_weight="1"
@@ -144,33 +135,34 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/viewAllDetails_txtView_color"
+                        android:id="@+id/bookingActivity_txtView_color"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="-Color-" />
+                        android:text="-Color-"
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/viewAllDetails_txtView_doorsNumber"
+                        android:id="@+id/bookingActivity_txtView_doorsNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="-Doors No.-" />
+                        android:text="-Doors No.-"
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/viewAllDetails_txtView_chairsNumber"
+                        android:id="@+id/bookingActivity_txtView_chairsNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="-Chairs No.-" />
+                        android:text="-Chairs No.-"
+                        android:textSize="16sp" />
 
                     <RatingBar
-                        android:id="@+id/viewAllDetails_ratingBar_carRating"
+                        android:id="@+id/bookingActivity_ratingBar_carRating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -180,11 +172,12 @@
                         android:stepSize="0.1" />
 
                     <TextView
-                        android:id="@+id/viewAllDetails_txtView_pricePerHour"
+                        android:id="@+id/bookingActivity_txtView_pricePerHour"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="-Price Per Hour-"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -198,47 +191,93 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/border"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewAllDetails_imgView_carImage">
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/viewAllDetails_txtView_safetyDepartment"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/bookingActivity_txtView_safetyDepartment"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Safty:"
-                    android:textStyle="bold" />
+                    android:layout_gravity="left|center_vertical"
+                    android:drawablePadding="3dp"
+                    android:paddingLeft="3dp"
+                    android:text="Safty"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_baseline_safty" />
 
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="SaftyIcon"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_airbag"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Airbag"
+                            app:drawableTopCompat="@drawable/ic_baseline_air_bag" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_seatbelts"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Seatbelts"
+                            app:drawableTopCompat="@drawable/ic_baseline_airline_seatbelt" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_ABS"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:drawableTop="@drawable/ic_baseline_abs"
+                            android:gravity="center"
+                            android:text="ABS" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/viewAllDetails_txtView_airbag"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Airbag" />
 
-                    <TextView
-                        android:id="@+id/viewAllDetails_txtView_seatbelts"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Seatbelts?-" />
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_abs"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Anti Lock Braking System (ABS)"
+                            app:srcCompat="@drawable/ic_baseline_abs"
+                            app:tint="#252424" />
 
-                    <TextView
-                        android:id="@+id/viewAllDetails_txtView_ABS"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-ABS?-" />
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_airbags"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Airbags"
+                            app:srcCompat="@drawable/ic_baseline_air_bag"
+                            app:tint="#673AB7" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_seatbelt"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Seatbelt"
+                            app:srcCompat="@drawable/ic_baseline_airline_seatbelt"
+                            app:tint="#8E2727" />
+
                 </LinearLayout>
+                -->
 
             </LinearLayout>
 
@@ -252,104 +291,239 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/bookingActivity_txtView_featuresDepartment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Features:"
-                    android:textStyle="bold" />
+                    android:layout_gravity="center_vertical"
+                    android:drawablePadding="3dp"
+                    android:paddingLeft="3dp"
+                    android:text="Features"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_baseline_star" />
 
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="FeaturesIcon"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_sunroof"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Sunroof"
+                            app:drawableTopCompat="@drawable/ic_baseline_roofing" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_parkingSensors"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Parking Sensors"
+                            app:drawableTopCompat="@drawable/ic_baseline_local_parking" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_radio"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Radio"
+                            app:drawableTopCompat="@drawable/ic_baseline_radio" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_navigationSystem"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Navigation System"
+                            app:drawableTopCompat="@drawable/ic_baseline_location_on" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_bluetooth"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Bluetooth"
+                            app:drawableTopCompat="@drawable/ic_baseline_bluetooth" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_remoteStart"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Remote Start"
+                            app:drawableTopCompat="@drawable/ic_baseline_settings_remote" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_airConditioner"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="AC"
+                            app:drawableTopCompat="@drawable/ic_baseline_ac_unit" />
+
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_musicPlayer"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Music Player"
+                            app:drawableTopCompat="@drawable/ic_baseline_music_note" />
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/textView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Sunroof?-" />
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_ac"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Air Conditioner"
+                            app:srcCompat="@drawable/ic_baseline_ac_unit" />
 
-                    <TextView
-                        android:id="@+id/textView6"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Parking Sensors?-" />
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_bluetooth"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Bluetooth"
+                            app:srcCompat="@drawable/ic_baseline_bluetooth" />
 
-                    <TextView
-                        android:id="@+id/textView7"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Radio?-" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_sunroof"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Sunroof"
+                            app:srcCompat="@drawable/ic_baseline_roofing" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_radio"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Radio"
+                            app:srcCompat="@drawable/ic_baseline_radio" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_music_player"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Music Player"
+                            app:srcCompat="@drawable/ic_baseline_music_note" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_remote_start"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Remote Start"
+                            app:srcCompat="@drawable/ic_baseline_settings_remote" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_parking_sensors"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Parking Sensors"
+                            app:srcCompat="@drawable/ic_baseline_local_parking" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_navigation_system"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Navigation System"
+                            app:srcCompat="@drawable/ic_baseline_location_on"
+                            app:tint="#4CAF50" />
+
+
+
                 </LinearLayout>
+
+
+-->
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bookingActivity_txtView_engineDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dp"
+                    android:paddingLeft="3dp"
+                    android:text="Engine"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_baseline_miscellaneous_services" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="5dp">
 
                     <TextView
-                        android:id="@+id/textView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Navigation System?-" />
-
-                    <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/bookingActivity_txtView_engineType"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="-Bluetooth?-" />
+                        android:text="(Manual - Automatic)"
+                        android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/bookingActivity_txtView_enginePerformace"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="-Remote Start?-  " />
-
+                        android:text="CC: Unknow"
+                        android:textSize="16sp" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView8"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Air Conditioner?-" />
-
-                    <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Leanther Seata" />
-
-                    <TextView
-                        android:id="@+id/textView10"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Music Player?-" />
-                </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
@@ -362,33 +536,129 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/bookingActivity_txtView_accessoriesDepartment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Engine:"
-                    android:textStyle="bold" />
+                    android:drawablePadding="3dp"
+                    android:paddingLeft="3dp"
+                    android:text="Accessories"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_baseline_extension" />
 
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="AccessoriesIcon"
+                    android:padding="5dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_extraTyre"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Extra Tyre"
+                            app:drawableTopCompat="@drawable/ic_baseline_extra_tyre" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_charger"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Charger"
+                            app:drawableTopCompat="@drawable/ic_baseline_charger" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_fireExtinguisher"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Fire Extinguisher"
+                            app:drawableTopCompat="@drawable/ic_baseline_fire_extinguisher" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_firstAidKit"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="First Aid Kit"
+                            app:drawableTopCompat="@drawable/ic_baseline_medical_services" />
+
+                        <TextView
+                            android:id="@+id/bookingActivity_txtView_carSeat"
+                            android:layout_width="80dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Car Seat"
+                            app:drawableTopCompat="@drawable/ic_baseline_child_friendly" />
+
+
+
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Manual or Automatic?-" />
 
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="CC: Unknow" />
+
+                     <ImageView
+                            android:id="@+id/bookingActivity_imgView_extra_tyre"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Extra Tyre"
+                            app:srcCompat="@drawable/ic_baseline_extra_tyre" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_charger"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Charger"
+                            app:srcCompat="@drawable/ic_baseline_charger" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_fire_extinguisher"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Fire Extinguisher"
+                            app:srcCompat="@drawable/ic_baseline_fire_extinguisher" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_car_seat"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="Car Seat"
+                            app:srcCompat="@drawable/ic_baseline_child_friendly" />
+
+                        <ImageView
+                            android:id="@+id/bookingActivity_imgView_first_aid_kit"
+                            android:layout_width="60dp"
+                            android:layout_height="30dp"
+                            android:layout_weight="1"
+                            android:contentDescription="First Aid Kit"
+                            app:srcCompat="@drawable/ic_baseline_medical_services" />
+
                 </LinearLayout>
+
+-->
             </LinearLayout>
 
             <LinearLayout
@@ -401,110 +671,81 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/bookingActivity_txtView_smokingDepartment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Accessories:"
-                    android:textStyle="bold" />
+                    android:drawablePadding="3dp"
+                    android:paddingLeft="3dp"
+                    android:text="Smoking Preferences"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:drawableLeftCompat="@drawable/ic_baseline_smoking_rooms" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView15"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Extra Tyre?-" />
-
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Charger?-" />
-
-                    <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Fire Extinguisher?-" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView18"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-First Aid Kit?-" />
-
-                    <TextView
-                        android:id="@+id/textView19"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="-Car Seat?-" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                android:background="@drawable/border"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView20"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Smoking Preferences:"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="-Smoking or Non-Smoking?-" />
+                    android:orientation="horizontal">
 
+                    <TextView
+
+                        android:id="@+id/bookingActivity_txtView_no_smoking"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="No Smoking"
+                        app:drawableTopCompat="@drawable/ic_baseline_smoke_free" />
+
+                    <TextView
+
+                        android:id="@+id/bookingActivity_txtView_smoking"
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Smoking"
+                        app:drawableTopCompat="@drawable/ic_baseline_smoking_rooms" />
+
+
+                </LinearLayout>
+
+                <!--
+
+
+                    <ImageView
+                        android:id="@+id/bookingActivity_imgView_Smoking"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:contentDescription="Smoking"
+                        app:srcCompat="@drawable/ic_baseline_smoking_rooms" />
+
+                    <ImageView
+                        android:id="@+id/bookingActivity_imgView_Non_Smoking"
+                        android:layout_width="60dp"
+                        android:layout_height="30dp"
+                        android:contentDescription="Non-Smoking"
+                        app:srcCompat="@drawable/ic_baseline_smoke_free" />
+
+
+-->
             </LinearLayout>
 
             <Button
-                android:id="@+id/viewAllDetails_btn_bookNow"
+                android:id="@+id/bookingActivity_btn_bookNow"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
-                android:text="Book Now"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/ic_border_rounded"
+
 
                 android:clickable="true"
                 android:focusable="true"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
 
+                android:text="Book Now"
                 android:textColor="@color/white"
-                android:background="@drawable/ic_border_rounded"
 
                 />
 

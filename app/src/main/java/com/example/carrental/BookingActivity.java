@@ -2,10 +2,14 @@ package com.example.carrental;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.carrental.adapters.SliderAdapter;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -14,7 +18,6 @@ import com.smarteist.autoimageslider.SliderView;
 
 
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
 
 public class BookingActivity extends AppCompatActivity {
 
@@ -29,6 +32,27 @@ public class BookingActivity extends AppCompatActivity {
     private TextView engine;
     private TextView price;
     private SliderView sliderView;
+    private Button bookNow;
+/*
+    private ImageView imgView_abs;
+    private ImageView imgView_airbags;
+    private ImageView imgView_seatbelt;
+    private ImageView imgView_ac;
+    private ImageView imgView_bluetooth;
+    private ImageView imgView_sunroof;
+    private ImageView imgView_radio;
+    private ImageView imgView_music_player;
+    private ImageView imgView_remote_start;
+    private ImageView imgView_parking_sensors;
+    private ImageView imgView_navigation_system;
+    private ImageView imgView_extra_tyre;
+    private ImageView imgView_charger;
+    private ImageView imgView_fire_extinguisher;
+    private ImageView imgView_car_seat;
+    private ImageView imgView_first_aid_kit;
+    private ImageView imgView_Smoking;
+    private ImageView imgView_Non_Smoking;
+*/
 
 
     @Override
@@ -37,24 +61,27 @@ public class BookingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_booking);
 
         initialization();
-        //====================================RECEIVE DATA=====================================
+
+        //====================================RECEIVE DATA====================================
         Bundle bundle=getIntent().getExtras();
         if(bundle!=null) {
 
-            //======================================DEBUG=======================================
+            //============================DEBUG=================
             //Log.d("click","data Received successfully");
             //Log.d("id",String.valueOf(id));
             //Log.d("ReceivedData",String.valueOf(bundle.getParcelable("listItemObject")));
-            //======================================DEBUG=======================================
+            //============================DEBUG=================
 
             homeListItem=bundle.getParcelable("listItemObject");
             int id=bundle.getInt("id");
         }
         else
             throw new InvalidParameterException("Bundle is empty");
-        //====================================RECEIVE DATA=====================================
+        //====================================RECEIVE DATA====================================
 
 
+
+        //================================SET DATA============================================
         carModel.setText(homeListItem.getCarModel());
         companyName.setText(homeListItem.getCompanyName());
         //carImage.setImageResource(homeListItem.getCarImg());
@@ -65,14 +92,17 @@ public class BookingActivity extends AppCompatActivity {
         chairsNo.setText(homeListItem.getSpecs()[2]);
         engine.setText(homeListItem.getSpecs()[3]);
 
-
-
-        //==================Image Slider Show=============================
+        //==================Image Slider Show=====================
         int[] images = {homeListItem.getCarImg(),
                 R.drawable.ic_car_default_black,
                 R.drawable.ic_car_default_black,
                 R.drawable.ic_car_default_black,};
-        //==================Image Slider Show=============================
+        //==================Image Slider Show=====================
+
+        //================================SET DATA============================================
+
+
+
 
         //==================Image Slider Show=============================
         SliderAdapter sliderAdapter = new SliderAdapter(images);
@@ -81,19 +111,59 @@ public class BookingActivity extends AppCompatActivity {
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycle(false);
         //==================Image Slider Show=============================
+
+
+        //================Test Get Location Activity==============================
+
+        bookNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BookingActivity.this, getUserLocation.class);
+                startActivity(intent);
+            }
+        });
+
+        //================Test Get Location Activity==============================
     }
 
-
     public void initialization() {
-        carModel=findViewById(R.id.viewAllDetails_txtView_carModel);
-        companyName=findViewById(R.id.viewAllDetails_txtView_companyName);
+        carModel=findViewById(R.id.bookingActivity_txtView_carModel);
+        companyName=findViewById(R.id.bookingActivity_txtView_companyName);
         //carImage=findViewById(R.id.viewAllDetails_imgView_carImage);
-        companyAddress=findViewById(R.id.viewAllDetails_txtView_companyAddress);
-        color=findViewById(R.id.viewAllDetails_txtView_color);
-        doorsNo=findViewById(R.id.viewAllDetails_txtView_doorsNumber);
-        chairsNo=findViewById(R.id.viewAllDetails_txtView_chairsNumber);
-        engine=findViewById(R.id.textView12);
-        price=findViewById(R.id.viewAllDetails_txtView_pricePerHour);
-        sliderView = findViewById(R.id.image_slider);
+        companyAddress=findViewById(R.id.bookingActivity_txtView_companyAddress);
+        color=findViewById(R.id.bookingActivity_txtView_color);
+        doorsNo=findViewById(R.id.bookingActivity_txtView_doorsNumber);
+        chairsNo=findViewById(R.id.bookingActivity_txtView_chairsNumber);
+        engine=findViewById(R.id.bookingActivity_txtView_engineType);
+        price=findViewById(R.id.bookingActivity_txtView_pricePerHour);
+        sliderView = findViewById(R.id.bookingActivity_imageSlider_imagesOfCar);
+        bookNow = findViewById(R.id.bookingActivity_btn_bookNow);
+
+    /*
+        imgView_abs = findViewById(R.id.bookingActivity_imgView_abs);
+        imgView_airbags = findViewById(R.id.bookingActivity_imgView_airbags);
+        imgView_seatbelt = findViewById(R.id.bookingActivity_imgView_seatbelt);
+        imgView_ac = findViewById(R.id.bookingActivity_imgView_ac);
+        imgView_bluetooth = findViewById(R.id.bookingActivity_imgView_bluetooth);
+        imgView_sunroof = findViewById(R.id.bookingActivity_imgView_sunroof);
+        imgView_radio = findViewById(R.id.bookingActivity_imgView_radio);
+        imgView_music_player = findViewById(R.id.bookingActivity_imgView_music_player);
+        imgView_remote_start = findViewById(R.id.bookingActivity_imgView_remote_start);
+        imgView_parking_sensors = findViewById(R.id.bookingActivity_imgView_parking_sensors);
+        imgView_navigation_system = findViewById(R.id.bookingActivity_imgView_navigation_system);
+        imgView_extra_tyre = findViewById(R.id.bookingActivity_imgView_extra_tyre);
+        imgView_charger = findViewById(R.id.bookingActivity_imgView_charger);
+        imgView_fire_extinguisher = findViewById(R.id.bookingActivity_imgView_fire_extinguisher);
+        imgView_car_seat = findViewById(R.id.bookingActivity_imgView_car_seat);
+        imgView_first_aid_kit = findViewById(R.id.bookingActivity_imgView_first_aid_kit);
+        imgView_Smoking = findViewById(R.id.bookingActivity_imgView_Smoking);
+        imgView_Non_Smoking = findViewById(R.id.bookingActivity_imgView_Non_Smoking);
+    */
+
+
+
+
+
+
     }
 }

@@ -19,5 +19,6 @@
     <string name="app_logo">app_logo</string>
     <string name="content_description_for_slider_item">Car Images</string>
     <string name="microsoft">Microsoft</string>
+    <string name="get_my_location">Get My Location</string>
 
 </resources>
