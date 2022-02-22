@@ -5,6 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.drawable.Icon;
 import android.os.Bundle;
 import android.view.View;
+import android.content.Intent;
+import android.graphics.drawable.Icon;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +35,8 @@ public class BookingActivity extends AppCompatActivity {
     private TextView engine;
     private TextView price;
     private SliderView sliderView;
+    private Button bookNow;
+
 /*
     private ImageView imgView_abs;
     private ImageView imgView_airbags;
@@ -108,6 +115,20 @@ public class BookingActivity extends AppCompatActivity {
         sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderView.setAutoCycle(false);
         //==================Image Slider Show=============================
+
+
+
+        //================Test Get Location Activity==============================
+
+        bookNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(BookingActivity.this, getUserLocation.class);
+                startActivity(intent);
+            }
+        });
+
+        //================Test Get Location Activity==============================
     }
 
     public void initialization() {
@@ -121,6 +142,9 @@ public class BookingActivity extends AppCompatActivity {
         engine=findViewById(R.id.bookingActivity_txtView_engineType);
         price=findViewById(R.id.bookingActivity_txtView_pricePerHour);
         sliderView = findViewById(R.id.bookingActivity_imageSlider_imagesOfCar);
+
+        bookNow = findViewById(R.id.bookingActivity_btn_bookNow);
+
 
     /*
         imgView_abs = findViewById(R.id.bookingActivity_imgView_abs);

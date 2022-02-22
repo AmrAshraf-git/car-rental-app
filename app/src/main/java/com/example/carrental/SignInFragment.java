@@ -38,6 +38,12 @@ public class SignInFragment extends Fragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        fragmentOnClickListener=null;
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
