@@ -45,6 +45,7 @@ public class getUserLocation extends AppCompatActivity {
     String City,Country;
     Drawable icon = null;
     int PERMISSION_ID = 44;
+    // Test Comment to check if git hub work correctly or not.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
