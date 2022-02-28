@@ -200,7 +200,7 @@ public class getUserLocation extends AppCompatActivity {
         getMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getUserLocation.this, MainActivity.class);
+                Intent intent=new Intent(getUserLocation.this, NavControllerActivity.class);
                 startActivity(intent);
             }
         });

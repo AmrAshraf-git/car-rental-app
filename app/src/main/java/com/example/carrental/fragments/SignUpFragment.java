@@ -1,4 +1,4 @@
-package com.example.carrental;
+package com.example.carrental.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.carrental.R;
 
 public class SignUpFragment extends Fragment {
 

@@ -1,9 +1,8 @@
-package com.example.carrental;
+package com.example.carrental.fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.carrental.NavControllerActivity;
+import com.example.carrental.R;
+import com.example.carrental.getUserLocation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -34,7 +36,7 @@ public class SignInFragment extends Fragment {
             fragmentOnClickListener = (FragmentOnClickListener) context;
         }
         else
-            throw new ClassCastException("This activity does not implement FragmentOnClickListener");
+            throw new ClassCastException(context.toString() + "must implements FragmentOnClickListener");
     }
 
     @Override
@@ -66,7 +68,8 @@ public class SignInFragment extends Fragment {
                 String e=email.getText().toString();
                 String p=password.getText().toString();
                 if(e.equals("admin")&&p.equals("admin")) {
-                    Intent intent = new Intent(getActivity(), HomePageActivity.class);
+                    //Intent intent = new Intent(getActivity(), NavControllerActivity.class);
+                    Intent intent=new Intent(getActivity(), getUserLocation.class);
                     intent.putExtra("user","admin");
                     startActivity(intent);
                 }

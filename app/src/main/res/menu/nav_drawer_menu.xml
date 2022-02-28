@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:checked="true"
+            android:icon="@drawable/ic_baseline_home"/>
+        <item
+            android:id="@+id/nav_favorite"
+            android:title="Favorite List"
+            android:icon="@drawable/ic_baseline_favorite"/>
+
+        <item
+            android:id="@+id/nav_my_booking"
+            android:title="My booking"
+            android:icon="@drawable/ic_baseline_request" />
+    </group>
+
+    <item android:title="Account">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_view_profile"
+                    android:title="View Profile"
+                    android:icon="@drawable/ic_baseline_account_circle"/>
+                <item
+                    android:id="@+id/nav_log_out"
+                    android:title="Log out"
+                    android:icon="@drawable/ic_baseline_door"/>
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Other">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item android:id="@+id/nav_settings"
+                    android:title="Settings"
+                    android:icon="@drawable/ic_baseline_settings"/>
+                <item
+                    android:id="@+id/nav_cont_us"
+                    android:title="Contact Us"
+                    android:icon="@drawable/ic_baseline_email"/>
+                <item
+                    android:id="@+id/nav_privacy"
+                    android:title="Privacy"
+                    android:icon="@drawable/ic_baseline_privacy"/>
+                <item
+                    android:id="@+id/nav_about"
+                    android:title="About"
+                    android:icon="@drawable/ic_baseline_priority_high"/>
+            </group>
+        </menu>
+    </item>
+
+</menu>

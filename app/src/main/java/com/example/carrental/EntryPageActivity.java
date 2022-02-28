@@ -1,13 +1,14 @@
 package com.example.carrental;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.carrental.adapters.EntryViewPagerAdapter;
+import com.example.carrental.fragments.SignInFragment;
+import com.example.carrental.fragments.SignUpFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class EntryPageActivity extends AppCompatActivity implements SignInFragment.FragmentOnClickListener {
@@ -25,13 +26,13 @@ public class EntryPageActivity extends AppCompatActivity implements SignInFragme
         //signInFragment=new SignInFragment();
 
 
-        //====================================FRAGMENT SETUP====================================
+        //====================================VIEW PAGER SETUP====================================
         entryViewPagerAdapter.addFragmentTab("Login",new SignInFragment());
         entryViewPagerAdapter.addFragmentTab("Signup",new SignUpFragment());
         viewPager.setAdapter(entryViewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        //====================================FRAGMENT SETUP====================================
+        //====================================VIEW PAGER SETUP====================================
     }
 
     //Receive data from sign in FRG (if required).

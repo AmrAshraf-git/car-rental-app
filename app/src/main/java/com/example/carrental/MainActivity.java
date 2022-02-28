@@ -1,5 +1,4 @@
 package com.example.carrental;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -23,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         continueGuest.setOnClickListener(v -> {
-            Intent intent=new Intent(MainActivity.this, HomePageActivity.class);
+            Intent intent=new Intent(MainActivity.this, NavControllerActivity.class);
             startActivity(intent);
         });
     }

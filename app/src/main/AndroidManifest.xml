@@ -18,21 +18,21 @@
         <activity
             android:name=".getUserLocation"
             android:exported="false" />
+
         <activity
-            android:name=".BookingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HomePageActivity"
+            android:name=".NavControllerActivity"
             android:exported="true"
+            android:hardwareAccelerated="true"
             android:theme="@style/Theme.CarRental" />
+
         <activity
             android:name=".EntryPageActivity"
             android:exported="true"
-            android:theme="@style/Theme.CarRentalNoActionBar" />
+            android:theme="@style/Theme.CarRental" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.CarRentalNoActionBar">
+            android:theme="@style/Theme.CarRental">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

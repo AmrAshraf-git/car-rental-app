@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Random;
 
-public class HomeListItem implements Parcelable {
+public class HomeListDataModel implements Parcelable {
     private String companyName;
     private String companyAddress;
 
@@ -17,14 +17,14 @@ public class HomeListItem implements Parcelable {
     private String[] specs;
     private String[] bookDetails;
 
-    public HomeListItem() {
+    public HomeListDataModel() {
         carImg= R.drawable.img_logo_test;
         priceLabel=PriceLabel.DOLLAR;
         id= new Random().nextInt(30);
     }
 
 
-    protected HomeListItem(Parcel in) {
+    protected HomeListDataModel(Parcel in) {
         companyName = in.readString();
         companyAddress = in.readString();
         carModel = in.readString();
@@ -35,15 +35,15 @@ public class HomeListItem implements Parcelable {
         bookDetails = in.createStringArray();
     }
 
-    public static final Creator<HomeListItem> CREATOR = new Creator<HomeListItem>() {
+    public static final Creator<HomeListDataModel> CREATOR = new Creator<HomeListDataModel>() {
         @Override
-        public HomeListItem createFromParcel(Parcel in) {
-            return new HomeListItem(in);
+        public HomeListDataModel createFromParcel(Parcel in) {
+            return new HomeListDataModel(in);
         }
 
         @Override
-        public HomeListItem[] newArray(int size) {
-            return new HomeListItem[size];
+        public HomeListDataModel[] newArray(int size) {
+            return new HomeListDataModel[size];
         }
     };
 

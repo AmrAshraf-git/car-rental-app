@@ -10,17 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.carrental.HomeListItem;
+import com.example.carrental.HomeListDataModel;
 import com.example.carrental.R;
 
 import java.util.ArrayList;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
-    private final ArrayList<HomeListItem> arrayList;
+    private final ArrayList<HomeListDataModel> arrayList;
     private final OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public HomeListAdapter(ArrayList<HomeListItem> arrayList, OnRecyclerViewClickListener onRecyclerViewClickListener) {
+    public HomeListAdapter(ArrayList<HomeListDataModel> arrayList, OnRecyclerViewClickListener onRecyclerViewClickListener) {
         this.arrayList = arrayList;
         this.onRecyclerViewClickListener = onRecyclerViewClickListener;
         setHasStableIds(true);
@@ -30,9 +30,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
     @NonNull
     @Override
     //Same as "getView method" but, this method includes if(view==null){Save the ViewHolder object in cached view} and else{get the ViewHolder object from cached view}.
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_list_row, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+        final View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_list_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -41,18 +40,19 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         return arrayList.size();
     }
 
-    public HomeListItem getItem(int pos) {
+    public HomeListDataModel getItem(final int pos) {
         return arrayList.get(pos);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(final int position) {
         return (getItem(position).getId()+position);
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewType(final int position) {
         return position;
+        //return R.layout.activity_home_list_row;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        HomeListItem homeListItem;
+        HomeListDataModel homeListDataModel;
         ImageView carImage;
         RatingBar compRate;
         TextView compLocation,companyName,carModel,spec1,spec2,spec3,spec4,priceLabel,price;
 
-        public ViewHolder(View view)
+        public ViewHolder(final View view)
         {
             super(view);
 
@@ -94,23 +94,23 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             });
         }
 
-        void bind(HomeListItem homeListItem){
-            this.homeListItem=homeListItem;
+        void bind(final HomeListDataModel homeListDataModel){
+            this.homeListDataModel = homeListDataModel;
 
-            priceLabel.setText(homeListItem.getPriceLabel().toString());
-            carImage.setImageResource(homeListItem.getCarImg());
-            companyName.setText(homeListItem.getCompanyName());
-            carModel.setText(homeListItem.getCarModel());
-            spec1.setText(homeListItem.getSpecs()[0]);
-            spec2.setText(homeListItem.getSpecs()[1]);
-            spec3.setText(homeListItem.getSpecs()[2]);
-            spec4.setText(homeListItem.getSpecs()[3]);
-            price.setText(String.valueOf(homeListItem.getPrice()));
+            priceLabel.setText(homeListDataModel.getPriceLabel().toString());
+            carImage.setImageResource(homeListDataModel.getCarImg());
+            companyName.setText(homeListDataModel.getCompanyName());
+            carModel.setText(homeListDataModel.getCarModel());
+            spec1.setText(homeListDataModel.getSpecs()[0]);
+            spec2.setText(homeListDataModel.getSpecs()[1]);
+            spec3.setText(homeListDataModel.getSpecs()[2]);
+            spec4.setText(homeListDataModel.getSpecs()[3]);
+            price.setText(String.valueOf(homeListDataModel.getPrice()));
         }
     }
 
     public interface OnRecyclerViewClickListener {
-        void onItemClick(long id,HomeListItem homeListItem);
+        void onItemClick(long id, HomeListDataModel homeListDataModel);
     }
 
 }
