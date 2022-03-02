@@ -10,17 +10,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.carrental.HomeListDataModel;
+import com.example.carrental.dataModels.Vehicle;
 import com.example.carrental.R;
 
 import java.util.ArrayList;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
-    private final ArrayList<HomeListDataModel> arrayList;
+    private final ArrayList<Vehicle> arrayList;
     private final OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public HomeListAdapter(ArrayList<HomeListDataModel> arrayList, OnRecyclerViewClickListener onRecyclerViewClickListener) {
+    public HomeListAdapter(ArrayList<Vehicle> arrayList, OnRecyclerViewClickListener onRecyclerViewClickListener) {
         this.arrayList = arrayList;
         this.onRecyclerViewClickListener = onRecyclerViewClickListener;
         setHasStableIds(true);
@@ -40,7 +40,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         return arrayList.size();
     }
 
-    public HomeListDataModel getItem(final int pos) {
+    public Vehicle getItem(final int pos) {
         return arrayList.get(pos);
     }
 
@@ -64,25 +64,25 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        HomeListDataModel homeListDataModel;
-        ImageView carImage;
+        Vehicle vehicle;
+        ImageView vehicleImage;
         RatingBar compRate;
-        TextView compLocation,companyName,carModel,spec1,spec2,spec3,spec4,priceLabel,price;
+        TextView compLocation,companyName, vehicleModel, vehicleColor, doorsNum, seatingCapacity, transmission,priceLabel,price;
 
         public ViewHolder(final View view)
         {
             super(view);
 
             //Inflating
-            carImage=view.findViewById(R.id.homeListRow_imgView_car);
+            vehicleImage =view.findViewById(R.id.homeListRow_imgView_car);
             compRate=view.findViewById(R.id.homeListRow_ratingBar_compRate);
             compLocation=view.findViewById(R.id.homeListRow_txtView_compLocation);
             companyName=view.findViewById(R.id.homeListRow_txtView_compName);
-            carModel=view.findViewById(R.id.homeListRow_txtView_carModel);
-            spec1=view.findViewById(R.id.homeListRow_txtView_spec1);
-            spec2=view.findViewById(R.id.homeListRow_txtView_spec2);
-            spec3=view.findViewById(R.id.homeListRow_txtView_spec3);
-            spec4=view.findViewById(R.id.homeListRow_txtView_spec4);
+            vehicleModel =view.findViewById(R.id.homeListRow_txtView_carModel);
+            vehicleColor =view.findViewById(R.id.homeListRow_txtView_spec1);
+            doorsNum =view.findViewById(R.id.homeListRow_txtView_spec2);
+            seatingCapacity =view.findViewById(R.id.homeListRow_txtView_spec3);
+            transmission =view.findViewById(R.id.homeListRow_txtView_spec4);
             price=view.findViewById(R.id.homeListRow_txtView_price);
             priceLabel=view.findViewById(R.id.homeListRow_txtView_lbl);
 
@@ -94,23 +94,23 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             });
         }
 
-        void bind(final HomeListDataModel homeListDataModel){
-            this.homeListDataModel = homeListDataModel;
+        void bind(final Vehicle vehicle){
+            this.vehicle = vehicle;
 
-            priceLabel.setText(homeListDataModel.getPriceLabel().toString());
-            carImage.setImageResource(homeListDataModel.getCarImg());
-            companyName.setText(homeListDataModel.getCompanyName());
-            carModel.setText(homeListDataModel.getCarModel());
-            spec1.setText(homeListDataModel.getSpecs()[0]);
-            spec2.setText(homeListDataModel.getSpecs()[1]);
-            spec3.setText(homeListDataModel.getSpecs()[2]);
-            spec4.setText(homeListDataModel.getSpecs()[3]);
-            price.setText(String.valueOf(homeListDataModel.getPrice()));
+            priceLabel.setText(vehicle.getPriceLabel().toString());
+            vehicleImage.setImageResource(vehicle.getVehicleImg()[0]);
+            companyName.setText(vehicle.getCompanyName());
+            vehicleModel.setText(vehicle.getVehicleModel());
+            vehicleColor.setText(vehicle.getVehicleColor());
+            doorsNum.setText(String.valueOf(vehicle.getDoorsNum()));
+            seatingCapacity.setText(String.valueOf(vehicle.getSeatingCapacity()));
+            transmission.setText(vehicle.getVehicleSpecs().getAutomaticTransmission()?"Automatic":"Manual");
+            price.setText(String.valueOf(vehicle.getPrice()));
         }
     }
 
     public interface OnRecyclerViewClickListener {
-        void onItemClick(long id, HomeListDataModel homeListDataModel);
+        void onItemClick(long id, Vehicle vehicle);
     }
 
 }

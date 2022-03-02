@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.carrental.HomeListDataModel;
+import com.example.carrental.dataModels.Vehicle;
 import com.example.carrental.R;
 import com.example.carrental.adapters.SliderAdapter;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -37,18 +37,17 @@ public class BookingFragment extends Fragment {
     private SliderView sliderView;
     private Button bookNow;
 
-    // TODO: Rename and change types of parameters
-    private HomeListDataModel homeListDataModel;
+    private Vehicle vehicle;
 
     public BookingFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static BookingFragment newInstance(HomeListDataModel HomeListDataModel) {
+
+    public static BookingFragment newInstance(Vehicle Vehicle) {
         BookingFragment fragment = new BookingFragment();
         Bundle args = new Bundle();
-        args.putParcelable(HOME_LIST_ITEM, HomeListDataModel);
+        args.putParcelable(HOME_LIST_ITEM, Vehicle);
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +56,7 @@ public class BookingFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            homeListDataModel = getArguments().getParcelable(HOME_LIST_ITEM);
+            vehicle = getArguments().getParcelable(HOME_LIST_ITEM);
         }
         else throw new InvalidParameterException("Incompatible argument");
     }
@@ -79,6 +78,7 @@ public class BookingFragment extends Fragment {
         price=view.findViewById(R.id.viewAllDetails_txtView_pricePerHour);
         sliderView = view.findViewById(R.id.image_slider);*/
 
+
         carModel=view.findViewById(R.id.bookingActivity_txtView_carModel);
         companyName=view.findViewById(R.id.bookingActivity_txtView_companyName);
         //carImage=findViewById(R.id.viewAllDetails_imgView_carImage);
@@ -89,7 +89,6 @@ public class BookingFragment extends Fragment {
         engine=view.findViewById(R.id.bookingActivity_txtView_engineType);
         price=view.findViewById(R.id.bookingActivity_txtView_pricePerHour);
         sliderView = view.findViewById(R.id.bookingActivity_imageSlider_imagesOfCar);
-
         bookNow = view.findViewById(R.id.bookingActivity_btn_bookNow);
 
 
@@ -110,19 +109,21 @@ public class BookingFragment extends Fragment {
             //throw new InvalidParameterException("Bundle is empty");
         //====================================RECEIVE DATA=====================================
 
-        carModel.setText(homeListDataModel.getCarModel());
-        companyName.setText(homeListDataModel.getCompanyName());
-        //carImage.setImageResource(homeListItem.getCarImg());
-        companyAddress.setText(homeListDataModel.getCompanyAddress());
-        price.setText(String.valueOf(homeListDataModel.getPrice()));
-        color.setText(homeListDataModel.getSpecs()[0]);
-        doorsNo.setText(homeListDataModel.getSpecs()[1]);
-        chairsNo.setText(homeListDataModel.getSpecs()[2]);
-        engine.setText(homeListDataModel.getSpecs()[3]);
 
+
+        // TODO: Get data from 'homeListDataModel' or 'homeListDataModel.getVehicleSpecs' and pass them into their proper view
+        carModel.setText(vehicle.getVehicleModel());
+        companyName.setText(vehicle.getCompanyName());
+        //carImage.setImageResource(homeListItem.getCarImg());
+        companyAddress.setText(vehicle.getCompanyAddress());
+        price.setText(String.valueOf(vehicle.getPrice()));
+        color.setText(vehicle.getVehicleColor());
+        doorsNo.setText(String.valueOf(vehicle.getDoorsNum()));
+        chairsNo.setText(String.valueOf(vehicle.getSeatingCapacity()));
+        engine.setText(vehicle.getVehicleSpecs().getAutomaticTransmission()?"Automatic":"Manual");
 
         //==================Image Slider Show=============================
-        int[] images = {homeListDataModel.getCarImg(),
+        int[] images = {vehicle.getVehicleImg()[0],
                 R.drawable.ic_car_default_black,
                 R.drawable.ic_car_default_black,
                 R.drawable.ic_car_default_black,};

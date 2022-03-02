@@ -12,9 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.carrental.HomeListDataModel;
+import com.example.carrental.dataModels.Vehicle;
 import com.example.carrental.PriceLabel;
 import com.example.carrental.R;
+import com.example.carrental.dataModels.VehicleSpecs;
 import com.example.carrental.adapters.HomeListAdapter;
 import com.example.carrental.fragments.BookingFragment;
 
@@ -28,7 +29,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     //private RecyclerView.LayoutManager layoutManager;
     private HomeListAdapter homeListAdapter;
-    private ArrayList<HomeListDataModel> homeListItemArrayList;
+    private ArrayList<Vehicle> homeListItemArrayList;
 
     //private String mParam1;
     //private String mParam2;
@@ -80,37 +81,54 @@ public class HomeFragment extends Fragment {
         });
 
         //======================================DUMMY DATA======================================
-        HomeListDataModel homeListDataModel = new HomeListDataModel();
-        HomeListDataModel homeListDataModel2 = new HomeListDataModel();
-
-        homeListDataModel.setCarModel("Nissan Sunny");
+        //1st object
+        Vehicle vehicle = new Vehicle();
+        vehicle.setVehicleModel("Nissan Sunny");
         //String[] book = {"150 Km/period", "Min 1 Days", "No Extra Fees", "Insurance Coverage"};
         //homeListItem.setBookDetails(book);
-        homeListDataModel.setCompanyName("Rent Me");
-        homeListDataModel.setPrice(600);
-        homeListDataModel.setPriceLabel(PriceLabel.EGYPTIAN_POUND);
-        String[] spec={"Silver","4","5","Automatic"};
-        homeListDataModel.setSpecs(spec);
-        homeListDataModel.setCarImg(R.drawable.img_logo_test);
-        homeListDataModel.setCompanyAddress("Cairo,Egypt");
+        vehicle.setCompanyName("Rent Me");
+        vehicle.setPrice(600);
+        vehicle.setPriceLabel(PriceLabel.EGYPTIAN_POUND);
+        //String[] spec={"Silver","4","5","Automatic"};
+        //homeListDataModel.setSpecs(spec);
+        vehicle.setVehicleColor("Silver");
+        vehicle.setDoorsNum(4);
+        vehicle.setSeatingCapacity(5);
+        VehicleSpecs vehicleSpecs=new VehicleSpecs();
+        vehicleSpecs.addEngineSpecs(false,1498);
+        vehicle.setVehicleSpecs(vehicleSpecs);
+        int[] vehicleImg =new int[3];
+        vehicleImg[0]=R.drawable.img_logo_test;
+        vehicle.setVehicleImg(vehicleImg);
+        vehicle.setCompanyAddress("Cairo,Egypt");
 
-        homeListDataModel2.setCarModel("Peugeot 3008");
+        //2nd object
+        Vehicle vehicle2 = new Vehicle();
+        vehicle2.setVehicleModel("Peugeot 3008");
         //String[] book2 = {"150 Km/period", "Min 2 Days", "No Extra Fees", "Insurance Coverage"};
         //homeListItem2.setBookDetails(book2);
-        homeListDataModel2.setCompanyName("1st for Rent");
-        homeListDataModel2.setPrice(1200);
-        String[] spec2={"Blue","4","5","Automatic"};
-        homeListDataModel2.setSpecs(spec2);
-        homeListDataModel2.setPriceLabel(PriceLabel.EGYPTIAN_POUND);
-        homeListDataModel2.setCarImg(R.drawable.ic_car_default_black);
-        homeListDataModel2.setCompanyAddress("Alex,Egypt");
+        vehicle2.setCompanyName("1st for Rent");
+        vehicle2.setPrice(1200);
+        //String[] spec2={"Blue","4","5","Automatic"};
+        //homeListDataModel2.setSpecs(spec2);
+        vehicle2.setPriceLabel(PriceLabel.EGYPTIAN_POUND);
+        vehicle2.setVehicleColor("blue");
+        vehicle2.setDoorsNum(4);
+        vehicle2.setSeatingCapacity(5);
+        VehicleSpecs vehicleSpecs2=new VehicleSpecs();
+        vehicleSpecs2.addEngineSpecs(true,1598);
+        vehicle2.setVehicleSpecs(vehicleSpecs2);
+        int[] vehicleImg2 =new int[3];
+        vehicleImg2[0]=R.drawable.ic_car_default_black;
+        vehicle2.setVehicleImg(vehicleImg2);
+        vehicle2.setCompanyAddress("Alex,Egypt");
 
-        homeListItemArrayList.add(homeListDataModel);
-        homeListItemArrayList.add(homeListDataModel);
-        homeListItemArrayList.add(homeListDataModel2);
-        homeListItemArrayList.add(homeListDataModel);
-        homeListItemArrayList.add(homeListDataModel);
-        homeListItemArrayList.add(homeListDataModel2);
+        homeListItemArrayList.add(vehicle);
+        homeListItemArrayList.add(vehicle);
+        homeListItemArrayList.add(vehicle2);
+        homeListItemArrayList.add(vehicle);
+        homeListItemArrayList.add(vehicle);
+        homeListItemArrayList.add(vehicle2);
         //======================================DUMMY DATA======================================
 
 
