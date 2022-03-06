@@ -1,11 +1,27 @@
 package com.example.carrental.dataModels;
 
 public class VehicleSpecs {
-    private Boolean airBag,seatBelts,ABS,sunRoof
-            ,parkingSensors,radio, bluetooth
-            ,navSystem,remoteStart,AC,musicPlayer,automaticTransmission
-            ,extraTyre, charger,fireExtinguisher,firstAidKit,carSeat,smokingPreferences;
-    private int CC;
+    private Boolean airBag, //13
+            seatBelts, //14
+            ABS, //15
+            sunRoof, //16
+            parkingSensors, //17
+            radio, //18
+            bluetooth, //19
+            navSystem, //20
+            remoteStart, //21
+            AC, //22
+            musicPlayer, //23
+            automaticTransmission, //24
+            extraTyre, //25
+            charger, //26
+            fireExtinguisher, //27
+            firstAidKit, //28
+            carSeat, //29
+            smokingPreferences; //30
+    private int CC; //31
+
+
 
     public void addSafetySpecs(Boolean airBag, Boolean seatBelts, Boolean ABS)
     {

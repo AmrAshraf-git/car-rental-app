@@ -44,12 +44,12 @@
                         app:tint="@color/blue" />
 
                     <TextView
-                        android:id="@+id/bookingActivity_txtView_carModel"
+                        android:id="@+id/bookingActivity_txtView_vehicleModel"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="-Car Model-" />
+                        android:text="-Vehicle Model-" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,7 +112,7 @@
                     app:tint="@color/blue"/>
 -->
                 <com.smarteist.autoimageslider.SliderView
-                    android:id="@+id/bookingActivity_imageSlider_imagesOfCar"
+                    android:id="@+id/bookingActivity_imageSlider_imagesOfvehicle"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_weight="1"
@@ -162,7 +162,7 @@
                         android:textSize="16sp" />
 
                     <RatingBar
-                        android:id="@+id/bookingActivity_ratingBar_carRating"
+                        android:id="@+id/bookingActivity_ratingBar_vehicleRating"
                         style="?android:attr/ratingBarStyleSmall"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

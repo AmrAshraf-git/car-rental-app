@@ -75,7 +75,7 @@ public class HomeFragment extends Fragment {
             //bundle.putParcelable("listItemObject",homeListItem);
             //fragment.setArguments(bundle);
             Fragment fragment= BookingFragment.newInstance(homeListItem);
-            getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.translate_enter, R.anim.nav_default_exit_anim)
+            getParentFragmentManager().beginTransaction().setCustomAnimations(R.anim.translate_enter, R.anim.translate_exit)
                     .addToBackStack(null).replace(R.id.navContent_frameLayout_container,fragment).commit();
             //====================================SEND DATA=====================================
         });
