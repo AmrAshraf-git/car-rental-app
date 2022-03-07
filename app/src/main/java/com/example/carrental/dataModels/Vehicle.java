@@ -20,17 +20,19 @@ public class Vehicle implements Parcelable {
     private String[] bookDetails;*/
 
     private int id;
-    private String companyName;
-    private String companyAddress;
-    private String vehicleModel;
-    private int[] vehicleImg;
-    private String vehicleColor;
-    private int doorsNum;
-    private int seatingCapacity;
-    private float vehicleRate;
-    private float CompRate;
-    private float price;
-    private PriceLabel priceLabel;
+    //1 ->  Brand Image
+    private String vehicleModel; //2
+    private String companyName; //3
+    private String companyAddress; //4
+    private float CompRate; //5
+    private int[] vehicleImg; //6
+    private String vehicleColor; //7
+    private int doorsNum; //8
+    private int seatingCapacity; //9
+    private float vehicleRate; //10
+    private float price; //11
+    private PriceLabel priceLabel; //12
+
     //private String[] specs;
     //private String[] bookDetails;
     private VehicleSpecs vehicleSpecs;
