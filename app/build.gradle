@@ -45,4 +45,6 @@ dependencies {
     //==================google services===============================================
     implementation 'com.google.android.gms:play-services-location:19.0.1'
     //==================google services================================================
+
+    implementation 'com.android.volley:volley:1.2.1'
 }

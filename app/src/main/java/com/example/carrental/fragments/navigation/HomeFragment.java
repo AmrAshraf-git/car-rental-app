@@ -1,23 +1,36 @@
 package com.example.carrental.fragments.navigation;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.carrental.dataModels.Vehicle;
 import com.example.carrental.PriceLabel;
 import com.example.carrental.R;
 import com.example.carrental.dataModels.VehicleSpecs;
 import com.example.carrental.adapters.HomeListAdapter;
 import com.example.carrental.fragments.BookingFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -30,6 +43,7 @@ public class HomeFragment extends Fragment {
     //private RecyclerView.LayoutManager layoutManager;
     private HomeListAdapter homeListAdapter;
     private ArrayList<Vehicle> homeListItemArrayList;
+    private static final String URL="https://car-rental-eg.herokuapp.com/getAllVehicle";
 
     //private String mParam1;
     //private String mParam2;
@@ -80,10 +94,79 @@ public class HomeFragment extends Fragment {
             //====================================SEND DATA=====================================
         });
 
+
+        Vehicle vehicle = new Vehicle();
+       /* RequestQueue queue = Volley.newRequestQueue(getContext());
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, URL, null, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                //for(int i=0;i<response.length();i++){
+                    try {
+                        JSONObject data=response.getJSONObject(0);
+                        vehicle.setVehicleModel(data.getString("model"));
+                        Log.d("jSon",response.toString());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                //}
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(
+                Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.d("JSON",response.getJSONArray("data").get(0).toString());
+                    JSONArray dataArray=response.getJSONArray("data");
+                    for (int i=0;i<dataArray.length();i++) {
+                        JSONObject data = dataArray.getJSONObject(i);
+                        Vehicle vehicle = new Vehicle();
+                        vehicle.setVehicleModel(data.getString("model"));
+                        vehicle.setCompanyName("Example CMP");
+                        vehicle.setPrice(Float.parseFloat(data.getString("pricePerDay")));
+                        vehicle.setPriceLabel(PriceLabel.EGYPTIAN_POUND);
+                        //String[] spec={"Silver","4","5","Automatic"};
+                        //homeListDataModel.setSpecs(spec);
+                        vehicle.setVehicleColor(data.getString("color"));
+                        vehicle.setDoorsNum(4);
+                        vehicle.setSeatingCapacity(5);
+                        VehicleSpecs vehicleSpecs=new VehicleSpecs();
+                        vehicleSpecs.addEngineSpecs(data.getBoolean("transmissionType"),data.getInt("CC"));
+                        vehicle.setVehicleSpecs(vehicleSpecs);
+                        int[] vehicleImg =new int[3];
+                        vehicleImg[0]=R.drawable.img_logo_test;
+                        vehicle.setVehicleImg(vehicleImg);
+                        vehicle.setCompanyAddress("Cairo,Egypt");
+                        homeListItemArrayList.add(vehicle);
+                    }
+                    homeListAdapter.notifyDataSetChanged();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }
+        );
+        queue.add(jsonObjectRequest);
+
+
         //======================================DUMMY DATA======================================
         //1st object
-        Vehicle vehicle = new Vehicle();
-        vehicle.setVehicleModel("Nissan Sunny");
+/*
+        //vehicle.setVehicleModel("Nissan Sunny");
         //String[] book = {"150 Km/period", "Min 1 Days", "No Extra Fees", "Insurance Coverage"};
         //homeListItem.setBookDetails(book);
         vehicle.setCompanyName("Rent Me");
@@ -100,8 +183,8 @@ public class HomeFragment extends Fragment {
         int[] vehicleImg =new int[3];
         vehicleImg[0]=R.drawable.img_logo_test;
         vehicle.setVehicleImg(vehicleImg);
-        vehicle.setCompanyAddress("Cairo,Egypt");
-
+        vehicle.setCompanyAddress("Cairo,Egypt");*/
+/*
         //2nd object
         Vehicle vehicle2 = new Vehicle();
         vehicle2.setVehicleModel("Peugeot 3008");
@@ -128,7 +211,7 @@ public class HomeFragment extends Fragment {
         homeListItemArrayList.add(vehicle2);
         homeListItemArrayList.add(vehicle);
         homeListItemArrayList.add(vehicle);
-        homeListItemArrayList.add(vehicle2);
+        homeListItemArrayList.add(vehicle2);*/
         //======================================DUMMY DATA======================================
 
 
@@ -157,6 +240,7 @@ public class HomeFragment extends Fragment {
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setNestedScrollingEnabled(false);
         //=======================================RV SETUP=======================================
+
 
 
         return view;

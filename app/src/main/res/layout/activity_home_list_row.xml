@@ -22,12 +22,14 @@
         app:layout_constraintBottom_toTopOf="@id/homeListRow_constLayout_middle">
         <TextView
             android:id="@+id/homeListRow_txtView_carModel"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="Car Model"
             android:textStyle="bold"
             android:gravity="start"
             android:textSize="18sp"
+            android:maxLines="2"
+
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/homeListRow_txtView_compName"
@@ -35,7 +37,7 @@
         </TextView>
         <TextView
             android:id="@+id/homeListRow_txtView_compName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:text="Company Name"
             android:textSize="18sp"
@@ -46,6 +48,22 @@
             app:layout_constraintEnd_toEndOf="parent">
         </TextView>
 
+
+        <RatingBar
+            android:id="@+id/homeListRow_ratingBar_carRate"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+
+            android:stepSize="0.1"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/homeListRow_txtView_carModel"
+            app:layout_constraintEnd_toStartOf="@id/homeListRow_ratingBar_compRate"
+            app:layout_constraintTop_toBottomOf="@id/homeListRow_txtView_carModel" />
+
         <RatingBar
             android:id="@+id/homeListRow_ratingBar_compRate"
             style="?android:attr/ratingBarStyleSmall"
@@ -55,22 +73,9 @@
             android:numStars="5"
             android:stepSize="0.1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/homeListRow_txtView_compName"
+            app:layout_constraintStart_toEndOf="@id/homeListRow_ratingBar_carRate"
             app:layout_constraintEnd_toEndOf="@id/homeListRow_txtView_compName"
-            app:layout_constraintTop_toBottomOf="@id/homeListRow_txtView_compName" />
-
-        <RatingBar
-            android:id="@+id/homeListRow_ratingBar_carRate"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:stepSize="0.1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/homeListRow_txtView_carModel"
-            app:layout_constraintEnd_toEndOf="@id/homeListRow_txtView_carModel"
-            app:layout_constraintTop_toBottomOf="@id/homeListRow_txtView_carModel" />
+            app:layout_constraintTop_toTopOf="@id/homeListRow_ratingBar_carRate" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

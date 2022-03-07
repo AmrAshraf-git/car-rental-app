@@ -60,10 +60,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/signIn_edTxt_usrName"
+                    android:id="@+id/signIn_edTxt_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:singleLine="true"
+                    android:autofillHints="emailAddress"
                     android:inputType="textEmailAddress">
                 </com.google.android.material.textfield.TextInputEditText>
             </com.google.android.material.textfield.TextInputLayout>
@@ -127,6 +128,23 @@
                 android:background="@drawable/ic_btn_rounded"
                 android:textAllCaps="false">
             </Button>
+
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:id="@+id/signIn_progressBar"
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/signIn_btn_signIn"
+                app:layout_constraintBottom_toTopOf="@id/signIn_floatBtn_2"
+                app:layout_constraintEnd_toEndOf="@id/signIn_btn_signIn"
+                app:layout_constraintStart_toStartOf="@id/signIn_btn_signIn">
+
+            </ProgressBar>
+
+
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/signIn_floatBtn_1"
                 android:layout_width="wrap_content"

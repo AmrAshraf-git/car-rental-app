@@ -6,19 +6,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.carrental.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpFragment extends Fragment {
 
     EditText fName;
     EditText lName;
     EditText email;
+    EditText phone;
     EditText password;
     EditText confPassword;
     Button signUp;
+    ProgressBar progressBar;
+    final String URL="https://car-rental-eg.herokuapp.com/singup";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,10 +42,15 @@ public class SignUpFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_sign_up, container, false);
         fName =view.findViewById(R.id.signUp_edTxt_fName);
         lName =view.findViewById(R.id.signUp_edTxt_lName);
-        email =view.findViewById(R.id.signUp_edTxt_usrName);
+        email =view.findViewById(R.id.signUp_edTxt_email);
+        phone = view.findViewById(R.id.signUp_edTxt_phone);
         password=view.findViewById(R.id.signUp_edTxt_pswd);
         confPassword =view.findViewById(R.id.signUp_edTxt_cnfPswd);
         signUp=view.findViewById(R.id.signUp_btn_signUp);
+        progressBar= view.findViewById(R.id.signUP_progressBar);
+
+
+
 
 /*
 //=========================================Animations===============================================
@@ -57,5 +77,37 @@ public class SignUpFragment extends Fragment {
 */
         return view;
     }
+/*
+    public void register(String fName,String lName,String email,String phone,String pass, String confPass){
+
+        StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> map=new HashMap<String,String>();
+                map.put("fName",fName);
+                map.put("lName",lName);
+                map.put("email",email);
+                map.put("phone",phone);
+                map.put("password",pass);
+                map.put("confPassword",confPass);
+
+                return map;
+            }
+        };
+
+    }*/
 
 }

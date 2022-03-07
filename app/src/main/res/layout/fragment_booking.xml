@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".BookingActivity">
+    android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/bookingActivity_scrollView_mainScroll"
@@ -737,7 +736,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
-                android:background="@drawable/ic_border_rounded"
+                android:background="@drawable/ic_btn_rounded"
 
 
                 android:clickable="true"

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.example.carrental.NavControllerActivity;
 import com.example.carrental.R;
 import com.example.carrental.getUserLocation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,7 +49,7 @@ public class SignInFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view =inflater.inflate(R.layout.fragment_sign_in, container, false);
-        email =view.findViewById(R.id.signIn_edTxt_usrName);
+        email =view.findViewById(R.id.signIn_edTxt_email);
         password=view.findViewById(R.id.signIn_edTxt_pswd);
         signIn=view.findViewById(R.id.signIn_btn_signIn);
         loginTitle=view.findViewById(R.id.signIn_txtView_title);
