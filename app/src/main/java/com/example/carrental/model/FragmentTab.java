@@ -1,4 +1,4 @@
-package com.example.carrental;
+package com.example.carrental.model;
 
 import androidx.fragment.app.Fragment;
 

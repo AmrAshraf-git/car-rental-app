@@ -1,4 +1,4 @@
-package com.example.carrental;
+package com.example.carrental.ui.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.carrental.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 
 
@@ -36,7 +37,7 @@ import java.io.IOException;
 import java.util.List;
 
 
-public class getUserLocation extends AppCompatActivity {
+public class UserLocationActivity extends AppCompatActivity {
 
     Button getMyLocation;
     TextView UserLocation;
@@ -50,7 +51,7 @@ public class getUserLocation extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_user_location);
+        setContentView(R.layout.activity_user_location);
 
         icon = getResources().getDrawable(R.drawable.ic_baseline_location_on);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -200,7 +201,7 @@ public class getUserLocation extends AppCompatActivity {
         getMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getUserLocation.this, NavControllerActivity.class);
+                Intent intent=new Intent(UserLocationActivity.this, NavControllerActivity.class);
                 startActivity(intent);
             }
         });

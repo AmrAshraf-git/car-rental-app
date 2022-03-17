@@ -1,4 +1,4 @@
-package com.example.carrental.fragments.navigation;
+package com.example.carrental.ui.main.fragment.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.carrental.R;
 
-public class MyBookingListFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,14 +20,13 @@ public class MyBookingListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public MyBookingListFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
-
     // TODO: Rename and change types and number of parameters
-    public static MyBookingListFragment newInstance(String param1, String param2) {
-        MyBookingListFragment fragment = new MyBookingListFragment();
+    public static SettingsFragment newInstance(String param1, String param2) {
+        SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -48,15 +47,14 @@ public class MyBookingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_booking_list, container, false);
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
-
-    /*
+/*
     @Override
     public void onResume() {
         super.onResume();
-        ((HomePageActivity)getActivity()).getSupportActionBar().setTitle("my booking");
+        ((HomePageActivity)getActivity()).getSupportActionBar().setTitle("Settings");
     }
 
-     */
+ */
 }

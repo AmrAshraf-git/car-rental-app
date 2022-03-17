@@ -1,4 +1,4 @@
-package com.example.carrental;
+package com.example.carrental.ui.main;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -17,12 +17,13 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.carrental.fragments.navigation.AboutFragment;
-import com.example.carrental.fragments.navigation.FavoriteListFragment;
-import com.example.carrental.fragments.navigation.HomeFragment;
-import com.example.carrental.fragments.navigation.MyBookingListFragment;
-import com.example.carrental.fragments.navigation.PrivacyPolicyFragment;
-import com.example.carrental.fragments.navigation.SettingsFragment;
+import com.example.carrental.R;
+import com.example.carrental.ui.main.fragment.navigation.AboutFragment;
+import com.example.carrental.ui.main.fragment.navigation.FavoriteListFragment;
+import com.example.carrental.ui.main.fragment.navigation.HomeFragment;
+import com.example.carrental.ui.main.fragment.navigation.MyBookingListFragment;
+import com.example.carrental.ui.main.fragment.navigation.PrivacyPolicyFragment;
+import com.example.carrental.ui.main.fragment.navigation.SettingsFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;

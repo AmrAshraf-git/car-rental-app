@@ -1,4 +1,4 @@
-package com.example.carrental.adapters;
+package com.example.carrental.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,12 +7,13 @@ import android.widget.ImageView;
 
 import com.example.carrental.R;
 import com.smarteist.autoimageslider.SliderViewAdapter;
+import com.squareup.picasso.Picasso;
 
 public class SliderAdapter extends SliderViewAdapter<SliderAdapter.ViewHolder>{
 
-    private final int[] images;
+    private final String[] images;
 
-    public SliderAdapter(int[] images){
+    public SliderAdapter(String[] images){
 
         this.images = images;
     }
@@ -27,8 +28,8 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
-        viewHolder.imageView.setImageResource(images[position]);
+        //viewHolder.imageView.setImageResource(images[position]);
+        Picasso.get().load(images[position]).fit().centerInside().error(R.drawable.img_logo_test).into(viewHolder.imageView);
 
     }
 

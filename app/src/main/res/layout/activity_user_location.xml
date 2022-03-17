@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
     android:orientation="vertical"
-    tools:context=".getUserLocation">
+    tools:context=".ui.main.UserLocationActivity">
 
     <TextView
         android:id="@+id/getLocation_txtView_location"

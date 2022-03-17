@@ -1,4 +1,4 @@
-package com.example.carrental.fragments;
+package com.example.carrental.ui.main.fragment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.carrental.R;
-import com.example.carrental.getUserLocation;
+import com.example.carrental.ui.main.UserLocationActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -68,7 +68,7 @@ public class SignInFragment extends Fragment {
                 String p=password.getText().toString();
                 if(e.equals("admin")&&p.equals("admin")) {
                     //Intent intent = new Intent(getActivity(), NavControllerActivity.class);
-                    Intent intent=new Intent(getActivity(), getUserLocation.class);
+                    Intent intent=new Intent(getActivity(), UserLocationActivity.class);
                     intent.putExtra("user","admin");
                     startActivity(intent);
                 }

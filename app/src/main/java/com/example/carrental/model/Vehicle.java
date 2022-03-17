@@ -1,61 +1,38 @@
-package com.example.carrental.dataModels;
+package com.example.carrental.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.carrental.PriceLabel;
-import com.example.carrental.R;
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-import java.util.Random;
+public class Vehicle extends VehicleSpecs implements Parcelable {
 
-public class Vehicle implements Parcelable {
-    /*private String companyName;
-    private String companyAddress;
-    private String carModel;
-    private int carImg;
-    private int id;
-    private double price;
-    private PriceLabel priceLabel;
-    private String[] specs;
-    private String[] bookDetails;*/
+    private int id; //temp
+    private String _id;
 
-    private int id;
-    //1 ->  Brand Image
+
+    @SerializedName("model")
+    @Expose
     private String vehicleModel; //2
+
     private String companyName; //3
-    private String companyAddress; //4
-    private float CompRate; //5
-    private int[] vehicleImg; //6
-    private String vehicleColor; //7
-    private int doorsNum; //8
-    private int seatingCapacity; //9
-    private float vehicleRate; //10
-    private float price; //11
-    private PriceLabel priceLabel; //12
-
-    //private String[] specs;
-    //private String[] bookDetails;
-    private VehicleSpecs vehicleSpecs;
-
-    public Vehicle() {
-        vehicleImg =new int[3];
-        vehicleImg[0]= R.drawable.img_logo_test;
-        priceLabel=PriceLabel.DOLLAR;
-        id= new Random().nextInt(30);
-    }
-
 
     protected Vehicle(Parcel in) {
         id = in.readInt();
-        companyName = in.readString();
-        companyAddress = in.readString();
+        _id = in.readString();
         vehicleModel = in.readString();
-        vehicleImg = in.createIntArray();
+        companyName = in.readString();
+        companyCity = in.readString();
+        companyAddress = in.readString();
+        compHotline = in.readInt();
+        CompRate = in.readFloat();
+        vehicleImgURL = in.createStringArray();
         vehicleColor = in.readString();
         doorsNum = in.readInt();
         seatingCapacity = in.readInt();
         vehicleRate = in.readFloat();
-        CompRate = in.readFloat();
         price = in.readFloat();
     }
 
@@ -71,6 +48,57 @@ public class Vehicle implements Parcelable {
         }
     };
 
+    public void setCompHotline(int compHotline) {
+        this.compHotline = compHotline;
+    }
+
+    private String companyCity;
+    private String companyAddress; //4
+    private int compHotline;
+    private float CompRate; //5
+
+    @SerializedName("imageURL")
+    @Expose
+    private String[] vehicleImgURL; //6
+
+    @SerializedName("color")
+    @Expose
+    private String vehicleColor; //7
+
+    @SerializedName("doorsNumber")
+    @Expose
+    private int doorsNum; //8
+
+    @SerializedName("chairsNumber")
+    @Expose
+    private int seatingCapacity; //9
+
+    @SerializedName("VehicleRate")
+    @Expose
+    private float vehicleRate; //10
+
+    @SerializedName("pricePerDay")
+    @Expose
+    private float price; //11
+
+    private PriceLabel priceLabel; //12
+
+    @SerializedName("companyID")
+    @Expose
+    private JsonObject compDetails;
+
+    private VehicleSpecs vehicleSpecs;
+
+
+
+    public Vehicle() {
+        //vehicleImgURL =new String[4];
+        //vehicleImg[0]= R.drawable.img_logo_test;
+        priceLabel=PriceLabel.DOLLAR;
+        //id= new Random().nextInt(30);
+    }
+
+
     public int getId() {
         return id;
     }
@@ -79,16 +107,36 @@ public class Vehicle implements Parcelable {
         this.id = id;
     }
 
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
     public String getCompanyName() {
-        return companyName;
+        return compDetails.get("CompanyName").getAsString();
+    }
+
+    public int getCompHotline() {
+        return compDetails.get("Hotline").getAsInt();
     }
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
+    public String getCompanyCity() {
+        return compDetails.get("City").getAsString();
+    }
+
+    public void setCompanyCity(String companyCity) {
+        this.companyCity = companyCity;
+    }
+
     public String getCompanyAddress() {
-        return companyAddress;
+        return compDetails.get("Street").getAsString();
     }
 
     public void setCompanyAddress(String companyAddress) {
@@ -103,12 +151,12 @@ public class Vehicle implements Parcelable {
         this.vehicleModel = vehicleModel;
     }
 
-    public int[] getVehicleImg() {
-        return vehicleImg;
+    public String[] getVehicleImgURL() {
+        return vehicleImgURL;
     }
 
-    public void setVehicleImg(int[] vehicleImg) {
-        this.vehicleImg = vehicleImg;
+    public void setVehicleImgURL(String[] vehicleImgURL) {
+        this.vehicleImgURL = vehicleImgURL;
     }
 
     public String getVehicleColor() {
@@ -144,7 +192,7 @@ public class Vehicle implements Parcelable {
     }
 
     public float getCompRate() {
-        return CompRate;
+        return compDetails.get("companyRate").getAsFloat();
     }
 
     public void setCompRate(float compRate) {
@@ -175,6 +223,14 @@ public class Vehicle implements Parcelable {
         this.vehicleSpecs = vehicleSpecs;
     }
 
+    public JsonObject getCompDetails() {
+        return compDetails;
+    }
+
+    public void setCompDetails(JsonObject compDetails) {
+        this.compDetails = compDetails;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -182,18 +238,19 @@ public class Vehicle implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
         dest.writeInt(id);
-        dest.writeString(companyName);
-        dest.writeString(companyAddress);
+        dest.writeString(_id);
         dest.writeString(vehicleModel);
-        dest.writeIntArray(vehicleImg);
+        dest.writeString(companyName);
+        dest.writeString(companyCity);
+        dest.writeString(companyAddress);
+        dest.writeInt(compHotline);
+        dest.writeFloat(CompRate);
+        dest.writeStringArray(vehicleImgURL);
         dest.writeString(vehicleColor);
         dest.writeInt(doorsNum);
         dest.writeInt(seatingCapacity);
         dest.writeFloat(vehicleRate);
-        dest.writeFloat(CompRate);
         dest.writeFloat(price);
     }
-
 }

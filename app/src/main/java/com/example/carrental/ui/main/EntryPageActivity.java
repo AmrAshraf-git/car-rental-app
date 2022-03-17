@@ -1,4 +1,4 @@
-package com.example.carrental;
+package com.example.carrental.ui.main;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -6,9 +6,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.carrental.adapters.EntryViewPagerAdapter;
-import com.example.carrental.fragments.SignInFragment;
-import com.example.carrental.fragments.SignUpFragment;
+import com.example.carrental.R;
+import com.example.carrental.ui.adapter.EntryViewPagerAdapter;
+import com.example.carrental.ui.main.fragment.SignInFragment;
+import com.example.carrental.ui.main.fragment.SignUpFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class EntryPageActivity extends AppCompatActivity implements SignInFragment.FragmentOnClickListener {

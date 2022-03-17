@@ -1,4 +1,4 @@
-package com.example.carrental.fragments.navigation;
+package com.example.carrental.ui.main.fragment.navigation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.carrental.R;
 
-public class SettingsFragment extends Fragment {
+public class FavoriteListFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,13 +20,13 @@ public class SettingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SettingsFragment() {
+    public FavoriteListFragment() {
         // Required empty public constructor
     }
 
     // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
+    public static FavoriteListFragment newInstance(String param1, String param2) {
+        FavoriteListFragment fragment = new FavoriteListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -47,13 +47,13 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.fragment_favorite_list, container, false);
     }
 /*
     @Override
     public void onResume() {
         super.onResume();
-        ((HomePageActivity)getActivity()).getSupportActionBar().setTitle("Settings");
+        ((HomePageActivity)getActivity()).getSupportActionBar().setTitle("Favorite");
     }
 
  */

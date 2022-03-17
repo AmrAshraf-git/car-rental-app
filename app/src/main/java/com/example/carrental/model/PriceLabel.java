@@ -1,4 +1,4 @@
-package com.example.carrental;
+package com.example.carrental.model;
 
 public enum PriceLabel {
     EGYPTIAN_POUND,DOLLAR;

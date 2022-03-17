@@ -1,9 +1,11 @@
-package com.example.carrental;
+package com.example.carrental.ui.main;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+
+import com.example.carrental.R;
 
 public class MainActivity extends AppCompatActivity {
 

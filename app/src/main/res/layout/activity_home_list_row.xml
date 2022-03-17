@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:padding="4dp"
-    android:background="@drawable/ic_btn_rounded"
+    android:layout_margin="5dp"
     android:focusable="false"
-    android:backgroundTint="@color/list_item"
-    android:stateListAnimator="@null"
-    android:orientation="vertical">
+    android:foreground="?attr/selectableItemBackgroundBorderless"
+    app:cardBackgroundColor="@color/list_item"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="10dp"
+    android:stateListAnimator="@null">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeListRow_constLayout_top"
@@ -57,7 +63,7 @@
             android:isIndicator="true"
             android:numStars="5"
 
-            android:stepSize="0.1"
+            android:stepSize="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@id/homeListRow_txtView_carModel"
@@ -71,7 +77,7 @@
             android:layout_height="wrap_content"
             android:isIndicator="true"
             android:numStars="5"
-            android:stepSize="0.1"
+            android:stepSize="0.5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/homeListRow_ratingBar_carRate"
             app:layout_constraintEnd_toEndOf="@id/homeListRow_txtView_compName"
@@ -99,7 +105,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/img_logo_test"
-            app:tint="@color/blue"
+
             android:contentDescription="Car Picture"
             android:padding="7dp"
             android:layout_marginEnd="15dp"
@@ -574,4 +580,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

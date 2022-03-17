@@ -1,4 +1,4 @@
-package com.example.carrental.fragments;
+package com.example.carrental.ui.main.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,20 +7,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.carrental.R;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class SignUpFragment extends Fragment {
 
