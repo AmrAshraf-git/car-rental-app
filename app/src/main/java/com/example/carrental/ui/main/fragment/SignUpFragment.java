@@ -9,20 +9,24 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carrental.R;
+import com.example.carrental.repository.VehicleRepo;
+import com.example.carrental.ui.main.VehicleViewModel;
 
 public class SignUpFragment extends Fragment {
 
-    EditText fName;
-    EditText lName;
-    EditText email;
-    EditText phone;
-    EditText password;
-    EditText confPassword;
-    Button signUp;
-    ProgressBar progressBar;
-    final String URL="https://car-rental-eg.herokuapp.com/singup";
+    private EditText fName;
+    private EditText lName;
+    private EditText email;
+    private EditText phone;
+    private EditText password;
+    private EditText confPassword;
+    private Button signUp;
+    private ProgressBar progressBar;
+    private VehicleViewModel vehicleViewModel;
+    private VehicleRepo vehicleRepo;
 
 
     @Override
@@ -39,7 +43,51 @@ public class SignUpFragment extends Fragment {
         signUp=view.findViewById(R.id.signUp_btn_signUp);
         progressBar= view.findViewById(R.id.signUP_progressBar);
 
+        //vehicleViewModel=new ViewModelProvider(this).get(VehicleViewModel.class);
+        vehicleRepo=VehicleRepo.getInstance();
 
+
+
+        signUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(fName.getText().toString().isEmpty())
+                {
+                    fName.requestFocus();
+                    fName.setError("First name is required");
+                }
+                if(lName.getText().toString().isEmpty())
+                {
+                    lName.requestFocus();
+                    lName.setError("Last name is required");
+                }
+                if(email.getText().toString().isEmpty())
+                {
+                    email.requestFocus();
+                    email.setError("Email is required");
+                }
+                if(password.getText().toString().isEmpty())
+                {
+                    password.requestFocus();
+                    password.setError("password name is required");
+                }
+                if(confPassword.getText().toString().isEmpty())
+                {
+                    confPassword.requestFocus();
+                    confPassword.setError("Confirm password name is required");
+                }
+                if(phone.getText().toString().isEmpty())
+                {
+                    phone.requestFocus();
+                    phone.setError("Phone name is required");
+                }
+
+                vehicleRepo.signUp("fName.getText().toString()",
+                        "lName.getText().toString()","email.getText().toString()",
+                        "password.getText().toString()","Password.getText().toString()",
+                        123456789);
+            }
+        });
 
 
 /*

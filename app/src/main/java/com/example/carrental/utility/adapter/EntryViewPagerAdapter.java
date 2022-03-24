@@ -1,4 +1,4 @@
-package com.example.carrental.ui.adapter;
+package com.example.carrental.utility.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

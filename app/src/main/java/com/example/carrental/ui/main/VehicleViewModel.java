@@ -1,26 +1,33 @@
 package com.example.carrental.ui.main;
 
-import android.view.View;
-import android.widget.Toast;
-
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.carrental.data.SingletonApiClient;
-import com.example.carrental.model.VehicleBridge;
+import com.example.carrental.model.Vehicle;
+import com.example.carrental.repository.VehicleRepo;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.List;
 
 public class VehicleViewModel extends ViewModel {
-    public MutableLiveData<VehicleBridge> mutableLiveData=new MutableLiveData<>();
 
-    public void getVehicles(View view){
+    //Live data
+    //private final MutableLiveData<VehicleResponse> mutableLiveData=new MutableLiveData<>();
+    //private final LiveData<List<Vehicle>> mutableLiveData;;
+    private final VehicleRepo vehicleRepo;
+
+    public VehicleViewModel(){
+        vehicleRepo=VehicleRepo.getInstance();
+        //mutableLiveData=vehicleRepo.getVehicles();
+    }
+
+
+
+    /*
+    public LiveData<VehicleResponse> getVehicles(View view){
         //======================================PARSE DATA======================================
-        SingletonApiClient.getSingletonClient().getJsonModel().enqueue(new Callback<VehicleBridge>() {
+        ApiClient.getInstance().getJsonModel().enqueue(new Callback<VehicleResponse>() {
             @Override
-            public void onResponse(Call<VehicleBridge> call, Response<VehicleBridge> response) {
+            public void onResponse(Call<VehicleResponse> call, Response<VehicleResponse> response) {
                 if (!response.isSuccessful() || response.body()==null) {
                     Toast.makeText(view.getContext(), String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
                     return;
@@ -29,11 +36,20 @@ public class VehicleViewModel extends ViewModel {
             }
 
             @Override
-            public void onFailure(Call<VehicleBridge> call, Throwable t) {
+            public void onFailure(Call<VehicleResponse> call, Throwable t) {
                 t.printStackTrace();
                 Toast.makeText(view.getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
         //======================================PARSE DATA======================================
+    return mutableLiveData;
+    }*/
+
+    //Get The data from Repository
+    public LiveData<List<Vehicle>> getVehicle(){
+        //return mutableLiveData;
+        return vehicleRepo.getVehicles();
     }
+
+
 }

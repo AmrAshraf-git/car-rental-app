@@ -1,4 +1,4 @@
-package com.example.carrental;
+package com.example.carrental.utility;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

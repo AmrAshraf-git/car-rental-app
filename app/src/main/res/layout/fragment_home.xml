@@ -12,14 +12,16 @@
     tools:context=".ui.main.fragment.navigation.HomeFragment">
 
 
-        <ProgressBar
-            android:id="@+id/prgs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
 
+    <ProgressBar
+        android:id="@+id/homePageF_prgrsBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/homePageF_swipeRf"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

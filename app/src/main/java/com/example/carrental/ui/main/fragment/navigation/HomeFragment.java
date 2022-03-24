@@ -1,8 +1,8 @@
 package com.example.carrental.ui.main.fragment.navigation;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,15 +16,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.carrental.model.VehicleBridge;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.R;
-import com.example.carrental.ui.adapter.HomeListAdapter;
+import com.example.carrental.utility.adapter.HomeListAdapter;
 import com.example.carrental.ui.main.fragment.BookingFragment;
 import com.example.carrental.ui.main.VehicleViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeListAdapter.OnRecyclerViewClickListener {
 
@@ -36,9 +37,9 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     private VehicleViewModel vehicleViewModel;
     //private RecyclerView.LayoutManager layoutManager;
     private HomeListAdapter homeListAdapter;
-    private ArrayList<Vehicle> homeListItemArrayList=new ArrayList<>();
-    private static final String URL = "https://car-rental-eg.herokuapp.com/getAllVehicle";
+    private List<Vehicle> homeItemList =new ArrayList<>();
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
     //private ProgressDialog progressDialog;
     Handler handler;
 
@@ -206,16 +207,20 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        recyclerView = view.findViewById(R.id.homePageF_recyclerView_main);
         //handler=new Handler();
         //handler.post(new Runnable() {
         //   @Override
         // public void run() {
-        progressBar = view.findViewById(R.id.prgs);
+        swipeRefreshLayout=view.findViewById(R.id.homePageF_swipeRf);
+        progressBar = view.findViewById(R.id.homePageF_prgrsBar);
         progressBar.setVisibility(View.VISIBLE);
         // }
         // });
+        homeListAdapter = new HomeListAdapter(homeItemList,this);
+        linearLayoutManager=new LinearLayoutManager(getContext());
+        vehicleViewModel= new ViewModelProvider(this).get(VehicleViewModel.class);
 
-        //======================================LIVE DATA======================================
         /**
         * Retrofit MVC
         Retrofit retrofit = new Retrofit.Builder().baseUrl("https://car-rental-eg.herokuapp.com/")
@@ -286,13 +291,28 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
         });
          */
 
-        vehicleViewModel= new ViewModelProvider(this).get(VehicleViewModel.class);
-        vehicleViewModel.getVehicles(view);
-        homeListAdapter = new HomeListAdapter(homeListItemArrayList,this);
-        vehicleViewModel.mutableLiveData.observe(getViewLifecycleOwner(), new Observer<VehicleBridge>() {
+        //vehicleViewModel.getVehicles(view);
+        observeViewModel();
+        setUpRecyclerView(linearLayoutManager,homeListAdapter);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onChanged(VehicleBridge vehicleBridge) {
-                homeListAdapter.updateStatus(vehicleBridge.getData());
+            public void onRefresh() {
+                progressBar.setVisibility(View.VISIBLE);
+                observeViewModel();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
+        return view;
+    }
+
+    private void observeViewModel() {
+        vehicleViewModel.getVehicle().observe(getViewLifecycleOwner(), new Observer<List<Vehicle>>() {
+            @Override
+            public void onChanged(List<Vehicle> vehicles) {
+                homeListAdapter.updateStatus(vehicles);
                 //handler.post(new Runnable() {
                 // @Override
                 //public void run() {
@@ -302,25 +322,16 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                 //});
             }
         });
-        //======================================LIVE DATA======================================
+    }
 
-
-
-
-
-        //=======================================RV SETUP=======================================
-        recyclerView = view.findViewById(R.id.homePageF_recyclerView_main);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    private void setUpRecyclerView(LinearLayoutManager linearLayoutManager, HomeListAdapter homeListAdapter) {
+        recyclerView.setLayoutManager(linearLayoutManager);
         //performance
         //homeListAdapter.setHasStableIds(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(homeListAdapter);
-        //=======================================RV SETUP=======================================
-
-
-        return view;
     }
 
     @Override
@@ -354,7 +365,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             bundle.putParcelable("listItemObject",homeListItem);
             fragment.setArguments(bundle);
             */
-        Fragment fragment = BookingFragment.newInstance(homeListItemArrayList.get(position));
+        Fragment fragment = BookingFragment.newInstance(homeItemList.get(position));
         getParentFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.translate_enter, R.anim.translate_exit)
                 .addToBackStack(null)
