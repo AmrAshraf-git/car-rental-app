@@ -45,6 +45,7 @@ public class SignUpFragment extends Fragment {
     private Button signUp;
     private ProgressBar progressBar;
     private VehicleViewModel vehicleViewModel;
+    private String test;
 
 
     @Override
