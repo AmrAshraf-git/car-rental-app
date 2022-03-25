@@ -18,7 +18,6 @@ import com.example.carrental.R;
 import com.example.carrental.constant.Credentials;
 import com.example.carrental.data.ApiClient;
 import com.example.carrental.data.ApiService;
-
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignUpResponse;
 import com.example.carrental.repository.VehicleRepo;
@@ -45,7 +44,6 @@ public class SignUpFragment extends Fragment {
     private Button signUp;
     private ProgressBar progressBar;
     private VehicleViewModel vehicleViewModel;
-    private String test;
 
 
     @Override
@@ -89,28 +87,28 @@ public class SignUpFragment extends Fragment {
 
 /**
  * Animations
-//=========================================Animations===============================================
-        fName.setTranslationX(800);
-        lName.setTranslationX(800);
-        phone.setTranslationX(800);
-        password.setTranslationX(800);
-        confPassword.setTranslationX(800);
-        signUp.setTranslationX(800);
+ //=========================================Animations===============================================
+ fName.setTranslationX(800);
+ lName.setTranslationX(800);
+ phone.setTranslationX(800);
+ password.setTranslationX(800);
+ confPassword.setTranslationX(800);
+ signUp.setTranslationX(800);
 
-        fName.setAlpha(0);
-        lName.setAlpha(0);
-        phone.setAlpha(0);
-        password.setAlpha(0);
-        confPassword.setAlpha(0);
-        signUp.setAlpha(0);
+ fName.setAlpha(0);
+ lName.setAlpha(0);
+ phone.setAlpha(0);
+ password.setAlpha(0);
+ confPassword.setAlpha(0);
+ signUp.setAlpha(0);
 
-        fName.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        lName.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        phone.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
-        confPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
-        signUp.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
-*/
+ fName.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+ lName.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+ phone.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+ password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
+ confPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
+ signUp.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
+ */
         return view;
 
     }
@@ -232,7 +230,7 @@ public class SignUpFragment extends Fragment {
 //====================================VALIDATION=====================================
 
 /**
-*POST via encoded field
+ *POST via encoded field
  *
  /*
  Retrofit retrofit = new Retrofit.Builder().baseUrl(Credentials.BASE_URL)
@@ -254,41 +252,41 @@ public void onFailure(Call<ResponseBody> call, Throwable t) {
 }
 });
 
-//                vehicleRepo.signUp("fName.getText().toString()",
-//                        "lName.getText().toString()","email.getText().toString()",
-//                        "password.getText().toString()","Password.getText().toString()",
-//                        123456789);
+ //                vehicleRepo.signUp("fName.getText().toString()",
+ //                        "lName.getText().toString()","email.getText().toString()",
+ //                        "password.getText().toString()","Password.getText().toString()",
+ //                        123456789);
 
-    public void register(String fName,String lName,String email,String phone,String pass, String confPass){
+ public void register(String fName,String lName,String email,String phone,String pass, String confPass){
 
-        StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
+ StringRequest stringRequest =new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+@Override
+public void onResponse(String response) {
+Toast.makeText(getContext(), response, Toast.LENGTH_SHORT).show();
 
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Nullable
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> map=new HashMap<String,String>();
-                map.put("fName",fName);
-                map.put("lName",lName);
-                map.put("email",email);
-                map.put("phone",phone);
-                map.put("password",pass);
-                map.put("confPassword",confPass);
+}
+}, new Response.ErrorListener() {
+@Override
+public void onErrorResponse(VolleyError error) {
+Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+}
+}){
+@Nullable
+@Override
+protected Map<String, String> getParams() throws AuthFailureError {
+Map<String,String> map=new HashMap<String,String>();
+map.put("fName",fName);
+map.put("lName",lName);
+map.put("email",email);
+map.put("phone",phone);
+map.put("password",pass);
+map.put("confPassword",confPass);
 
-                return map;
-            }
-        };
+return map;
+}
+};
 
-    }*/
+ }*/
 
 }
