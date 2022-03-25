@@ -1,4 +1,4 @@
-package com.example.carrental.ui.adapter;
+package com.example.carrental.utility.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,18 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHolder> {
 
-    private final ArrayList<Vehicle> arrayList;
+    private final List<Vehicle> arrayList;
     private final OnRecyclerViewClickListener onRecyclerViewClickListener;
 
-    public HomeListAdapter(ArrayList<Vehicle> arrayList, OnRecyclerViewClickListener onRecyclerViewClickListener) {
+    public HomeListAdapter(List<Vehicle> arrayList, OnRecyclerViewClickListener onRecyclerViewClickListener) {
         this.arrayList = arrayList;
         this.onRecyclerViewClickListener = onRecyclerViewClickListener;
         setHasStableIds(true);
@@ -51,7 +52,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         return position;
     }
 
-    public void updateStatus(ArrayList<Vehicle> vehicles )
+    public void updateStatus(List<Vehicle> vehicles )
     {
         this.arrayList.clear();
         this.arrayList.addAll(vehicles);
@@ -67,12 +68,28 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
     @Override
     //What should do in each object of the ViewHolder
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
-        holder.bind(getItem(position));
+        //holder.bind(getItem(position));
+
+        holder.priceLabel.setText(getItem(position).getPriceLabel().toString());
+        //vehicleImage.setImageResource(vehicle.getVehicleImgURL()[0]);
+        //Picasso.get().load(vehicle.getVehicleImgURL()[0]).fit().centerInside().error(R.drawable.img_logo_test).into(vehicleImage);
+        Glide.with(holder.itemView.getContext()).load(getItem(position).getVehicleImgURL()[0]).fitCenter()
+                .error(R.drawable.img_logo_test).into(holder.vehicleImage);
+        //new DownloadImageTask(vehicleImage).execute(vehicle.getVehicleImgURL()[0]);
+        holder.companyName.setText(getItem(position).getCompanyName());
+        holder.vehicleModel.setText(getItem(position).getVehicleModel());
+        holder.vehicleColor.setText(getItem(position).getVehicleColor());
+        holder.carRate.setRating(getItem(position).getVehicleRate());
+        holder.compRate.setRating(getItem(position).getCompRate());
+        holder.doorsNum.setText(String.valueOf(getItem(position).getDoorsNum()));
+        holder.seatingCapacity.setText(String.valueOf(getItem(position).getSeatingCapacity()));
+        holder.transmission.setText(getItem(position).getAutomaticTransmission()?"Automatic":"Manual");
+        holder.price.setText(String.valueOf(getItem(position).getPrice()));
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        Vehicle vehicle;
+        //Vehicle vehicle;
         ImageView vehicleImage;
         RatingBar compRate, carRate;
 
@@ -108,12 +125,13 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             });
         }
 
-        void bind(final Vehicle vehicle){
+        /*void bind(final Vehicle vehicle){
             this.vehicle = vehicle;
 
             priceLabel.setText(vehicle.getPriceLabel().toString());
             //vehicleImage.setImageResource(vehicle.getVehicleImgURL()[0]);
-            Picasso.get().load(vehicle.getVehicleImgURL()[0]).fit().centerInside().error(R.drawable.img_logo_test).into(vehicleImage);
+            //Picasso.get().load(vehicle.getVehicleImgURL()[0]).fit().centerInside().error(R.drawable.img_logo_test).into(vehicleImage);
+            Glide.with(itemView.getContext()).load(vehicle.getVehicleImgURL()[0]).fitCenter().error(R.drawable.img_logo_test).into(vehicleImage);
             //new DownloadImageTask(vehicleImage).execute(vehicle.getVehicleImgURL()[0]);
             companyName.setText(vehicle.getCompanyName());
             vehicleModel.setText(vehicle.getVehicleModel());
@@ -124,7 +142,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             seatingCapacity.setText(String.valueOf(vehicle.getSeatingCapacity()));
             transmission.setText(vehicle.getAutomaticTransmission()?"Automatic":"Manual");
             price.setText(String.valueOf(vehicle.getPrice()));
-        }
+        }*/
     }
 
     public interface OnRecyclerViewClickListener {

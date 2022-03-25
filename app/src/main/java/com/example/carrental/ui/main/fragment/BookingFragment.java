@@ -14,11 +14,10 @@ import androidx.fragment.app.Fragment;
 
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.R;
-import com.example.carrental.ui.adapter.SliderAdapter;
+import com.example.carrental.utility.adapter.SliderAdapter;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
-import com.squareup.picasso.Picasso;
 
 import java.security.InvalidParameterException;
 

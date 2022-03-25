@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.carrental.R;
-import com.example.carrental.ui.adapter.EntryViewPagerAdapter;
+import com.example.carrental.utility.adapter.EntryViewPagerAdapter;
 import com.example.carrental.ui.main.fragment.SignInFragment;
 import com.example.carrental.ui.main.fragment.SignUpFragment;
 import com.google.android.material.tabs.TabLayout;

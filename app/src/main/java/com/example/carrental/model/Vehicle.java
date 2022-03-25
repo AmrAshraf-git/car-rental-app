@@ -3,6 +3,7 @@ package com.example.carrental.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.carrental.constant.PriceLabel;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -18,39 +19,6 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     private String vehicleModel; //2
 
     private String companyName; //3
-
-    protected Vehicle(Parcel in) {
-        id = in.readInt();
-        _id = in.readString();
-        vehicleModel = in.readString();
-        companyName = in.readString();
-        companyCity = in.readString();
-        companyAddress = in.readString();
-        compHotline = in.readInt();
-        CompRate = in.readFloat();
-        vehicleImgURL = in.createStringArray();
-        vehicleColor = in.readString();
-        doorsNum = in.readInt();
-        seatingCapacity = in.readInt();
-        vehicleRate = in.readFloat();
-        price = in.readFloat();
-    }
-
-    public static final Creator<Vehicle> CREATOR = new Creator<Vehicle>() {
-        @Override
-        public Vehicle createFromParcel(Parcel in) {
-            return new Vehicle(in);
-        }
-
-        @Override
-        public Vehicle[] newArray(int size) {
-            return new Vehicle[size];
-        }
-    };
-
-    public void setCompHotline(int compHotline) {
-        this.compHotline = compHotline;
-    }
 
     private String companyCity;
     private String companyAddress; //4
@@ -90,6 +58,35 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     private VehicleSpecs vehicleSpecs;
 
 
+    protected Vehicle(Parcel in) {
+        id = in.readInt();
+        _id = in.readString();
+        vehicleModel = in.readString();
+        companyName = in.readString();
+        companyCity = in.readString();
+        companyAddress = in.readString();
+        compHotline = in.readInt();
+        CompRate = in.readFloat();
+        vehicleImgURL = in.createStringArray();
+        vehicleColor = in.readString();
+        doorsNum = in.readInt();
+        seatingCapacity = in.readInt();
+        vehicleRate = in.readFloat();
+        price = in.readFloat();
+    }
+
+    public static final Creator<Vehicle> CREATOR = new Creator<Vehicle>() {
+        @Override
+        public Vehicle createFromParcel(Parcel in) {
+            return new Vehicle(in);
+        }
+
+        @Override
+        public Vehicle[] newArray(int size) {
+            return new Vehicle[size];
+        }
+    };
+
 
     public Vehicle() {
         //vehicleImgURL =new String[4];
@@ -121,6 +118,10 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
 
     public int getCompHotline() {
         return compDetails.get("Hotline").getAsInt();
+    }
+
+    public void setCompHotline(int compHotline) {
+        this.compHotline = compHotline;
     }
 
     public void setCompanyName(String companyName) {
@@ -230,6 +231,7 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     public void setCompDetails(JsonObject compDetails) {
         this.compDetails = compDetails;
     }
+
 
     @Override
     public int describeContents() {

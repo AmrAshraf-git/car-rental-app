@@ -9,13 +9,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-public class Singleton {
-    private static Singleton instance;
+public class VolleySingleton {
+    private static VolleySingleton instance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     private static Context ctx;
 
-    private Singleton(Context context) {
+    private VolleySingleton(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
 
@@ -36,9 +36,9 @@ public class Singleton {
                 });
     }
 
-    public static synchronized Singleton getInstance(Context context) {
+    public static synchronized VolleySingleton getInstance(Context context) {
         if (instance == null) {
-            instance = new Singleton(context);
+            instance = new VolleySingleton(context);
         }
         return instance;
     }
