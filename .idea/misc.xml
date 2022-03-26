@@ -133,10 +133,33 @@
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/signup_tab.xml" value="0.209375" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/menu/nav_drawer_menu.xml" value="0.209375" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/menu/tool_bar_menu.xml" value="0.209375" />
-        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/activity_home_list_row.xml" value="0.33" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/activity_entry_page.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/activity_get_user_location.xml" value="0.209375" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/activity_home_list_row.xml" value="0.25" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/activity_main.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/activity_nav_controller.xml" value="0.209375" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/activity_slider_item.xml" value="0.209375" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/fragment_about.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/fragment_booking.xml" value="0.209375" />
         <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/fragment_home.xml" value="0.209375" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/fragment_privacy_policy.xml" value="0.209375" />
         <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/fragment_sign_in.xml" value="0.18888888888888888" />
         <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/fragment_sign_up.xml" value="0.18888888888888888" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/nav_container.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/3D/Desktop/New folder/CarRental/app/src/main/res/layout/nav_content.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/activity_main.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/activity_nav_controller.xml" value="0.18461537784373291" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/activity_slider_item.xml" value="0.18958333333333333" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/fragment_booking.xml" value="0.18958333333333333" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/fragment_home.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/fragment_my_booking_list.xml" value="0.18958333333333333" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/fragment_sign_in.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/fragment_sign_up.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/layout/nav_content.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/3D/Desktop/New folder/MVVM/CarRental/app/src/main/res/menu/tool_bar_menu.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/3D/Desktop/New folder/Retrofit/CarRental/app/src/main/res/layout/activity_home_list_row.xml" value="0.209375" />
+        <entry key="..\:/Users/3D/Desktop/New folder/Retrofit/CarRental/app/src/main/res/layout/activity_nav_controller.xml" value="0.209375" />
+        <entry key="..\:/Users/3D/Desktop/New folder/Retrofit/CarRental/app/src/main/res/layout/fragment_home.xml" value="0.25" />
       </map>
     </option>
   </component>
