@@ -1,5 +1,6 @@
 package com.example.carrental.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +13,15 @@ import android.widget.RatingBar;
 
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.carrental.dataModels.Vehicle;
 import com.example.carrental.R;
 import com.example.carrental.adapters.SliderAdapter;
+import com.example.carrental.fragments.navigation.FavoriteListFragment;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
@@ -39,7 +44,6 @@ public class BookingFragment extends Fragment {
     private TextView seatingCapacity; //9
     private RatingBar vehicleRate; //10
     private TextView price; //11
-    private String priceLabel; //12
 
     private TextView airBag; //13
     private TextView seatBelts; //14
@@ -65,9 +69,10 @@ public class BookingFragment extends Fragment {
 
 
 
-
+    FragmentManager fragmentManager;
     private Button bookNow;
     private Vehicle vehicle;
+    //private AlertDialog.Builder alertDialog;
 
     //private ImageView carImage;
     //private HomeListItem homeListItem;
@@ -99,6 +104,9 @@ public class BookingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_booking, container, false);
+
+        //alertDialog = new AlertDialog.Builder(getContext());
+
         /*
         carModel=view.findViewById(R.id.viewAllDetails_txtView_carModel);
         companyName=view.findViewById(R.id.viewAllDetails_txtView_companyName);
@@ -202,6 +210,24 @@ public class BookingFragment extends Fragment {
 
         setSpecs();
 
+        bookNow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Confirmation(vehicle.getVehicleModel(),vehicle.getPrice());
+
+
+                Fragment fragment = new ConfirmationFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+            }
+        });
+
+
+
 
 
 
@@ -274,6 +300,35 @@ public class BookingFragment extends Fragment {
 
 
     }
+/*
+    private void Confirmation(String vehicleModel,float price)
+    {
+        alertDialog.setCancelable(false);
+        alertDialog.setIcon(R.drawable.ic_baseline_check_circle_outline);
+        alertDialog.setTitle("Confirmation");
+        alertDialog.setMessage("Are you sure about renting this vehicle? \n"+
+                "Model: "+vehicle.getVehicleModel()+"\n"+
+                "Price: "+vehicle.getPrice()+" "+vehicle.getPriceLabel() +" (Per Day)");
+        alertDialog.setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //check if user logged on by his account, not as a guest.
+                //if (logged on) .. Send Request to company .. show Toast with "Request is Sent"
+                //else .. send him to Login page
+
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = alertDialog.create();
+        dialog.show();
+    }
+
+ */
 
 
 
