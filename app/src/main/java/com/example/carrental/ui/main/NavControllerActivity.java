@@ -18,6 +18,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 
 import com.example.carrental.R;
+import com.example.carrental.ui.main.fragment.ChooseCategoryFragment;
 import com.example.carrental.ui.main.fragment.navigation.AboutFragment;
 import com.example.carrental.ui.main.fragment.navigation.FavoriteListFragment;
 import com.example.carrental.ui.main.fragment.navigation.HomeFragment;
@@ -116,7 +117,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                     fragmentManager.popBackStackImmediate();
                     currentNavigationDrawerItem = 0;
                     fragmentManager.beginTransaction()
-                            .replace(R.id.navContent_frameLayout_container, new HomeFragment()).commit();
+                            .replace(R.id.navContent_frameLayout_container, new ChooseCategoryFragment()).commit();
                 }
                 /*
                 Intent intent=getIntent();

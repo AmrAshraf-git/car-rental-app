@@ -12,6 +12,8 @@
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/bg_rounded_layout.xml" value="0.18703703703703703" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/border.xml" value="0.2703125" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/border_black.xml" value="0.18703703703703703" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/category_item.xml" value="0.152" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/category_item2.xml" value="0.1835" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_bar_rounded.xml" value="0.1835" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_abs.xml" value="0.154" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_ac_unit.xml" value="0.154" />
@@ -63,6 +65,7 @@
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_icons8_facebook.xml" value="0.18703703703703703" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_icons8_google.xml" value="0.18703703703703703" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18703703703703703" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/shadow.xml" value="0.203" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout-v26/fragment_sign_in.xml" value="0.11302083333333333" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_booking.xml" value="0.4" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_entry_page.xml" value="0.1793478260869565" />
@@ -75,14 +78,19 @@
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_view_all_details_and_booking.xml" value="0.264" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_booking.xml" value="0.4" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_choose_category.xml" value="0.4" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_confirmation.xml" value="0.264" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_favorite_list.xml" value="0.1" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_my_booking_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_sign_in.xml" value="0.2" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_sign_up.xml" value="0.1793478260869565" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/nav_container.xml" value="0.25416666666666665" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/nav_content.xml" value="0.1" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/nav_header.xml" value="0.1" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/slider_item.xml" value="0.16485507246376813" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/menu/nav_drawer_menu.xml" value="0.25025641025641027" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/menu/tool_bar_menu.xml" value="0.24351851851851852" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable-v24/ic_baseline_chair.xml" value="0.132" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable-v24/ic_baseline_color.xml" value="0.132" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable-v24/ic_baseline_door.xml" value="0.132" />
