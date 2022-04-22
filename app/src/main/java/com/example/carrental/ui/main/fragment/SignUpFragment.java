@@ -68,7 +68,7 @@ public class SignUpFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (checkEmpty() && validateFname() && validateLname() && validateEmail() && validatePassword() && validateConfPassword()) {
-                    //createNewUser();
+                    createNewUser();
 
 
                     vehicleViewModel.getNewUserResponse().observe(getViewLifecycleOwner(), new Observer<ResponseBody>() {

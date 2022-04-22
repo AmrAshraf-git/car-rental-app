@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Modern/GP/Backup/New2/car-rental-app/app/src/main/res/layout/fragment_choose_category.xml" value="0.25" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18703703703703703" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/bg_favorite_btn.xml" value="0.1915" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/bg_gradient.xml" value="0.18703703703703703" />
@@ -27,6 +28,8 @@
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_check_circle_outline.xml" value="0.169" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_child_friendly.xml" value="0.154" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_color.xml" value="0.168" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_directions_bus.xml" value="0.1675" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_directions_car.xml" value="0.1675" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_door.xml" value="0.168" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_engine.xml" value="0.154" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_extension.xml" value="0.154" />
@@ -43,6 +46,7 @@
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_medical_services.xml" value="0.16" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_miscellaneous_services.xml" value="0.154" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_music_note.xml" value="0.16" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_pedal_bike.xml" value="0.1675" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_radio.xml" value="0.16" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_roofing.xml" value="0.16" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_roofing_24.xml" value="0.16" />
@@ -75,10 +79,13 @@
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_nav_controller.xml" value="0.25416666666666665" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_slider_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_user_location.xml" value="0.25" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_view_all_details_and_booking.xml" value="0.264" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/design_layout_snackbar_include.xml" value="0.25" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_booking.xml" value="0.4" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_choose_category.xml" value="0.4" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_choose_category2.xml" value="0.264" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_confirmation.xml" value="0.264" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_favorite_list.xml" value="0.1" />
         <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_home.xml" value="0.25416666666666665" />

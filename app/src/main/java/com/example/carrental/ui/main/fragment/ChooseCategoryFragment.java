@@ -2,6 +2,7 @@ package com.example.carrental.ui.main.fragment;
 
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,7 +19,7 @@ import com.example.carrental.ui.main.fragment.navigation.HomeFragment;
 public class ChooseCategoryFragment extends Fragment {
 
 
-    private ConstraintLayout Carscategory;
+    private CardView Carscategory;
     private FragmentManager fragmentManager;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -60,7 +61,7 @@ public class ChooseCategoryFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_choose_category, container, false);
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        Carscategory = view.findViewById(R.id.category_constraint_cars);
+        Carscategory = view.findViewById(R.id.category_cardView_Cars);
         Carscategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
