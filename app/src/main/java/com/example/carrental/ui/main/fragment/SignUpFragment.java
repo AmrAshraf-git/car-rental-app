@@ -1,7 +1,6 @@
 package com.example.carrental.ui.main.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,28 +9,17 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carrental.R;
-import com.example.carrental.constant.Credentials;
-import com.example.carrental.data.ApiClient;
-import com.example.carrental.data.ApiService;
 import com.example.carrental.model.NewUser;
-import com.example.carrental.model.SignUpResponse;
-import com.example.carrental.repository.VehicleRepo;
 import com.example.carrental.ui.main.VehicleViewModel;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import okhttp3.Response;
 
 public class SignUpFragment extends Fragment {
 
@@ -42,47 +30,77 @@ public class SignUpFragment extends Fragment {
     private EditText password;
     private EditText confPassword;
     private Button signUp;
+    private View view;
+    private boolean mAlreadyLoaded;
     private ProgressBar progressBar;
     private VehicleViewModel vehicleViewModel;
+    //private SignUpViewModel signUpViewModel;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(savedInstanceState==null)
+            mAlreadyLoaded=false;
+        //signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
+        vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if (savedInstanceState==null && !mAlreadyLoaded) {
+            mAlreadyLoaded = true;
 
-        View view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        fName = view.findViewById(R.id.signUp_edTxt_fName);
-        lName = view.findViewById(R.id.signUp_edTxt_lName);
-        email = view.findViewById(R.id.signUp_edTxt_email);
-        phone = view.findViewById(R.id.signUp_edTxt_phone);
-        password = view.findViewById(R.id.signUp_edTxt_pswd);
-        confPassword = view.findViewById(R.id.signUp_edTxt_cnfPswd);
-        signUp = view.findViewById(R.id.signUp_btn_signUp);
-        progressBar = view.findViewById(R.id.signUP_progressBar);
-
-
-        vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
-
-
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkEmpty() && validateFname() && validateLname() && validateEmail() && validatePassword() && validateConfPassword()) {
-                    createNewUser();
+            view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+            fName = view.findViewById(R.id.signUp_edTxt_fName);
+            lName = view.findViewById(R.id.signUp_edTxt_lName);
+            email = view.findViewById(R.id.signUp_edTxt_email);
+            phone = view.findViewById(R.id.signUp_edTxt_phone);
+            password = view.findViewById(R.id.signUp_edTxt_pswd);
+            confPassword = view.findViewById(R.id.signUp_edTxt_cnfPswd);
+            signUp = view.findViewById(R.id.signUp_btn_signUp);
+            progressBar = view.findViewById(R.id.signUP_progressBar);
 
 
-                    vehicleViewModel.getNewUserResponse().observe(getViewLifecycleOwner(), new Observer<ResponseBody>() {
-                        @Override
-                        public void onChanged(ResponseBody responseBody) {
-                            Log.e("getNewUserResponse", String.valueOf(responseBody));
-                            if (responseBody == null)
-                                Toast.makeText(getContext(), "An error occurred, check your inputs", Toast.LENGTH_SHORT).show();
+            //vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
 
-                        }
-                    });
+
+
+            signUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (checkEmpty() && validateFname() && validateLname() && validateEmail() && validatePassword() && validateConfPassword()) {
+                        progressBar.setVisibility(View.VISIBLE);
+
+                        //vehicleViewModel.getNewUserResponse(createNewUser()).removeObservers(getViewLifecycleOwner());
+                        //if (!signUpViewModel.getNewUserResponse(createNewUser()).hasObservers()) {
+                        vehicleViewModel.getNewUserResponse(createNewUser()).observe(getViewLifecycleOwner(), new Observer<Response>() {
+                            @Override
+                            public void onChanged(Response response) {
+                                if(getViewLifecycleOwner().getLifecycle().getCurrentState()== Lifecycle.State.RESUMED) {
+                                    if (response == null || response.code() != 200 || !response.isSuccessful()) {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getContext(), "An error occurred, please try again" + "Message: " + (response != null ? response.message() : null) + "  " + "Code: " + (response != null ? response.code() : null), Toast.LENGTH_LONG).show();
+                                        //signUpViewModel.getNewUserResponse(createNewUser()).removeObservers(getViewLifecycleOwner());
+                                    } else if (response.code() == 200) {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getContext(), "sign-up successful " + "Message: " + (response != null ? response.message() : null) + "  " + "Code: " + (response != null ? response.code() : null), Toast.LENGTH_SHORT).show();
+                                        //signUpViewModel.getNewUserResponse(createNewUser()).removeObservers(getViewLifecycleOwner());
+                                    } else {
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getContext(), "Unexpected error occurred " + "Message: " + (response != null ? response.message() : null) + "  " + "Code: " + (response != null ? response.code() : null), Toast.LENGTH_SHORT).show();
+                                        //signUpViewModel.getNewUserResponse(createNewUser()).removeObservers(getViewLifecycleOwner());
+                                    }
+                                }
+                                //Log.e("tst",response.toString());
+                                //Toast.makeText(getContext(), response.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                    }
                 }
-            }
-        });
+                //}
+            });
 
 
 /**
@@ -109,31 +127,37 @@ public class SignUpFragment extends Fragment {
  confPassword.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
  signUp.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
  */
+
+        }
         return view;
 
     }
 
-
-    private void createNewUser() {
+    private NewUser createNewUser() {
         NewUser newUser = new NewUser();
+
         newUser.setFirstName(fName.getText().toString());
         newUser.setLastName(lName.getText().toString());
         newUser.setEmail(email.getText().toString());
         newUser.setPassword(password.getText().toString());
         newUser.setCpassword(confPassword.getText().toString());
         newUser.setPhone(Integer.parseInt(phone.getText().toString()));
-        /**
-         * Dummy Data New User
-         NewUser newUser=new NewUser();
-         newUser.setFirstName("fName.getText().toString()");
+
+        //Dummy Data New User
+
+         /*newUser.setFirstName("fName.getText().toString()");
          newUser.setLastName("lName.getText().toString()");
          newUser.setEmail("test2@example.com");
          newUser.setPassword("password.getText()");
          newUser.setCpassword("cpassword.getText()");
-         newUser.setPhone(123456789);
-         */
-        vehicleViewModel.signUp(newUser);
+         newUser.setPhone(123456);*/
+
+        return  newUser;
+        //vehicleViewModel.signUp(newUser);
     }
+
+
+
 
     //====================================VALIDATION=====================================
     private boolean checkEmpty() {

@@ -36,7 +36,6 @@
             android:textSize="18sp"
             android:maxLines="2"
 
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/homeListRow_txtView_compName"
             app:layout_constraintHorizontal_chainStyle="spread_inside">

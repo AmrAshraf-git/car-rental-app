@@ -1,26 +1,33 @@
 package com.example.carrental.ui.main;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.carrental.model.NewUser;
-import com.example.carrental.model.Vehicle;
-import com.example.carrental.repository.VehicleRepo;
-
-import java.util.List;
-
-import okhttp3.ResponseBody;
+import com.example.carrental.model.SignInResponse;
+import com.example.carrental.model.User;
+import com.example.carrental.model.VehicleResponse;
+import com.example.carrental.repository.MainRepository;
 
 public class VehicleViewModel extends ViewModel {
 
     //Live data
     //private final MutableLiveData<VehicleResponse> mutableLiveData=new MutableLiveData<>();
-    //private final LiveData<List<Vehicle>> mutableLiveData;;
-    private final VehicleRepo vehicleRepo;
+    //private final LiveData<VehicleResponse> mutableLiveData;
+    //private final MutableLiveData<ResponseBody> newUserMutableLiveDataResponse;
+    private final MutableLiveData<SignInResponse> userMutableLiveDataResponse;
+    //private final MutableLiveData<String> toastResponse;
+    private final MainRepository mainRepository;
 
     public VehicleViewModel() {
-        vehicleRepo = VehicleRepo.getInstance();
-        //mutableLiveData=vehicleRepo.getVehicles();
+        mainRepository = MainRepository.getInstance();
+        userMutableLiveDataResponse=new MutableLiveData<>();
+        //toastResponse=new MutableLiveData<>("");
+        //mutableLiveData=vehicleRepo.getVehiclesResponse();
+        //newUserMutableLiveDataResponse=new MutableLiveData<>();
     }
 
 
@@ -49,17 +56,43 @@ public class VehicleViewModel extends ViewModel {
     }*/
 
     //Get The data from Repository
-    public LiveData<List<Vehicle>> getVehicle() {
+    public LiveData<VehicleResponse> getVehicle() {
         //return mutableLiveData;
-        return vehicleRepo.getVehicles();
+        return mainRepository.getVehiclesResponse();
     }
 
-    public void signUp(NewUser newUser) {
-        vehicleRepo.signUp(newUser);
+
+
+    //public void signUp(NewUser newUser) {
+        //vehicleRepo.signUp(newUser);
+    //}
+
+    public LiveData<okhttp3.Response> getNewUserResponse(NewUser newUser) {
+        return mainRepository.signUpResponse(newUser);
     }
 
-    public LiveData<ResponseBody> getNewUserResponse() {
-        return vehicleRepo.getNewUserResponse();
+    /*public LiveData<SignInResponse> getUserResponse(User user) {
+        return mainRepository.remoteSignIn(user);
+    }*/
+    public LiveData<SignInResponse> getUserResponse() {
+        return userMutableLiveDataResponse;
+    }
 
+    public void login(User user){
+        mainRepository.remoteSignIn(user, new MainRepository.LoginResponse() {
+            @Override
+            public void onResponse(SignInResponse signInResponse) {
+                userMutableLiveDataResponse.postValue(signInResponse);
+                //toastResponse.postValue(signInResponse.getMessage());
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                SignInResponse mSignInResponse=new SignInResponse();
+                mSignInResponse.setMessage(throwable.getLocalizedMessage());
+                userMutableLiveDataResponse.postValue(mSignInResponse);
+                //toastResponse.postValue(throwable.getLocalizedMessage());
+            }
+        });
     }
 }

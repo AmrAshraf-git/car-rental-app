@@ -40,7 +40,7 @@ public class EntryPageActivity extends AppCompatActivity implements SignInFragme
     @Override
     public void onItemClick(String email) {
         //Log.e("emailTest",email);
-        Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, email, Toast.LENGTH_SHORT).show();
     }
 
 

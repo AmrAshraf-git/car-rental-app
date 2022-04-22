@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:id="@+id/signIn_progressBar"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/signIn_btn_signIn"
                 app:layout_constraintBottom_toTopOf="@id/signIn_floatBtn_2"
                 app:layout_constraintEnd_toEndOf="@id/signIn_btn_signIn"

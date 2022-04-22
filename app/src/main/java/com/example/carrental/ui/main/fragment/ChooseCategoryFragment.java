@@ -65,8 +65,8 @@ public class ChooseCategoryFragment extends Fragment {
         Carscategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentManager.beginTransaction()
-                        .replace(R.id.navContent_frameLayout_container, new HomeFragment()).addToBackStack(null).commit();
+                fragmentManager.beginTransaction().addToBackStack(null)
+                        .replace(R.id.navContent_frameLayout_container, new HomeFragment()).commit();
             }
         });
 

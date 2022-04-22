@@ -2,7 +2,9 @@ package com.example.carrental.data;
 
 import com.example.carrental.constant.Credentials;
 import com.example.carrental.model.NewUser;
+import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
+import com.example.carrental.model.User;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.model.VehicleResponse;
 import com.google.gson.annotations.Expose;
@@ -39,6 +41,12 @@ public interface ApiService {
 
     @POST(Credentials.REGISTER)
     Call<ResponseBody> signUp(@Body NewUser newUser);
+
+    @POST(Credentials.SIGN_IN)
+    Call<SignInResponse> signIn(@Body User user);
+
+
+
 
 
 

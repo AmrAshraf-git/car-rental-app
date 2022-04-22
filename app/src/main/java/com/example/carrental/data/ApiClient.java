@@ -22,20 +22,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ApiClient {
     private static ApiClient instance;
-    private final ApiService apiService;
+    //private final ApiService apiService;
     private static Retrofit retrofit;
-    private final MutableLiveData<List<Vehicle>> vehicleMutableLiveData;
-    private final   MutableLiveData<ResponseBody> newUserMutableLiveDataResponse;
+    //private final MutableLiveData<Vehicle> vehicleMutableLiveData;
+    //private final   MutableLiveData<ResponseBody> newUserMutableLiveDataResponse;
 
 
     private ApiClient(){
-
-
         retrofit = new Retrofit.Builder().baseUrl(Credentials.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
-        apiService = retrofit.create(ApiService.class);
-        vehicleMutableLiveData =new MutableLiveData<>();
-        newUserMutableLiveDataResponse=new MutableLiveData<>();
+        //apiService = retrofit.create(ApiService.class);
+        //vehicleMutableLiveData =new MutableLiveData<>();
+        //newUserMutableLiveDataResponse=new MutableLiveData<>();
 
     }
 
@@ -46,21 +44,17 @@ public class ApiClient {
         return instance;
     }
 
-
-    /*
-    public Call<VehicleResponse> getJsonModel(){
-        return apiService.getJsonModel();
-    }*/
-
     public Retrofit retrofitRequest(){
         return retrofit;
     }
 
     public ApiService getApiService() {
-        return apiService;
+        return retrofit.create(ApiService.class);
+        //return apiService;
     }
 
-    public LiveData<List<Vehicle>> getVehiclesResponse() {
+    /*
+    public LiveData<Vehicle> getVehiclesResponse() {
         //======================================PARSE DATA======================================
         apiService.getJsonModel().enqueue(new Callback<VehicleResponse>() {
             @Override
@@ -111,7 +105,7 @@ public class ApiClient {
         });
 
 
-    }
+    }*/
 
 
 }

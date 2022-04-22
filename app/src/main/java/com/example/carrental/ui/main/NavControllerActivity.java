@@ -48,6 +48,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
     final int PRIVACY_POLICY= R.id.nav_privacy;
     final int ABOUT = R.id.nav_about;
     final int CONTACT_US= R.id.nav_cont_us;
+    final int ALL_CATEGORIES=R.id.nav_allCategories;
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -128,18 +129,25 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                 overridePendingTransition(0,0);
                 */
                 break;
-
-            case FAVORITE_LIST:
+            case ALL_CATEGORIES:
                 if (currentNavigationDrawerItem != 1) {
                     currentNavigationDrawerItem = 1;
+                    fragmentManager.beginTransaction()
+                            .replace(R.id.navContent_frameLayout_container, new HomeFragment()).addToBackStack(null).commit();
+                }
+                break;
+
+            case FAVORITE_LIST:
+                if (currentNavigationDrawerItem != 2) {
+                    currentNavigationDrawerItem = 2;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new FavoriteListFragment()).addToBackStack(null).commit();
                 }
                 break;
 
             case MY_BOOKING:
-                if (currentNavigationDrawerItem != 2) {
-                    currentNavigationDrawerItem = 2;
+                if (currentNavigationDrawerItem != 3) {
+                    currentNavigationDrawerItem = 3;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new MyBookingListFragment()).addToBackStack(null).commit();
                 }
@@ -156,8 +164,8 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                 break;
 
             case SETTINGS:
-                if (currentNavigationDrawerItem != 4) {
-                    currentNavigationDrawerItem = 4;
+                if (currentNavigationDrawerItem != 5) {
+                    currentNavigationDrawerItem = 5;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new SettingsFragment()).addToBackStack(null).commit();
                 }
@@ -172,16 +180,16 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                 break;
 
             case PRIVACY_POLICY:
-                if (currentNavigationDrawerItem != 6) {
-                    currentNavigationDrawerItem = 6;
+                if (currentNavigationDrawerItem != 7) {
+                    currentNavigationDrawerItem = 7;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new PrivacyPolicyFragment()).addToBackStack(null).commit();
                 }
                 break;
 
             case ABOUT:
-                if (currentNavigationDrawerItem != 7) {
-                    currentNavigationDrawerItem = 7;
+                if (currentNavigationDrawerItem != 8) {
+                    currentNavigationDrawerItem = 8;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new AboutFragment()).addToBackStack("about").commit();
                 }
@@ -207,10 +215,10 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
             //navigationView.setCheckedItem(R.id.nav_home);
             //Objects.requireNonNull(getSupportActionBar()).setTitle("Choose your Vehicle");
             currentNavigationDrawerItem = 0;
-            MenuItem menuItem =navigationView.getMenu().getItem(currentNavigationDrawerItem).setChecked(true);
-            onNavigationItemSelected(menuItem);
+            //MenuItem menuItem =navigationView.getMenu().getItem(currentNavigationDrawerItem).setChecked(true);
+            onNavigationItemSelected(navigationView.getMenu().getItem(currentNavigationDrawerItem).setChecked(true));
         }
-        if (getSupportFragmentManager().findFragmentById(R.id.navContent_frameLayout_container) instanceof HomeFragment) {
+        if (getSupportFragmentManager().findFragmentById(R.id.navContent_frameLayout_container) instanceof ChooseCategoryFragment) {
             getSupportFragmentManager().popBackStackImmediate();
             finish();
         }
