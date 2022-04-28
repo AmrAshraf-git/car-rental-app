@@ -326,12 +326,12 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                     //handler.post(new Runnable() {
                     // @Override
                     //public void run() {
-                    if (progressBar.isShown())
-                        progressBar.setVisibility(View.GONE);
                     //}
                     //});
                 } else
                     Toast.makeText(getContext(), "can't reach the data from the server, please try again", Toast.LENGTH_SHORT).show();
+                if (progressBar.isShown())
+                    progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -357,14 +357,6 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        //((HomePageActivity)getActivity()).getSupportActionBar().setTitle("Choose your car");
-        //if(progressBar.isShown())
-        //progressBar.setVisibility(View.GONE);
-    }
-
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -377,16 +369,6 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     @Override
     public void onItemClick(int position) {
         //====================================SEND DATA=====================================
-            /*
-            Intent intent=new Intent(getContext(), BookingActivity.class);
-            intent.putExtra("listItemObject",homeListItem);
-            intent.putExtra("id",id);
-            startActivity(intent);
-
-            Bundle bundle=new Bundle();
-            bundle.putParcelable("listItemObject",homeListItem);
-            fragment.setArguments(bundle);
-            */
         Fragment fragment = BookingFragment.newInstance(homeItemList.get(position));
         getParentFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.translate_enter, R.anim.translate_exit)

@@ -22,6 +22,7 @@ import retrofit2.Response;
 
 public class MainRepository {
 
+
     private static MainRepository instance;
     private final ApiService apiService;
     private final MutableLiveData<VehicleResponse> vehicleMutableLiveData;

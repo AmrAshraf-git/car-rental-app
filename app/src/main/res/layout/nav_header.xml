@@ -11,13 +11,14 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/navHeader_imageView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-
+        android:clickable="true"
         android:contentDescription="account_picture"
-        app:srcCompat="@drawable/ic_baseline_account_circle" />
+        app:srcCompat="@drawable/ic_baseline_account_circle"
+        android:focusable="true" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -26,23 +27,28 @@
         android:weightSum="2"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/navHeader_txtView_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:textSize="18sp"
             android:layout_weight="1"
             android:text="Create an account"
             android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:gravity="start|bottom"
             android:clickable="true"
             android:focusable="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/navHeader_txtView_subTitle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:clickable="true"
+            android:focusable="true"
             android:gravity="start|top"
             android:text="or sign in" />
 

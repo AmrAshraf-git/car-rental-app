@@ -29,7 +29,7 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_view_profile"
+                    android:id="@+id/nav_view_account"
                     android:title="View Profile"
                     android:icon="@drawable/ic_baseline_account_circle"/>
                 <item

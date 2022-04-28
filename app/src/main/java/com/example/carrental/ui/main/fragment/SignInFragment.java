@@ -1,7 +1,9 @@
 package com.example.carrental.ui.main.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,8 +27,11 @@ import com.example.carrental.R;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.User;
+import com.example.carrental.ui.main.MainActivity;
+import com.example.carrental.ui.main.NavControllerActivity;
 import com.example.carrental.ui.main.UserLocationActivity;
 import com.example.carrental.ui.main.VehicleViewModel;
+import com.example.carrental.utility.SessionManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -44,6 +49,8 @@ public class SignInFragment extends Fragment {
     private FragmentOnClickListener fragmentOnClickListener;
     private VehicleViewModel vehicleViewModel;
     private SignInResponse mSignInResponse;
+    private SessionManager sessionManager;
+    private Object MainActivity;
 
 
     @Override
@@ -51,6 +58,7 @@ public class SignInFragment extends Fragment {
         super.onAttach(context);
         if(context instanceof FragmentOnClickListener) {
             fragmentOnClickListener = (FragmentOnClickListener) context;
+            sessionManager=SessionManager.getInstance(context);
         }
         else
             throw new ClassCastException(context.toString() + "must implements FragmentOnClickListener");
@@ -98,7 +106,8 @@ public class SignInFragment extends Fragment {
 
                         progressBar.setVisibility(View.VISIBLE);
                         signIn.setEnabled(false);
-                        vehicleViewModel.login(getUser());
+                        User mUser=getUser();
+                        vehicleViewModel.login(mUser);
                         Log.e("resume1","onClick");
                         vehicleViewModel.getUserResponse().observe(getViewLifecycleOwner(), new Observer<SignInResponse>() {
                             @Override
@@ -108,8 +117,13 @@ public class SignInFragment extends Fragment {
                                     Log.e("resume3","Lifecycle_RESUMED");
                                     if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("done")) {
                                         email.setError(null);
-                                        Toast.makeText(getContext(), "sign-up successful " + "Message: " +  signInResponse.getToken() , Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getContext(), "sign-up successful " + "Message: " +  signInResponse.getToken() , Toast.LENGTH_SHORT).show();
                                         Log.e("resume4","if1");
+                                        if(signInResponse.getToken()!=null) {
+                                            mUser.setToken(signInResponse.getToken());
+                                            sessionManager.saveLoginSession(mUser);
+                                            moveToHomeActivity();
+                                        }
                                     }
                                     else if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("400")){
                                         email.setError("Invalid email or password");
@@ -174,6 +188,7 @@ public class SignInFragment extends Fragment {
                         email.setError("email or password isn't connected");
                     }*/
                 }
+
             });
 
             actBtnAnim();
@@ -249,6 +264,16 @@ public class SignInFragment extends Fragment {
     }
 
 
+
+    private void moveToHomeActivity() {
+        Intent intent = new Intent(getContext(), NavControllerActivity.class);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+        startActivity(intent);
+        requireActivity().finish();
+        //requireActivity().finishAffinity();
+    }
 
 
 

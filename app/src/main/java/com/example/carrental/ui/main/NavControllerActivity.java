@@ -3,9 +3,12 @@ package com.example.carrental.ui.main;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +27,9 @@ import com.example.carrental.ui.main.fragment.navigation.FavoriteListFragment;
 import com.example.carrental.ui.main.fragment.navigation.HomeFragment;
 import com.example.carrental.ui.main.fragment.navigation.MyBookingListFragment;
 import com.example.carrental.ui.main.fragment.navigation.PrivacyPolicyFragment;
+import com.example.carrental.ui.main.fragment.navigation.ProfileFragment;
 import com.example.carrental.ui.main.fragment.navigation.SettingsFragment;
+import com.example.carrental.utility.SessionManager;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Objects;
@@ -43,12 +48,13 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
     final int HOME = R.id.nav_home;
     final int FAVORITE_LIST = R.id.nav_favorite;
     final int MY_BOOKING = R.id.nav_my_booking;
-    final int PROFILE = R.id.nav_view_profile;
+    final int ACCOUNT = R.id.nav_view_account;
+    final int LOG_OUT = R.id.nav_log_out;
     final int SETTINGS = R.id.nav_settings;
-    final int PRIVACY_POLICY= R.id.nav_privacy;
+    final int PRIVACY_POLICY = R.id.nav_privacy;
     final int ABOUT = R.id.nav_about;
-    final int CONTACT_US= R.id.nav_cont_us;
-    final int ALL_CATEGORIES=R.id.nav_allCategories;
+    final int CONTACT_US = R.id.nav_cont_us;
+    final int ALL_CATEGORIES = R.id.nav_allCategories;
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -57,6 +63,9 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
     NavigationView navigationView;
     ActionBar actBar;
     FragmentManager fragmentManager;
+    TextView headerSignUp;
+    TextView headerSignIn;
+    ImageView headerImage;
 
     boolean toolBarNavigationListenerIsRegistered = false;
     int currentNavigationDrawerItem = 0;
@@ -111,7 +120,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        int id=item.getItemId();
+        int id = item.getItemId();
         switch (id) {
             case HOME:
                 if (currentNavigationDrawerItem != 0) {
@@ -120,14 +129,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new ChooseCategoryFragment()).commit();
                 }
-                /*
-                Intent intent=getIntent();
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                finish();
-                overridePendingTransition(0,0);
-                startActivity(intent);
-                overridePendingTransition(0,0);
-                */
+
                 break;
             case ALL_CATEGORIES:
                 if (currentNavigationDrawerItem != 1) {
@@ -138,71 +140,123 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                 break;
 
             case FAVORITE_LIST:
-                if (currentNavigationDrawerItem != 2) {
-                    currentNavigationDrawerItem = 2;
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.navContent_frameLayout_container, new FavoriteListFragment()).addToBackStack(null).commit();
+                if (!SessionManager.getInstance(NavControllerActivity.this).isLoggedIn()) {
+                    Intent intent = new Intent(NavControllerActivity.this, EntryPageActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    //overridePendingTransition(0, 0);
+                    startActivity(intent);
+                    //overridePendingTransition(0, 0);
+                    getSupportFragmentManager().popBackStack();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return false;
+                } else {
+                    if (currentNavigationDrawerItem != 2) {
+                        currentNavigationDrawerItem = 2;
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.navContent_frameLayout_container, new FavoriteListFragment()).addToBackStack(null).commit();
+                    }
                 }
                 break;
 
             case MY_BOOKING:
-                if (currentNavigationDrawerItem != 3) {
-                    currentNavigationDrawerItem = 3;
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.navContent_frameLayout_container, new MyBookingListFragment()).addToBackStack(null).commit();
+                if (!SessionManager.getInstance(NavControllerActivity.this).isLoggedIn()) {
+                    Intent intent = new Intent(NavControllerActivity.this, EntryPageActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    //overridePendingTransition(0, 0);
+                    startActivity(intent);
+                    //overridePendingTransition(0, 0);
+                    getSupportFragmentManager().popBackStack();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return false;
+                } else {
+                    if (currentNavigationDrawerItem != 3) {
+                        currentNavigationDrawerItem = 3;
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.navContent_frameLayout_container, new MyBookingListFragment()).addToBackStack(null).commit();
+                    }
                 }
                 break;
 
-            case PROFILE:
-                    //temp
-                    Intent intent = new Intent(this, EntryPageActivity.class);
+            case ACCOUNT:
+                if (!SessionManager.getInstance(NavControllerActivity.this).isLoggedIn()) {
+                    Intent intent = new Intent(NavControllerActivity.this, EntryPageActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    overridePendingTransition(0, 0);
+                    //overridePendingTransition(0, 0);
                     startActivity(intent);
-                    overridePendingTransition(0, 0);
+                    //overridePendingTransition(0, 0);
                     getSupportFragmentManager().popBackStack();
+                } else {
+                    if (currentNavigationDrawerItem != 4) {
+                        currentNavigationDrawerItem = 4;
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.navContent_frameLayout_container, new ProfileFragment()).addToBackStack(null).commit();
+                    }
+                }
+                break;
+
+            case LOG_OUT:
+                if (currentNavigationDrawerItem != 5) {
+                    currentNavigationDrawerItem = 5;
+                    if (SessionManager.getInstance(NavControllerActivity.this).isLoggedIn()) {
+                        SessionManager.getInstance(NavControllerActivity.this).removeLoginSession();
+                        Intent intent = new Intent(NavControllerActivity.this, MainActivity.class);
+                        //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //intent.setFlags(Intent.FLAG_ACTIVITY_TASK_ON_HOME);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
                 break;
 
             case SETTINGS:
-                if (currentNavigationDrawerItem != 5) {
-                    currentNavigationDrawerItem = 5;
+                if (currentNavigationDrawerItem != 6) {
+                    currentNavigationDrawerItem = 6;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new SettingsFragment()).addToBackStack(null).commit();
                 }
                 break;
 
             case CONTACT_US:
-                    intent =new Intent(Intent.ACTION_SEND);
-                    intent.putExtra(Intent.EXTRA_EMAIL,"example@gmail.com");
-                    intent.setType("message/rfc822");
-                    startActivity(Intent.createChooser(intent,"Send Email"));
-                    getSupportFragmentManager().popBackStack();
-                break;
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_EMAIL, "example@gmail.com");
+                intent.setType("message/rfc822");
+                startActivity(Intent.createChooser(intent, "Send Email"));
+                getSupportFragmentManager().popBackStack();
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return false;
+                //break;
 
             case PRIVACY_POLICY:
-                if (currentNavigationDrawerItem != 7) {
-                    currentNavigationDrawerItem = 7;
+                if (currentNavigationDrawerItem != 8) {
+                    currentNavigationDrawerItem = 8;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new PrivacyPolicyFragment()).addToBackStack(null).commit();
                 }
                 break;
 
             case ABOUT:
-                if (currentNavigationDrawerItem != 8) {
-                    currentNavigationDrawerItem = 8;
+                if (currentNavigationDrawerItem != 9) {
+                    currentNavigationDrawerItem = 9;
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new AboutFragment()).addToBackStack("about").commit();
                 }
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
-        if(id==CONTACT_US || id==PROFILE) {
-            return false;
-        }
-        else {
-            Objects.requireNonNull(actBar).setTitle(item.getTitle());
-            return true;
-        }
+        Objects.requireNonNull(actBar).setTitle(item.getTitle());
+        return true;
+
     }
 
     @Override
@@ -220,7 +274,8 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         }
         if (getSupportFragmentManager().findFragmentById(R.id.navContent_frameLayout_container) instanceof ChooseCategoryFragment) {
             getSupportFragmentManager().popBackStackImmediate();
-            finish();
+            super.onBackPressed();
+            //finish();
         }
         super.onBackPressed();
 
@@ -250,24 +305,29 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         super.onCreate(savedInstanceState);
         //activityHomePageBinding=ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_nav_controller);
-        fragmentManager=getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         drawerLayout = findViewById(R.id.drawerBase_drawerLayout);
         container = findViewById(R.id.navContent_frameLayout_container);
 
         navigationView = findViewById(R.id.baseDrawer_navView);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        headerSignUp=headerView.findViewById(R.id.navHeader_txtView_title);
+        headerSignIn=headerView.findViewById(R.id.navHeader_txtView_subTitle);
+        headerImage=headerView.findViewById(R.id.navHeader_imageView);
+        editNavItem();
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        actBar=getSupportActionBar();
+        actBar = getSupportActionBar();
 
         assert actBar != null : "ActBar is null";
         actBar.setDisplayHomeAsUpEnabled(true);
         //actBar.setHomeButtonEnabled(true);
         //Objects.requireNonNull(actBar).setTitle("Choose your Vehicle");
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawerLayout.addDrawerListener(drawerToggle);
         //actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         //actBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back);
@@ -282,8 +342,8 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         if (savedInstanceState == null) {
             //fragmentManager.beginTransaction().replace(R.id.navContent_frameLayout_container, new HomeFragment()).commit();
             //navigationView.setCheckedItem(R.id.nav_home);
-            currentNavigationDrawerItem=90;
-            MenuItem menuItem =navigationView.getMenu().getItem(0).setChecked(true);
+            currentNavigationDrawerItem = -1;
+            MenuItem menuItem = navigationView.getMenu().getItem(0).setChecked(true);
             onNavigationItemSelected(menuItem);
 
         }
@@ -362,6 +422,23 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         homeListItemArrayList.add(homeListItem2);
         //======================================DUMMY DATA======================================
         */
+
+        headerOnClick(headerSignUp);
+        headerOnClick(headerSignIn);
+    }
+
+    private void headerOnClick(View view) {
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v== headerSignIn|| v==headerSignUp) {
+                        MenuItem menuItem = navigationView.getMenu().findItem(ACCOUNT);
+                        onNavigationItemSelected(menuItem);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -378,7 +455,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
 
 
     private void enableHomeUpOrHamburger() {
-        boolean hamburgerBtn = (getSupportFragmentManager().getBackStackEntryCount() == 0 );
+        boolean hamburgerBtn = (getSupportFragmentManager().getBackStackEntryCount() == 0);
         if (hamburgerBtn) {
             //getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             drawerToggle.setDrawerIndicatorEnabled(true);
@@ -398,6 +475,20 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                 });
                 toolBarNavigationListenerIsRegistered = true;
             }
+        }
+    }
+
+
+    private void editNavItem() {
+        Menu navMenu = navigationView.getMenu();
+        if (!SessionManager.getInstance(NavControllerActivity.this).isLoggedIn()) {
+            navMenu.findItem(R.id.nav_log_out).setVisible(false);
+            navMenu.findItem(R.id.nav_view_account).setVisible(false);
+        } else {
+            navMenu.findItem(R.id.nav_log_out).setVisible(true);
+            navMenu.findItem(R.id.nav_view_account).setVisible(true);
+            headerSignIn.setVisibility(View.INVISIBLE);
+            headerSignUp.setText(SessionManager.getInstance(NavControllerActivity.this).getLoginSession().getEmail());
         }
     }
 }

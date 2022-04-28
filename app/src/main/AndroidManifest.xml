@@ -25,12 +25,17 @@
             android:name=".ui.main.NavControllerActivity"
             android:exported="true"
             android:hardwareAccelerated="true"
-            android:theme="@style/Theme.CarRental" />
+            android:theme="@style/Theme.CarRental"/>
+
+            <!--android:launchMode="singleTop"-->
+
 
         <activity
             android:name=".ui.main.EntryPageActivity"
             android:exported="true"
             android:theme="@style/Theme.CarRental" />
+
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true"
