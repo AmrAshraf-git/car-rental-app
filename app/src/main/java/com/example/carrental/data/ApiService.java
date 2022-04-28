@@ -1,6 +1,8 @@
 package com.example.carrental.data;
 
 import com.example.carrental.constant.Credentials;
+import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
@@ -45,7 +47,8 @@ public interface ApiService {
     @POST(Credentials.SIGN_IN)
     Call<SignInResponse> signIn(@Body User user);
 
-
+    @POST(Credentials.Booking)
+    Call<BookingResponse> RentRequest(@Body Booking booking);
 
 
 

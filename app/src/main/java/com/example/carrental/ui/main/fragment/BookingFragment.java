@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.R;
+import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.adapter.SliderAdapter;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
@@ -63,6 +64,7 @@ public class BookingFragment extends Fragment {
     private TextView Smoking; //30.1
     private TextView CC; //31
 
+    private VehicleViewModel vehicleViewModel;
 
 
 
@@ -209,15 +211,23 @@ public class BookingFragment extends Fragment {
         bookNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Confirmation(vehicle.getVehicleModel(),vehicle.getPrice());
 
+                //Transfer Required Data from Booking fragment to Confirmation fragment
+                Fragment fragment = ConfirmationFragment.newInstance(vehicle.getVehicleImgURL()[0],
+                        vehicle.getVehicleModel(),
+                        vehicle.getPrice()+" "+vehicle.getPriceLabel(),
+                        vehicle.getCompanyName(),vehicle.getCompRate());
 
-                Fragment fragment = new ConfirmationFragment();
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+
+
+
+
+
 
             }
         });

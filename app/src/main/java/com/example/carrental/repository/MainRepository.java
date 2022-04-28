@@ -8,6 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.carrental.data.ApiClient;
 import com.example.carrental.data.ApiService;
+import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.User;
@@ -214,6 +216,35 @@ public class MainRepository {
         });
     }
 
+    public void remoteBookingResponse(Booking booking, BookingResponse bookingResponse){
+        Call<com.example.carrental.model.BookingResponse> call = apiService.RentRequest(booking);
+        call.enqueue(new Callback<com.example.carrental.model.BookingResponse>() {
+            @Override
+            public void onResponse(Call<com.example.carrental.model.BookingResponse> call, Response<com.example.carrental.model.BookingResponse> response) {
+
+                if(response.body()==null)
+                {
+                    bookingResponse.onFailed(new Throwable(String.valueOf(response.code())));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    bookingResponse.onResponse(response.body());
+                }
+
+                else{
+                    bookingResponse.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.example.carrental.model.BookingResponse> call, Throwable t) {
+                bookingResponse.onFailed(t);
+                t.printStackTrace();
+            }
+        });
+
+
+    }
+
 
 
 
@@ -222,6 +253,10 @@ public class MainRepository {
         void onFailed(Throwable throwable);
     }
 
+    public interface BookingResponse{
+        void onResponse(com.example.carrental.model.BookingResponse bookingResponse);
+        void onFailed(Throwable throwable);
+    }
 
 
 

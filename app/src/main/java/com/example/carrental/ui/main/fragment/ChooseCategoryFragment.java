@@ -19,7 +19,7 @@ import com.example.carrental.ui.main.fragment.navigation.HomeFragment;
 public class ChooseCategoryFragment extends Fragment {
 
 
-    private CardView Carscategory;
+    private CardView carsCategory;
     private FragmentManager fragmentManager;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -61,8 +61,8 @@ public class ChooseCategoryFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_choose_category, container, false);
 
         fragmentManager = getActivity().getSupportFragmentManager();
-        Carscategory = view.findViewById(R.id.category_cardView_Cars);
-        Carscategory.setOnClickListener(new View.OnClickListener() {
+        carsCategory = view.findViewById(R.id.category_cardView_Cars);
+        carsCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentManager.beginTransaction().addToBackStack(null)

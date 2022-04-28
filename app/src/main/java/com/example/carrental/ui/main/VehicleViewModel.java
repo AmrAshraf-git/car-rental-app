@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.User;
@@ -19,12 +21,16 @@ public class VehicleViewModel extends ViewModel {
     //private final LiveData<VehicleResponse> mutableLiveData;
     //private final MutableLiveData<ResponseBody> newUserMutableLiveDataResponse;
     private final MutableLiveData<SignInResponse> userMutableLiveDataResponse;
+    private final MutableLiveData<BookingResponse> bookingMutableLiveDataResponse;
+
     //private final MutableLiveData<String> toastResponse;
     private final MainRepository mainRepository;
 
     public VehicleViewModel() {
         mainRepository = MainRepository.getInstance();
         userMutableLiveDataResponse=new MutableLiveData<>();
+        bookingMutableLiveDataResponse=new MutableLiveData<>();
+
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
@@ -78,6 +84,10 @@ public class VehicleViewModel extends ViewModel {
         return userMutableLiveDataResponse;
     }
 
+    public MutableLiveData<BookingResponse> getBookingMutableLiveDataResponse() {
+        return bookingMutableLiveDataResponse;
+    }
+
     public void login(User user){
         mainRepository.remoteSignIn(user, new MainRepository.LoginResponse() {
             @Override
@@ -92,6 +102,22 @@ public class VehicleViewModel extends ViewModel {
                 mSignInResponse.setMessage(throwable.getLocalizedMessage());
                 userMutableLiveDataResponse.postValue(mSignInResponse);
                 //toastResponse.postValue(throwable.getLocalizedMessage());
+            }
+        });
+    }
+
+    public void booking(Booking booking){
+        mainRepository.remoteBookingResponse(booking, new MainRepository.BookingResponse() {
+            @Override
+            public void onResponse(BookingResponse bookingResponse) {
+                bookingMutableLiveDataResponse.postValue(bookingResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                BookingResponse mBookingResponse=new BookingResponse();
+                mBookingResponse.setMessage(throwable.getLocalizedMessage());
+                bookingMutableLiveDataResponse.postValue(mBookingResponse);
             }
         });
     }
