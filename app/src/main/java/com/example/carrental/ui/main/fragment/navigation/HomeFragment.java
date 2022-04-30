@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -41,6 +42,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     //private RecyclerView.LayoutManager layoutManager;
     private HomeListAdapter homeListAdapter;
     private List<Vehicle> homeItemList = new ArrayList<>();
+    private VehicleResponse mVehicleResponse;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View view;
@@ -316,22 +318,40 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     }
 
     private void observeViewModel() {
+        //vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
+        getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
         vehicleViewModel.getVehicle().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
             @Override
             public void onChanged(VehicleResponse vehicleResponse) {
-                if (vehicleResponse != null) {
-                    homeListAdapter.updateStatus(vehicleResponse.getData());
-                    //homeItemList.addAll(vehicleResponse.getData());
-                    //homeListAdapter.notifyDataSetChanged();
-                    //handler.post(new Runnable() {
-                    // @Override
-                    //public void run() {
-                    //}
-                    //});
-                } else
-                    Toast.makeText(getContext(), "can't reach the data from the server, please try again", Toast.LENGTH_SHORT).show();
-                if (progressBar.isShown())
-                    progressBar.setVisibility(View.GONE);
+                Log.e("resume1","onChanged");
+                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse !=mVehicleResponse) {
+                    Log.e("resume2","Lifecycle_RESUMED(if1)");
+                    if (vehicleResponse.getMessage()!=null && vehicleResponse.getMessage().equals("done")) {
+                        Log.e("resume3","if2");
+                        if (vehicleResponse.getData() != null) {
+                            Log.e("resume4","if3");
+                            homeListAdapter.updateStatus(vehicleResponse.getData());
+                            //homeItemList.addAll(vehicleResponse.getData());
+                            //homeListAdapter.notifyDataSetChanged();
+                            //handler.post(new Runnable() {
+                            // @Override
+                            //public void run() {
+                            //}
+                            //});
+                        }
+                        else
+                            Toast.makeText(getContext(), (vehicleResponse.getMessage() != null ? vehicleResponse.getMessage() : "No responding data"), Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getContext(), (vehicleResponse.getMessage() != null ? vehicleResponse.getMessage() : "Unknown response, please try again"), Toast.LENGTH_SHORT).show();
+                        Log.e("resume5","else1");
+                    }
+                }
+                getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+                mVehicleResponse=vehicleResponse;
+                progressBar.setVisibility(View.GONE);
+                vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
+                Log.e("resume6","end of onChanged");
             }
         });
     }

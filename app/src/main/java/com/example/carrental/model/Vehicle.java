@@ -3,10 +3,13 @@ package com.example.carrental.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.bumptech.glide.Glide;
+import com.example.carrental.R;
 import com.example.carrental.constant.PriceLabel;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.squareup.picasso.Picasso;
 
 public class Vehicle extends VehicleSpecs implements Parcelable {
 
@@ -90,7 +93,7 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
 
     public Vehicle() {
         //vehicleImgURL =new String[4];
-        //vehicleImg[0]= R.drawable.img_logo_test;
+        //vehicleImgURL[0]= "R.drawable.img_logo_test";
         priceLabel=PriceLabel.DOLLAR;
         //id= new Random().nextInt(30);
     }

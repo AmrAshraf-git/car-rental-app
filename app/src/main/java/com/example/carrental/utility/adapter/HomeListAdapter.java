@@ -43,6 +43,10 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
     }
 
     public Vehicle getItem(final int pos) {
+        if(arrayList.get(pos).getVehicleImgURL().length==0) {
+            String[] tmp={"R.drawable.img_logo_test"};
+            arrayList.get(pos).setVehicleImgURL(tmp);
+        }
         return arrayList.get(pos);
     }
 
@@ -72,7 +76,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
         holder.priceLabel.setText(getItem(position).getPriceLabel().toString());
         //vehicleImage.setImageResource(vehicle.getVehicleImgURL()[0]);
-        //Picasso.get().load(vehicle.getVehicleImgURL()[0]).fit().centerInside().error(R.drawable.img_logo_test).into(vehicleImage);
+        //Picasso.get().load(getItem(position).getVehicleImgURL()[0]).fit().centerInside().error(R.drawable.img_logo_test).into(holder.vehicleImage);
         Glide.with(holder.itemView.getContext()).load(getItem(position).getVehicleImgURL()[0]).fitCenter()
                 .error(R.drawable.img_logo_test).into(holder.vehicleImage);
         //new DownloadImageTask(vehicleImage).execute(vehicle.getVehicleImgURL()[0]);

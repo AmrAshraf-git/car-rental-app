@@ -32,6 +32,7 @@ import com.example.carrental.ui.main.NavControllerActivity;
 import com.example.carrental.ui.main.UserLocationActivity;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.SessionManager;
+import com.example.carrental.utility.TextValidation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
@@ -96,11 +97,10 @@ public class SignInFragment extends Fragment {
 
 
 
-
             signIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (checkEmpty() &&  validateEmail()) {
+                    if (TextValidation.isEmailValid(email)) {
                         vehicleViewModel.getUserResponse().removeObservers(getViewLifecycleOwner());
                         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
 
@@ -108,31 +108,32 @@ public class SignInFragment extends Fragment {
                         signIn.setEnabled(false);
                         User mUser=getUser();
                         vehicleViewModel.login(mUser);
-                        Log.e("resume1","onClick");
+                        //Log.e("resume1","onClick");
                         vehicleViewModel.getUserResponse().observe(getViewLifecycleOwner(), new Observer<SignInResponse>() {
                             @Override
                             public void onChanged(SignInResponse signInResponse) {
-                                Log.e("resume2","onChanged");
+                                //Log.e("resume2","onChanged");
                                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && signInResponse !=mSignInResponse) {
-                                    Log.e("resume3","Lifecycle_RESUMED");
+                                    //Log.e("resume3","Lifecycle_RESUMED(if1)");
                                     if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("done")) {
                                         email.setError(null);
                                         //Toast.makeText(getContext(), "sign-up successful " + "Message: " +  signInResponse.getToken() , Toast.LENGTH_SHORT).show();
-                                        Log.e("resume4","if1");
+                                        //Log.e("resume4","if2");
                                         if(signInResponse.getToken()!=null) {
                                             mUser.setToken(signInResponse.getToken());
                                             sessionManager.saveLoginSession(mUser);
                                             moveToHomeActivity();
+                                            //Log.e("resume5","if3");
                                         }
                                     }
                                     else if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("400")){
                                         email.setError("Invalid email or password");
-                                        Log.e("resume4","if2");
+                                        //Log.e("resume6","else if1");
                                     }
                                     else {
                                         email.setError(null);
                                         Toast.makeText(getContext(), (signInResponse.getMessage() != null ? signInResponse.getMessage() : "Unknown"), Toast.LENGTH_SHORT).show();
-                                        Log.e("resume4","if3");
+                                        //Log.e("resume7","else1");
                                     }
                                 }
                                 //vehicleViewModel.getUserResponse().removeObservers(getViewLifecycleOwner());
@@ -141,8 +142,8 @@ public class SignInFragment extends Fragment {
 
                                 progressBar.setVisibility(View.GONE);
                                 signIn.setEnabled(true);
-                                Log.e("resume5","end of onChanged");
                                 mSignInResponse=signInResponse;
+                                //Log.e("resume8","end of onChanged");
                             }
 
                         });
@@ -188,11 +189,8 @@ public class SignInFragment extends Fragment {
                         email.setError("email or password isn't connected");
                     }*/
                 }
-
             });
-
             actBtnAnim();
-
         }
         return view;
     }
@@ -250,16 +248,13 @@ public class SignInFragment extends Fragment {
 
     private User getUser() {
         User user = new User();
-
         user.setEmail(email.getText().toString());
         user.setPassword(password.getText().toString());
-
         //Dummy Data New User
          /*
          user.setEmail("test2@example.com");
          user.setPassword("password.getText()");
          */
-
         return  user;
     }
 

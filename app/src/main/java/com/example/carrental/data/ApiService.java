@@ -7,12 +7,8 @@ import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
 import com.example.carrental.model.User;
-import com.example.carrental.model.Vehicle;
 import com.example.carrental.model.VehicleResponse;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -29,7 +25,9 @@ public interface ApiService {
     Call<VehicleResponse> getJsonModel();
 
 
-    /*
+
+    /**
+     * UrlEncoded
     @FormUrlEncoded
     @POST(Credentials.REGISTER)
     Call<ResponseBody> signUp(@Field("firstName") String firstName,
@@ -42,14 +40,13 @@ public interface ApiService {
     */
 
     @POST(Credentials.REGISTER)
-    Call<ResponseBody> signUp(@Body NewUser newUser);
+    Call<SignUpResponse> signUp(@Body NewUser newUser);
 
     @POST(Credentials.SIGN_IN)
     Call<SignInResponse> signIn(@Body User user);
 
     @POST(Credentials.Booking)
     Call<BookingResponse> RentRequest(@Body Booking booking);
-
 
 
 

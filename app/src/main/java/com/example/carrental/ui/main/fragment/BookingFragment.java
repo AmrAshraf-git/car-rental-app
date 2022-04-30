@@ -192,9 +192,14 @@ public class BookingFragment extends Fragment {
 
 
         //==================Image Slider Show=============================
-        String[] images = {vehicle.getVehicleImgURL()[0],
+        /*String[] images = {vehicle.getVehicleImgURL()[0],
                 vehicle.getVehicleImgURL()[1],
-                vehicle.getVehicleImgURL()[2]};
+                vehicle.getVehicleImgURL()[2]};*/
+        String[] images=new String[vehicle.getVehicleImgURL().length];
+        for(int i=0;i<images.length;i++){
+            images[i]= vehicle.getVehicleImgURL()[i];
+        }
+
         //==================Image Slider Show=============================
 
 

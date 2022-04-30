@@ -1,7 +1,5 @@
 package com.example.carrental.ui.main;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,6 +8,7 @@ import com.example.carrental.model.Booking;
 import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
+import com.example.carrental.model.SignUpResponse;
 import com.example.carrental.model.User;
 import com.example.carrental.model.VehicleResponse;
 import com.example.carrental.repository.MainRepository;
@@ -17,20 +16,21 @@ import com.example.carrental.repository.MainRepository;
 public class VehicleViewModel extends ViewModel {
 
     //Live data
-    //private final MutableLiveData<VehicleResponse> mutableLiveData=new MutableLiveData<>();
     //private final LiveData<VehicleResponse> mutableLiveData;
-    //private final MutableLiveData<ResponseBody> newUserMutableLiveDataResponse;
-    private final MutableLiveData<SignInResponse> userMutableLiveDataResponse;
-    private final MutableLiveData<BookingResponse> bookingMutableLiveDataResponse;
+    private final MutableLiveData<VehicleResponse> vehicleLiveDataResponse;
+    private final MutableLiveData<SignInResponse> userLiveDataResponse;
+    private final MutableLiveData<SignUpResponse> newUserLiveDataResponse;
+    private final MutableLiveData<BookingResponse> bookingLiveDataResponse;
 
     //private final MutableLiveData<String> toastResponse;
     private final MainRepository mainRepository;
 
     public VehicleViewModel() {
         mainRepository = MainRepository.getInstance();
-        userMutableLiveDataResponse=new MutableLiveData<>();
-        bookingMutableLiveDataResponse=new MutableLiveData<>();
-
+        userLiveDataResponse =new MutableLiveData<>();
+        newUserLiveDataResponse=new MutableLiveData<>();
+        bookingLiveDataResponse =new MutableLiveData<>();
+        vehicleLiveDataResponse=new MutableLiveData<>();
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
@@ -62,37 +62,63 @@ public class VehicleViewModel extends ViewModel {
     }*/
 
     //Get The data from Repository
-    public LiveData<VehicleResponse> getVehicle() {
-        //return mutableLiveData;
-        return mainRepository.getVehiclesResponse();
-    }
 
 
-
-    //public void signUp(NewUser newUser) {
-        //vehicleRepo.signUp(newUser);
-    //}
-
-    public LiveData<okhttp3.Response> getNewUserResponse(NewUser newUser) {
-        return mainRepository.signUpResponse(newUser);
-    }
+    /*public LiveData<okhttp3.Response> getNewUserResponse(NewUser newUser) {
+        return mainRepository.remoteSignUp(newUser);
+    }*/
 
     /*public LiveData<SignInResponse> getUserResponse(User user) {
         return mainRepository.remoteSignIn(user);
     }*/
-    public LiveData<SignInResponse> getUserResponse() {
-        return userMutableLiveDataResponse;
+
+
+
+    public MutableLiveData<BookingResponse> getBookingLiveDataResponse() {
+        return bookingLiveDataResponse;
+    }
+    public LiveData<VehicleResponse> getVehicle() {
+        //return mutableLiveData;
+        //return mainRepository.getVehiclesResponse();
+        mainRepository.remoteVehicleData(new MainRepository.OnVehiclesResponseListener() {
+            @Override
+            public void onResponse(VehicleResponse vehicleResponse) {
+                vehicleLiveDataResponse.postValue(vehicleResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                VehicleResponse mVehicleResponse=new VehicleResponse();
+                mVehicleResponse.setMessage(throwable.getLocalizedMessage());
+                vehicleLiveDataResponse.postValue(mVehicleResponse);
+            }
+        });
+        return vehicleLiveDataResponse;
     }
 
-    public MutableLiveData<BookingResponse> getBookingMutableLiveDataResponse() {
-        return bookingMutableLiveDataResponse;
+
+    public void booking(Booking booking){
+        mainRepository.remoteBookingResponse(booking, new MainRepository.OnBookingResponseListener() {
+            @Override
+            public void onResponse(BookingResponse bookingResponse) {
+                bookingLiveDataResponse.postValue(bookingResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                BookingResponse mBookingResponse=new BookingResponse();
+                mBookingResponse.setMessage(throwable.getLocalizedMessage());
+                bookingLiveDataResponse.postValue(mBookingResponse);
+            }
+        });
     }
+
 
     public void login(User user){
-        mainRepository.remoteSignIn(user, new MainRepository.LoginResponse() {
+        mainRepository.remoteSignIn(user, new MainRepository.OnSignInResponseListener() {
             @Override
             public void onResponse(SignInResponse signInResponse) {
-                userMutableLiveDataResponse.postValue(signInResponse);
+                userLiveDataResponse.postValue(signInResponse);
                 //toastResponse.postValue(signInResponse.getMessage());
             }
 
@@ -100,25 +126,32 @@ public class VehicleViewModel extends ViewModel {
             public void onFailed(Throwable throwable) {
                 SignInResponse mSignInResponse=new SignInResponse();
                 mSignInResponse.setMessage(throwable.getLocalizedMessage());
-                userMutableLiveDataResponse.postValue(mSignInResponse);
+                userLiveDataResponse.postValue(mSignInResponse);
                 //toastResponse.postValue(throwable.getLocalizedMessage());
             }
         });
     }
+    public LiveData<SignInResponse> getUserResponse() {
+        return userLiveDataResponse;
+    }
 
-    public void booking(Booking booking){
-        mainRepository.remoteBookingResponse(booking, new MainRepository.BookingResponse() {
+
+    public void signUp(NewUser newUser) {
+        mainRepository.remoteSignUp(newUser, new MainRepository.OnSignUpResponseListener() {
             @Override
-            public void onResponse(BookingResponse bookingResponse) {
-                bookingMutableLiveDataResponse.postValue(bookingResponse);
+            public void onResponse(SignUpResponse signUpResponse) {
+                newUserLiveDataResponse.postValue(signUpResponse);
             }
 
             @Override
             public void onFailed(Throwable throwable) {
-                BookingResponse mBookingResponse=new BookingResponse();
-                mBookingResponse.setMessage(throwable.getLocalizedMessage());
-                bookingMutableLiveDataResponse.postValue(mBookingResponse);
+                SignUpResponse mSignUpResponse=new SignUpResponse();
+                mSignUpResponse.setMessage(throwable.getLocalizedMessage());
+                newUserLiveDataResponse.postValue(mSignUpResponse);
             }
         });
+    }
+    public LiveData<SignUpResponse> getNewUserResponse(){
+        return newUserLiveDataResponse;
     }
 }

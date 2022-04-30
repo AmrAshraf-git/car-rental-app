@@ -1,14 +1,20 @@
 package com.example.carrental.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
+
 public class SignUpResponse {
 
     //private String err;
     private String message;
-    //private String[] ValidateError;
-    //private Object[] newUser;
 
+    @SerializedName("ValidateError")
+    @Expose
+    private String[] ValidateError;
 
-
+    private List<NewUser> newUser;
 
     public String getMessage() {
         return message;
@@ -18,4 +24,19 @@ public class SignUpResponse {
         this.message = message;
     }
 
+    public List<NewUser> getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(List<NewUser> newUser) {
+        this.newUser = newUser;
+    }
+
+    public String[] getValidateError() {
+        return ValidateError;
+    }
+
+    public void setValidateError(String[] validateError) {
+        ValidateError = validateError;
+    }
 }

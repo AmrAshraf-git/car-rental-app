@@ -3,19 +3,17 @@ package com.example.carrental.repository;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.carrental.data.ApiClient;
 import com.example.carrental.data.ApiService;
 import com.example.carrental.model.Booking;
-import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
+import com.example.carrental.model.SignUpResponse;
 import com.example.carrental.model.User;
 import com.example.carrental.model.VehicleResponse;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,14 +23,14 @@ public class MainRepository {
 
     private static MainRepository instance;
     private final ApiService apiService;
-    private final MutableLiveData<VehicleResponse> vehicleMutableLiveData;
-    private final MutableLiveData<okhttp3.Response> newUserMutableLiveDataResponse;
+    //private final MutableLiveData<VehicleResponse> vehicleMutableLiveData;
+    //private final MutableLiveData<SignUpResponse> newUserMutableLiveDataResponse;
     //private final MutableLiveData<SignInResponse> userMutableLiveDataResponse;
 
 
     private MainRepository(){
-        vehicleMutableLiveData =new MutableLiveData<>();
-        newUserMutableLiveDataResponse=new MutableLiveData<>();
+        //vehicleMutableLiveData =new MutableLiveData<>();
+        //newUserMutableLiveDataResponse=new MutableLiveData<>();
         //userMutableLiveDataResponse=new MutableLiveData<>();
         apiService=ApiClient.getInstance().getApiService();
     }
@@ -111,7 +109,7 @@ public class MainRepository {
     //}
 
 
-    public LiveData<VehicleResponse> getVehiclesResponse() {
+    /*public LiveData<VehicleResponse> getVehiclesResponse() {
         //======================================PARSE DATA======================================
         Call<VehicleResponse> call=apiService.getJsonModel();
         call.enqueue(new Callback<VehicleResponse>() {
@@ -136,36 +134,63 @@ public class MainRepository {
         });
         //======================================PARSE DATA======================================
         return vehicleMutableLiveData;
+    }*/
+
+
+    public void remoteVehicleData(OnVehiclesResponseListener onVehiclesResponseListener){
+        Call<VehicleResponse> call=apiService.getJsonModel();
+        call.enqueue(new Callback<VehicleResponse>() {
+            @Override
+            public void onResponse(Call<VehicleResponse> call, Response<VehicleResponse> response) {
+                if(response.body()==null){
+                    onVehiclesResponseListener.onFailed(new Throwable("Message: Unreached response"+"Code: "+response.code()));
+                }
+                else if(response.isSuccessful() && response.code()==200){
+                    onVehiclesResponseListener.onResponse(response.body());
+                }
+                else
+                    onVehiclesResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<VehicleResponse> call, Throwable t) {
+                onVehiclesResponseListener.onFailed(t);
+                t.printStackTrace();
+            }
+        });
     }
+
+
+
 
     //public MutableLiveData<ResponseBody> getNewUserMutableLiveData() {
         //return newUserMutableLiveDataResponse;
     //}
 
-    public LiveData<okhttp3.Response> signUpResponse(NewUser newUser) {
-        Call<ResponseBody> call=apiService.signUp(newUser);
-        call.enqueue(new Callback<ResponseBody>() {
+    public void remoteSignUp(NewUser newUser, OnSignUpResponseListener onSignUpResponseListener) {
+        Call<SignUpResponse> call=apiService.signUp(newUser);
+        call.enqueue(new Callback<SignUpResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                //if (!response.isSuccessful()) {
-                    //Log.e("SignUponResponseError", String.valueOf(response.raw()));
-                    //newUserMutableLiveDataResponse.setValue(null);
-                    //Toast.makeText(mApplication.getApplicationContext(), "Can't reach to the server, please try again " + "Message: "+response.message()+"  "+"Code: "+response.code(), Toast.LENGTH_LONG).show();
-                    //return;
-                //}
-                newUserMutableLiveDataResponse.postValue(response.raw());
-                Log.e("SignUponResponseError", response.errorBody() != null ? response.errorBody().toString():"null");
+            public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
+                if(response.body()==null)
+                {
+                    onSignUpResponseListener.onFailed(new Throwable(String.valueOf(response.code())));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    //Log.e("resTest",String.valueOf(response.body()));
+                    onSignUpResponseListener.onResponse(response.body());
+                }
+                else{
+                    onSignUpResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " + response.message() + (response.body().getValidateError()!=null? response.body().getValidateError()[0]: ""  )+ "  Code: "+response.code()));
+                }
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Log.e("SignUponFailure", String.valueOf(t.getMessage()));
+            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+                onSignUpResponseListener.onFailed(t);
                 t.printStackTrace();
-                newUserMutableLiveDataResponse.postValue(null);
-                //Toast.makeText(mApplication.getApplicationContext(), "Connection Failed!", Toast.LENGTH_SHORT).show();
             }
         });
-        return newUserMutableLiveDataResponse;
     }
 
 
@@ -192,32 +217,32 @@ public class MainRepository {
         return userMutableLiveDataResponse;
     }*/
 
-    public void remoteSignIn(User user,LoginResponse loginResponse) {
+    public void remoteSignIn(User user, OnSignInResponseListener onSignInResponseListener) {
         Call<SignInResponse> call=apiService.signIn(user);
         call.enqueue(new Callback<SignInResponse>() {
             @Override
             public void onResponse(@NonNull Call<SignInResponse> call, @NonNull Response<SignInResponse> response) {
                 if(response.body()==null)
                 {
-                    loginResponse.onFailed(new Throwable(String.valueOf(response.code())));
+                    onSignInResponseListener.onFailed(new Throwable(String.valueOf(response.code())));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
                     //Log.e("resTest",String.valueOf(response.body()));
-                    loginResponse.onResponse(response.body());
+                    onSignInResponseListener.onResponse(response.body());
                 }
                 else{
-                    loginResponse.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
+                    onSignInResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
                 }
             }
             @Override
             public void onFailure(@NonNull Call<SignInResponse> call, @NonNull Throwable t) {
-                loginResponse.onFailed(t);
+                onSignInResponseListener.onFailed(t);
                 t.printStackTrace();
             }
         });
     }
 
-    public void remoteBookingResponse(Booking booking, BookingResponse bookingResponse){
+    public void remoteBookingResponse(Booking booking, OnBookingResponseListener onBookingResponseListener){
         Call<com.example.carrental.model.BookingResponse> call = apiService.RentRequest(booking);
         call.enqueue(new Callback<com.example.carrental.model.BookingResponse>() {
             @Override
@@ -225,37 +250,45 @@ public class MainRepository {
 
                 if(response.body()==null)
                 {
-                    bookingResponse.onFailed(new Throwable(String.valueOf(response.code())));
+                    onBookingResponseListener.onFailed(new Throwable(String.valueOf(response.code())));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
-                    bookingResponse.onResponse(response.body());
+                    onBookingResponseListener.onResponse(response.body());
                 }
 
                 else{
-                    bookingResponse.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
+                    onBookingResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
                 }
             }
 
             @Override
             public void onFailure(Call<com.example.carrental.model.BookingResponse> call, Throwable t) {
-                bookingResponse.onFailed(t);
+                onBookingResponseListener.onFailed(t);
                 t.printStackTrace();
             }
         });
-
-
     }
 
 
 
 
-    public interface LoginResponse{
+    public interface OnSignInResponseListener {
         void onResponse(SignInResponse signInResponse);
         void onFailed(Throwable throwable);
     }
 
-    public interface BookingResponse{
+    public interface OnSignUpResponseListener {
+        void onResponse(SignUpResponse signUpResponse);
+        void onFailed(Throwable throwable);
+    }
+
+    public interface OnBookingResponseListener {
         void onResponse(com.example.carrental.model.BookingResponse bookingResponse);
+        void onFailed(Throwable throwable);
+    }
+
+    public interface OnVehiclesResponseListener {
+        void onResponse(VehicleResponse vehicleResponse);
         void onFailed(Throwable throwable);
     }
 
