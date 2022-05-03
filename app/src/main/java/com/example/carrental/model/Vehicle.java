@@ -16,17 +16,17 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     private int id; //temp
     private String _id;
 
-
     @SerializedName("model")
     @Expose
     private String vehicleModel; //2
 
-    private String companyName; //3
+    @SerializedName("brand")
+    @Expose
+    private String vehicleBrand;
 
-    private String companyCity;
-    private String companyAddress; //4
-    private int compHotline;
-    private float CompRate; //5
+    @SerializedName("Vehicletype")
+    @Expose
+    private String vehicleType;
 
     @SerializedName("imageURL")
     @Expose
@@ -58,24 +58,43 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     @Expose
     private JsonObject compDetails;
 
+    private String companyName; //3
+    private String companyCity;
+    private String companyAddress; //4
+    private int compHotline;
+    private float CompRate; //5
+
     private VehicleSpecs vehicleSpecs;
+
+
+
+
+
+    public Vehicle() {
+        //vehicleImgURL =new String[4];
+        //vehicleImgURL[0]= "R.drawable.img_logo_test";
+        priceLabel=PriceLabel.DOLLAR;
+        //id= new Random().nextInt(30);
+    }
 
 
     protected Vehicle(Parcel in) {
         id = in.readInt();
         _id = in.readString();
         vehicleModel = in.readString();
-        companyName = in.readString();
-        companyCity = in.readString();
-        companyAddress = in.readString();
-        compHotline = in.readInt();
-        CompRate = in.readFloat();
+        vehicleBrand = in.readString();
+        vehicleType = in.readString();
         vehicleImgURL = in.createStringArray();
         vehicleColor = in.readString();
         doorsNum = in.readInt();
         seatingCapacity = in.readInt();
         vehicleRate = in.readFloat();
         price = in.readFloat();
+        companyName = in.readString();
+        companyCity = in.readString();
+        companyAddress = in.readString();
+        compHotline = in.readInt();
+        CompRate = in.readFloat();
     }
 
     public static final Creator<Vehicle> CREATOR = new Creator<Vehicle>() {
@@ -89,15 +108,6 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
             return new Vehicle[size];
         }
     };
-
-
-    public Vehicle() {
-        //vehicleImgURL =new String[4];
-        //vehicleImgURL[0]= "R.drawable.img_logo_test";
-        priceLabel=PriceLabel.DOLLAR;
-        //id= new Random().nextInt(30);
-    }
-
 
     public int getId() {
         return id;
@@ -235,6 +245,21 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
         this.compDetails = compDetails;
     }
 
+    public String getVehicleBrand() {
+        return vehicleBrand;
+    }
+
+    public void setVehicleBrand(String vehicleBrand) {
+        this.vehicleBrand = vehicleBrand;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
 
     @Override
     public int describeContents() {
@@ -246,16 +271,18 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
         dest.writeInt(id);
         dest.writeString(_id);
         dest.writeString(vehicleModel);
-        dest.writeString(companyName);
-        dest.writeString(companyCity);
-        dest.writeString(companyAddress);
-        dest.writeInt(compHotline);
-        dest.writeFloat(CompRate);
+        dest.writeString(vehicleBrand);
+        dest.writeString(vehicleType);
         dest.writeStringArray(vehicleImgURL);
         dest.writeString(vehicleColor);
         dest.writeInt(doorsNum);
         dest.writeInt(seatingCapacity);
         dest.writeFloat(vehicleRate);
         dest.writeFloat(price);
+        dest.writeString(companyName);
+        dest.writeString(companyCity);
+        dest.writeString(companyAddress);
+        dest.writeInt(compHotline);
+        dest.writeFloat(CompRate);
     }
 }

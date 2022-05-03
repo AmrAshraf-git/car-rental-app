@@ -488,7 +488,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
             navMenu.findItem(R.id.nav_log_out).setVisible(true);
             navMenu.findItem(R.id.nav_view_account).setVisible(true);
             headerSignIn.setVisibility(View.INVISIBLE);
-            headerSignUp.setText(SessionManager.getInstance(NavControllerActivity.this).getLoginSession().getEmail());
+            headerSignUp.setText(SessionManager.getInstance(NavControllerActivity.this).getLoginSession().getFirstName());
         }
     }
 }

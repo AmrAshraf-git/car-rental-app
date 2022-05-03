@@ -53,59 +53,5 @@ public class ApiClient {
         //return apiService;
     }
 
-    /*
-    public LiveData<Vehicle> getVehiclesResponse() {
-        //======================================PARSE DATA======================================
-        apiService.getJsonModel().enqueue(new Callback<VehicleResponse>() {
-            @Override
-            public void onResponse(Call<VehicleResponse> call, Response<VehicleResponse> response) {
-                if (!response.isSuccessful() || response.body() == null) {
-                    Log.e("onResponseError", String.valueOf(response.code()));
-                    vehicleMutableLiveData.setValue(null);
-                    return;
-                }
-                List<Vehicle> list = new ArrayList<>(((VehicleResponse) response.body()).getData());
-                vehicleMutableLiveData.setValue(list);
-            }
-
-            @Override
-            public void onFailure(Call<VehicleResponse> call, Throwable t) {
-                vehicleMutableLiveData.setValue(null);
-                t.printStackTrace();
-            }
-        });
-        //======================================PARSE DATA======================================
-        return vehicleMutableLiveData;
-    }
-
-    public MutableLiveData<ResponseBody> getNewUserMutableLiveData() {
-        return newUserMutableLiveDataResponse;
-    }
-
-    public void signUpResponseRequest(NewUser newUser)
-    {
-        Call<ResponseBody> call=apiService.signUp(newUser);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (!response.isSuccessful()) {
-                    Log.e("SignUponResponseError", String.valueOf(response.raw()));
-                    newUserMutableLiveDataResponse.setValue(null);
-                    return;
-                }
-                newUserMutableLiveDataResponse.setValue(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Log.e("SignUponFailure", String.valueOf(t.getMessage()));
-                t.printStackTrace();
-                newUserMutableLiveDataResponse.setValue(null);
-            }
-        });
-
-
-    }*/
-
 
 }

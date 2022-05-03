@@ -10,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.carrental.R;
-import com.example.carrental.ui.main.NavControllerActivity;
 import com.example.carrental.utility.SessionManager;
 
 public class ProfileFragment extends Fragment {
 
     private View view;
-    private TextView testText;
+    private TextView fName;
+    private TextView lName;
+    private TextView email;
+    private TextView phone;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -51,9 +53,15 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_profile, container, false);
-        testText=view.findViewById(R.id.profile_txtView_test);
+        fName =view.findViewById(R.id.profile_txtView_fName);
+        lName =view.findViewById(R.id.profile_txtView_lName);
+        email =view.findViewById(R.id.profile_txtView_email);
+        phone =view.findViewById(R.id.profile_txtView_phone);
         if (SessionManager.getInstance(getContext()).isLoggedIn()) {
-            testText.setText(String.format("Email: %s", SessionManager.getInstance(getContext()).getLoginSession().getEmail()));
+            fName.setText(String.format("First name: %s", SessionManager.getInstance(getContext()).getLoginSession().getFirstName()));
+            lName.setText(String.format("Last name: %s", SessionManager.getInstance(getContext()).getLoginSession().getLastName()));
+            email.setText(String.format("Email: %s", SessionManager.getInstance(getContext()).getLoginSession().getEmail()));
+            phone.setText(String.format("Phone: %d", SessionManager.getInstance(getContext()).getLoginSession().getPhone()));
         }
         return view;
     }

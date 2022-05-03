@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
     tools:context=".ui.main.fragment.navigation.ProfileFragment">
 
     <TextView
-        android:id="@+id/profile_txtView_test"
+        android:id="@+id/profile_txtView_email"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/profile_txtView_fName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/profile_txtView_lName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:text="@string/hello_blank_fragment" />
+
+    <TextView
+        android:id="@+id/profile_txtView_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:text="@string/hello_blank_fragment" />
+
+</LinearLayout>

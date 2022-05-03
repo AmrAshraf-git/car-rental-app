@@ -106,8 +106,8 @@ public class SignInFragment extends Fragment {
 
                         progressBar.setVisibility(View.VISIBLE);
                         signIn.setEnabled(false);
-                        User mUser=getUser();
-                        vehicleViewModel.login(mUser);
+                        //User mUser=getUser();
+                        vehicleViewModel.login(getUser());
                         //Log.e("resume1","onClick");
                         vehicleViewModel.getUserResponse().observe(getViewLifecycleOwner(), new Observer<SignInResponse>() {
                             @Override
@@ -120,8 +120,9 @@ public class SignInFragment extends Fragment {
                                         //Toast.makeText(getContext(), "sign-up successful " + "Message: " +  signInResponse.getToken() , Toast.LENGTH_SHORT).show();
                                         //Log.e("resume4","if2");
                                         if(signInResponse.getToken()!=null) {
-                                            mUser.setToken(signInResponse.getToken());
-                                            sessionManager.saveLoginSession(mUser);
+                                            //mUser.setToken(signInResponse.getToken());
+                                            sessionManager.saveLoginSession(signInResponse);
+                                            Log.e("sin",signInResponse.getFirstName());
                                             moveToHomeActivity();
                                             //Log.e("resume5","if3");
                                         }
@@ -195,31 +196,6 @@ public class SignInFragment extends Fragment {
         return view;
     }
 
-
-
-    //====================================VALIDATION=====================================
-    private boolean checkEmpty() {
-        if (email.getText().toString().isEmpty()) {
-            email.requestFocus();
-            email.setError("Email is required");
-            return false;
-        } else if (password.getText().toString().isEmpty()) {
-            password.requestFocus();
-            password.setError("password name is required");
-            return false;
-        } else
-            return true;
-    }
-    private boolean validateEmail() {
-        String regVal = "^[A-Za-z0-9+_.-]+@(.+)$";
-        if (!email.getText().toString().matches(regVal)) {
-            email.setError("Invalid email");
-            email.requestFocus();
-            return false;
-        }
-        return true;
-    }
-    //====================================VALIDATION=====================================
 
 
     @Override
