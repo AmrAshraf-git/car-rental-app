@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     private boolean mAlreadyLoaded;
     private String previousQuery;
     MenuItem mMenuItem;
+    Menu mMenu;
     MenuInflater mInflater;
     SearchView searchView;
     //private ProgressDialog progressDialog;
@@ -100,6 +102,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                              Bundle savedInstanceState) {
         if (!mAlreadyLoaded) {
             mAlreadyLoaded = true;
+            //setHasOptionsMenu(true);
             //Log.e("test","view");
             view = inflater.inflate(R.layout.fragment_home, container, false);
             recyclerView = view.findViewById(R.id.homePageF_recyclerView_main);
@@ -119,8 +122,8 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
 
             //vehicleViewModel.getVehicles(view);
-            observeViewModel();
             setUpRecyclerView();
+            observeViewModel();
 
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -141,11 +144,11 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
         vehicleViewModel.getSearchedVehicle().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
             @Override
             public void onChanged(VehicleResponse vehicleResponse) {
-                //Log.e("resume1","onChanged");
+                Log.e("resume1","(Search)onChanged");
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mVehicleResponse) {
-                    //Log.e("resume2","Lifecycle_RESUMED(if1)");
+                    Log.e("resume2","(Search)Lifecycle_RESUMED(if1)");
                     if (vehicleResponse.getMessage() != null) {
-                        //Log.e("resume3","if2");
+                        //Log.e("resume3","(Search)if2");
                         if (vehicleResponse.getData() != null) {
                             if(vehicleResponse.getData().isEmpty()) {
                                 homeListAdapter.updateStatus(vehicleResponse.getData());
@@ -153,7 +156,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                             }
                             else {
                                 searchResult.setVisibility(View.GONE);
-                                //Log.e("resume4","if3");
+                                //Log.e("resume4","(Search)if3");
                                 homeListAdapter.updateStatus(vehicleResponse.getData());
                                 //homeItemList.addAll(vehicleResponse.getData());
                                 //homeListAdapter.notifyDataSetChanged();
@@ -168,7 +171,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                             Toast.makeText(getContext(), (vehicleResponse.getMessage() != null ? vehicleResponse.getMessage() : "No responding data"), Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getContext(), (vehicleResponse.getMessage() != null ? vehicleResponse.getMessage() : "Unknown response, please try again"), Toast.LENGTH_SHORT).show();
-                        //Log.e("resume5","else1");
+                        //Log.e("resume5","(Search)else1");
                     }
                 }
                 //getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
@@ -177,18 +180,20 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                 swipeRefreshLayout.setEnabled(false);
                 searchView.clearFocus();
                 //vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
-                //Log.e("resume6","end of onChanged");
+                //Log.e("resume6","(Search)end of onChanged");
             }
         });
     }
 
     private void observeViewModel() {
-        vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
         vehicleViewModel.getVehicle().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
             @Override
             public void onChanged(VehicleResponse vehicleResponse) {
                 //Log.e("resume1","onChanged");
+                //Log.e("response",String.valueOf(vehicleResponse));
+                //Log.e("mResponse",String.valueOf(mVehicleResponse));
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mVehicleResponse) {
                     //Log.e("resume2","Lifecycle_RESUMED(if1)");
                     if (vehicleResponse.getMessage() != null && vehicleResponse.getMessage().equals("done")) {
@@ -210,10 +215,10 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                         //Log.e("resume5","else1");
                     }
                 }
-                //getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
                 mVehicleResponse = vehicleResponse;
+                getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
                 progressBar.setVisibility(View.GONE);
-                //vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
+                vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
                 //Log.e("resume6","end of onChanged");
             }
         });
@@ -243,45 +248,28 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-
+        menu.clear();
+        //Log.e("onCreateOptionsMenu","called");
         inflater.inflate(R.menu.tool_bar_menu, menu);
-
         mMenuItem = menu.findItem(R.id.menu_item_search);
         searchView = (SearchView) mMenuItem.getActionView();
-        searchView.setFocusableInTouchMode(false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            searchView.setFocusedByDefault(false);
-        }
-
-        if (vehicleViewModel.getSearchedVehicle().getValue() != null) {
-            previousQuery = vehicleViewModel.getSearchedVehicle().getValue().getSearch();
-
-            if (previousQuery != null && !previousQuery.isEmpty()) {
-                mMenuItem.expandActionView();
-                //mMenuItem.expandActionView();
-                //searchView.setFocusable(false);
-                //searchView.setIconified(false);
-                searchView.clearFocus();
-                searchView.setQuery(previousQuery, false);
-                //mMenuItem.setVisible(true);
-            }
-
-            //Log.e("MenuItem",previousQuery);
-            //mMenuItem.collapseActionView();
-        }
+        //searchView.setFocusableInTouchMode(false);
+        searchView.setTouchscreenBlocksFocus(true);
+        searchView.setFocusable(false);
 
         //searchView.setIconified(true);
         mMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
                 //Log.e("MenuItem","Expand");
+                searchView.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                observeViewModel();
                 searchResult.setVisibility(View.GONE);
+                observeViewModel();
                 swipeRefreshLayout.setEnabled(true);
                 return true;
             }
@@ -301,6 +289,26 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                 return false;
             }
         });
+
+        if (vehicleViewModel.getSearchedVehicle().getValue() != null) {
+            previousQuery = vehicleViewModel.getSearchedVehicle().getValue().getSearch();
+
+            if (previousQuery != null && !previousQuery.isEmpty()) {
+                //mMenuItem.setVisible(false);
+                //searchView.setVisibility(View.INVISIBLE);
+                mMenuItem.expandActionView();
+                //searchView.setFocusable(false);
+                //searchView.setIconified(false);
+                searchView.clearFocus();
+                searchView.setQuery(previousQuery, false);
+                //mMenuItem.setVisible(true);
+                //mMenuItem.setVisible(true);
+                //searchView.setVisibility(View.VISIBLE);
+            }
+
+            //Log.e("MenuItem",previousQuery);
+            //mMenuItem.collapseActionView();
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -323,6 +331,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
         vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
         vehicleViewModel.getSearchedVehicle().removeObservers(getViewLifecycleOwner());
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+
     }
 
     @Override
@@ -335,6 +344,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     public void onResume() {
         super.onResume();
     }
+
 
     /**
      * Dummy Data

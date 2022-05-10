@@ -8,6 +8,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="@color/main_background"
     app:elevation="0dp"
+    android:focusable="false"
     android:theme="@style/Theme.CarRental.AppBarOverlay"
     app:layout_scrollFlags="scroll|enterAlways">
     <androidx.appcompat.widget.Toolbar

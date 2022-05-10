@@ -13,6 +13,7 @@ import com.example.carrental.model.VehicleResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -46,7 +47,7 @@ public interface ApiService {
     Call<SignInResponse> signIn(@Body User user);
 
     @POST(Credentials.Booking)
-    Call<BookingResponse> RentRequest(@Body Booking booking);
+    Call<BookingResponse> RentRequest(@Header("authorization") String token, @Body Booking booking);
 
 
 

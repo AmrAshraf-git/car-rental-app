@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import com.example.carrental.data.ApiClient;
 import com.example.carrental.data.ApiService;
 import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
@@ -142,29 +143,33 @@ public class MainRepository {
         });
     }
 
-    public void remoteBookingResponse(Booking booking, OnBookingResponseListener onBookingResponseListener){
-        Call<com.example.carrental.model.BookingResponse> call = apiService.RentRequest(booking);
-        call.enqueue(new Callback<com.example.carrental.model.BookingResponse>() {
+    public void remoteBookingResponse(String token, Booking booking, OnBookingResponseListener onBookingResponseListener){
+        Call<com.example.carrental.model.BookingResponse> call = apiService.RentRequest(token, booking);
+        call.enqueue(new Callback<BookingResponse>() {
             @Override
-            public void onResponse(Call<com.example.carrental.model.BookingResponse> call, Response<com.example.carrental.model.BookingResponse> response) {
+            public void onResponse(Call<BookingResponse> call, Response<BookingResponse> response) {
 
                 if(response.body()==null)
                 {
+                    //Log.e("resTest","nullBody");
                     onBookingResponseListener.onFailed(new Throwable(String.valueOf(response.code())));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
+                    //Log.e("resTest","succ");
                     onBookingResponseListener.onResponse(response.body());
                 }
 
                 else{
+                    //Log.e("resTest","unknown");
                     onBookingResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
                 }
             }
 
             @Override
-            public void onFailure(Call<com.example.carrental.model.BookingResponse> call, Throwable t) {
+            public void onFailure(Call<BookingResponse> call, Throwable t) {
                 onBookingResponseListener.onFailed(t);
                 t.printStackTrace();
+                //Log.e("resTest","failed");
             }
         });
     }

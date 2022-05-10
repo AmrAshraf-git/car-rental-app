@@ -26,6 +26,7 @@
             android:name=".ui.main.NavControllerActivity"
             android:exported="true"
             android:hardwareAccelerated="true"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:theme="@style/Theme.CarRental"/>
 
             <!--android:launchMode="singleTop"-->

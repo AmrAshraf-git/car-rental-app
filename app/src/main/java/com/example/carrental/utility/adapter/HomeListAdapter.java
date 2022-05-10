@@ -39,7 +39,9 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return arrayList.size();
+        if(arrayList!=null)
+            return arrayList.size();
+        return 0;
     }
 
     public Vehicle getItem(final int pos) {

@@ -5,9 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +24,10 @@ import android.widget.Toast;
 
 import com.example.carrental.R;
 import com.example.carrental.constant.DateConverter;
+import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingResponse;
+import com.example.carrental.ui.main.VehicleViewModel;
+import com.example.carrental.utility.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.net.URL;
@@ -61,6 +69,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     String dayOfWeek;
     String monthOfYear;
 
+    private VehicleViewModel vehicleViewModel;
+
     private boolean whichFocused = false; // (false -> Pick-up) , (true -> Drop-off)
 
 
@@ -69,15 +79,16 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String VEHICLE_IMAGE = "imageKey";
     private static final String VEHICLE_MODEL = "modelKey";
+    private static final String VEHICLE_ID = "idKey";
     private static final String VEHICLE_PRICE = "priceKey";
     private static final String COMPANY_NAME = "companyNameKey";
     private static final String COMPANY_RATE = "companyRateKey";
 
 
-
     // TODO: Rename and change types of parameters
     private String vehicleImage;
     private String vehicleModel;
+    private String vehicleId;
     private String vehiclePrice;
     private String companyName;
     private float companyRate;
@@ -87,13 +98,14 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     }
 
     // TODO: Rename and change types and number of parameters
-    public static ConfirmationFragment newInstance(String vehicleImage, String vehicleModel,
+    public static ConfirmationFragment newInstance(String vehicleImage, String vehicleModel, @NonNull String vehicleId,
                                                    String vehiclePrice, String companyName,
                                                    float companyRate) {
         ConfirmationFragment fragment = new ConfirmationFragment();
         Bundle args = new Bundle();
         args.putString(VEHICLE_IMAGE, vehicleImage);
         args.putString(VEHICLE_MODEL, vehicleModel);
+        args.putString(VEHICLE_ID, vehicleId);
         args.putString(VEHICLE_PRICE, vehiclePrice);
         args.putString(COMPANY_NAME, companyName);
         args.putFloat(COMPANY_RATE, companyRate);
@@ -108,6 +120,7 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         if (getArguments() != null) {
             vehicleImage = getArguments().getString(VEHICLE_IMAGE);
             vehicleModel = getArguments().getString(VEHICLE_MODEL);
+            vehicleId = getArguments().getString(VEHICLE_ID);
             vehiclePrice = getArguments().getString(VEHICLE_PRICE);
             companyName = getArguments().getString(COMPANY_NAME);
             companyRate = getArguments().getFloat(COMPANY_RATE);
@@ -138,13 +151,13 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
 
         sendRequestBtn = view.findViewById(R.id.confirmation_btn_sendRequest);
 
+        vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
+
         Picasso.get().load(vehicleImage).fit().centerInside().error(R.drawable.img_logo_test).into(vehicleImageImgView);
         vehicleModelTxtView.setText(vehicleModel);
         vehiclePriceTxtView.setText(vehiclePrice);
         companyNameTxtView.setText("Name: "+companyName);
         companyRateRB.setRating(companyRate);
-
-
 
 
         pickUpDateCard.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +179,33 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IsValidDates(pickUpDate,dropOffDate);
+                IsValidDates(pickUpDate, dropOffDate);
+
+                //==============================TEST ONLY========================================
+                if (SessionManager.getInstance(getContext()).isLoggedIn()){
+                    Booking booking = new Booking();
+                    booking.setVehicleID(vehicleId);
+                    booking.setPick_upLocation("Egypt");
+                    booking.setReturnLocation("Egypt");
+                    booking.setDateFrom("2022/07/11");
+                    booking.setDateTo("2022/07/12");
+
+                    vehicleViewModel.booking(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
+                    vehicleViewModel.getBookingLiveDataResponse().observe(getViewLifecycleOwner(), new Observer<BookingResponse>() {
+                        @Override
+                        public void onChanged(BookingResponse bookingResponse) {
+                            if (bookingResponse.getMessage() != null) {
+                                Log.e("bookingResponse", bookingResponse.getMessage());
+                            }
+                        }
+                    });
+                }
+                else
+                    Toast.makeText(getContext(), "You must login first", Toast.LENGTH_SHORT).show();
+                //==============================TEST ONLY========================================
+
+
+
             }
         });
 

@@ -219,7 +219,7 @@ public class BookingFragment extends Fragment {
 
                 //Transfer Required Data from Booking fragment to Confirmation fragment
                 Fragment fragment = ConfirmationFragment.newInstance(vehicle.getVehicleImgURL()[0],
-                        vehicle.getVehicleModel(),
+                        vehicle.getVehicleModel(), vehicle.get_id(),
                         vehicle.getPrice()+" "+vehicle.getPriceLabel(),
                         vehicle.getCompanyName(),vehicle.getCompRate());
 

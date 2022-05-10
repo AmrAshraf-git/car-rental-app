@@ -79,8 +79,8 @@ public class VehicleViewModel extends ViewModel {
         return vehicleLiveDataResponse;
     }
 
-    public void booking(Booking booking) {
-        mainRepository.remoteBookingResponse(booking, new MainRepository.OnBookingResponseListener() {
+    public void booking(String token, Booking booking) {
+        mainRepository.remoteBookingResponse(token, booking, new MainRepository.OnBookingResponseListener() {
             @Override
             public void onResponse(BookingResponse bookingResponse) {
                 bookingLiveDataResponse.postValue(bookingResponse);

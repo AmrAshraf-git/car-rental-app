@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -317,7 +318,6 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         headerSignIn=headerView.findViewById(R.id.navHeader_txtView_subTitle);
         headerImage=headerView.findViewById(R.id.navHeader_imageView);
         editNavItem();
-
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         actBar = getSupportActionBar();
@@ -333,8 +333,6 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         //actBar.setHomeAsUpIndicator(R.drawable.ic_baseline_arrow_back);
         //invalidateOptionsMenu();
         //drawerToggle.syncState();
-
-
         fragmentManager.addOnBackStackChangedListener(this);
         enableHomeUpOrHamburger();
 
@@ -440,7 +438,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         });
 
     }
-
+/*
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -451,7 +449,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
-    }
+    }*/
 
 
     private void enableHomeUpOrHamburger() {

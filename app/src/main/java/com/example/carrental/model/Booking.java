@@ -1,64 +1,62 @@
 package com.example.carrental.model;
 
 
-import java.util.Date;
-
 public class Booking {
 
-    private String vecihelID;
-    private String token;
-    private Date startDate;
-    private Date endDate;
-    private Coordinates pickupLocation;
-    private Coordinates deliveryLocation;
+    //private String token;
+    private String Pick_upLocation;
+    private String returnLocation;
+    private String DateFrom;
+    private String DateTo;
+    private String VehicleID;
 
 
-    public String getVecihelID() {
-        return vecihelID;
+    public String getVehicleID() {
+        return VehicleID;
     }
 
-    public void setVecihelID(String vecihelID) {
-        this.vecihelID = vecihelID;
+    public void setVehicleID(String vehicleID) {
+        this.VehicleID = vehicleID;
     }
 
-    public String getToken() {
-        return token;
+    //public String getToken() {
+        //return token;
+    //}
+
+    //public void setToken(String token) {
+        //this.token = token;
+    //}
+
+    public String getDateFrom() {
+        return DateFrom;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setDateFrom(String dateFrom) {
+        this.DateFrom = dateFrom;
     }
 
-    public Date getStartDate() {
-        return startDate;
+    public String getDateTo() {
+        return DateTo;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public void setDateTo(String dateTo) {
+        this.DateTo = dateTo;
     }
 
-    public Date getEndDate() {
-        return endDate;
+    public String getPick_upLocation() {
+        return Pick_upLocation;
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
+    public void setPick_upLocation(String pick_upLocation) {
+        this.Pick_upLocation = pick_upLocation;
     }
 
-    public Coordinates getPickupLocation() {
-        return pickupLocation;
+    public String getReturnLocation() {
+        return returnLocation;
     }
 
-    public void setPickupLocation(Coordinates pickupLocation) {
-        this.pickupLocation = pickupLocation;
-    }
-
-    public Coordinates getDeliveryLocation() {
-        return deliveryLocation;
-    }
-
-    public void setDeliveryLocation(Coordinates deliveryLocation) {
-        this.deliveryLocation = deliveryLocation;
+    public void setReturnLocation(String returnLocation) {
+        this.returnLocation = returnLocation;
     }
 
 }
