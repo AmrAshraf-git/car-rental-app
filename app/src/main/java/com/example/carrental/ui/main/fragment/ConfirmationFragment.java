@@ -2,7 +2,6 @@ package com.example.carrental.ui.main.fragment;
 
 import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,10 +29,8 @@ import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.SessionManager;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -185,10 +182,14 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                 if (SessionManager.getInstance(getContext()).isLoggedIn()){
                     Booking booking = new Booking();
                     booking.setVehicleID(vehicleId);
-                    booking.setPick_upLocation("Egypt");
-                    booking.setReturnLocation("Egypt");
-                    booking.setDateFrom("2022/07/11");
-                    booking.setDateTo("2022/07/12");
+                    booking.setPick_upLocation("Alex");
+                    booking.setReturn_Location("Alex");
+                    //booking.setDateFrom(pickUpDate);
+                    booking.setDateFrom("2022-06-22");
+                    //booking.setDateTo(dropOffDate);
+                    booking.setDateTo("2022-06-23");
+                    Log.e("ddd",pickUpDate);
+                    Log.e("ddd",dropOffDate);
 
                     vehicleViewModel.booking(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
                     vehicleViewModel.getBookingLiveDataResponse().observe(getViewLifecycleOwner(), new Observer<BookingResponse>() {

@@ -151,17 +151,17 @@ public class MainRepository {
 
                 if(response.body()==null)
                 {
-                    //Log.e("resTest","nullBody");
-                    onBookingResponseListener.onFailed(new Throwable(String.valueOf(response.code())));
+                    Log.e("resTest","nullBody");
+                    onBookingResponseListener.onFailed(new Throwable(String.valueOf(response.code() + response.message())));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
-                    //Log.e("resTest","succ");
+                    Log.e("resTest","succ");
                     onBookingResponseListener.onResponse(response.body());
                 }
 
                 else{
-                    //Log.e("resTest","unknown");
-                    onBookingResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
+                    Log.e("resTest","unknown");
+                    onBookingResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+  response.body().getMessage()!=null?response.body().getMessage() :"no message" +" Code: "+response.code()));
                 }
             }
 
@@ -169,7 +169,7 @@ public class MainRepository {
             public void onFailure(Call<BookingResponse> call, Throwable t) {
                 onBookingResponseListener.onFailed(t);
                 t.printStackTrace();
-                //Log.e("resTest","failed");
+                Log.e("resTest","failed");
             }
         });
     }

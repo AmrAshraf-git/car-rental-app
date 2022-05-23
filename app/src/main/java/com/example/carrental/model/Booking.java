@@ -5,7 +5,7 @@ public class Booking {
 
     //private String token;
     private String Pick_upLocation;
-    private String returnLocation;
+    private String return_Location;
     private String DateFrom;
     private String DateTo;
     private String VehicleID;
@@ -51,12 +51,12 @@ public class Booking {
         this.Pick_upLocation = pick_upLocation;
     }
 
-    public String getReturnLocation() {
-        return returnLocation;
+    public String getReturn_Location() {
+        return return_Location;
     }
 
-    public void setReturnLocation(String returnLocation) {
-        this.returnLocation = returnLocation;
+    public void setReturn_Location(String return_Location) {
+        this.return_Location = return_Location;
     }
 
 }
