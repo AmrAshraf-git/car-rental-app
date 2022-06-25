@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_background"
+    android:orientation="vertical"
+    android:padding="18dp"
+    tools:context=".ui.main.fragment.HistoryDetailsFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <TextView
+        android:id="@+id/historyDetails_txtView_requestID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:text="request ID" />
+
+    <TextView
+        android:id="@+id/historyDetails_txtView_vehicleID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:text="request vehicle ID" />
+
+    <TextView
+        android:id="@+id/historyDetails_txtView_companyID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:text="request company ID" />
+
+    <TextView
+        android:id="@+id/historyDetails_txtView_bookedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:text="booked date" />
+
+    <TextView
+        android:id="@+id/historyDetails_txtView_deliveredDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:text="delivered date" />
+
+    <TextView
+        android:id="@+id/historyDetails_txtView_pickupLoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:text="pickup location" />
+
+    <TextView
+        android:id="@+id/historyDetails_txtView_returnLoc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:text="return location" />
+
+    <TextView
+        android:id="@+id/historyDetails_txtView_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:text="status" />
+
+    </LinearLayout>
+
+</ScrollView>

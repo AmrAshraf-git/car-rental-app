@@ -108,33 +108,34 @@ public class SignInFragment extends Fragment {
                         signIn.setEnabled(false);
                         //User mUser=getUser();
                         vehicleViewModel.login(getUser());
-                        //Log.e("resume1","onClick");
+                        Log.e("resume1","onClick");
                         vehicleViewModel.getUserResponse().observe(getViewLifecycleOwner(), new Observer<SignInResponse>() {
                             @Override
                             public void onChanged(SignInResponse signInResponse) {
-                                //Log.e("resume2","onChanged");
+                                Log.e("resume2","onChanged");
                                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && signInResponse !=mSignInResponse) {
-                                    //Log.e("resume3","Lifecycle_RESUMED(if1)");
+                                    Log.e("resume3","Lifecycle_RESUMED(if1)");
                                     if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("done")) {
                                         email.setError(null);
-                                        //Toast.makeText(getContext(), "sign-up successful " + "Message: " +  signInResponse.getToken() , Toast.LENGTH_SHORT).show();
-                                        //Log.e("resume4","if2");
+                                        //Toast.makeText(getContext(), "sign-in successful " + "Message: " +  signInResponse.getToken() , Toast.LENGTH_SHORT).show();
+                                        Log.e("resume4","if2");
                                         if(signInResponse.getToken()!=null) {
                                             //mUser.setToken(signInResponse.getToken());
                                             sessionManager.saveLoginSession(signInResponse);
                                             Log.e("sin",signInResponse.getFirstName());
                                             moveToHomeActivity();
-                                            //Log.e("resume5","if3");
+                                            Log.e("resume5","if3");
                                         }
                                     }
                                     else if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("400")){
                                         email.setError("Invalid email or password");
-                                        //Log.e("resume6","else if1");
+                                        Log.e("msg",signInResponse.getMessage());
+                                        Log.e("resume6","else if1");
                                     }
                                     else {
                                         email.setError(null);
                                         Toast.makeText(getContext(), (signInResponse.getMessage() != null ? signInResponse.getMessage() : "Unknown"), Toast.LENGTH_SHORT).show();
-                                        //Log.e("resume7","else1");
+                                        Log.e("resume7","else1");
                                     }
                                 }
                                 //vehicleViewModel.getUserResponse().removeObservers(getViewLifecycleOwner());

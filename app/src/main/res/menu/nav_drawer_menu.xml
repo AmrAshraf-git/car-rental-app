@@ -9,15 +9,17 @@
             android:title="Home"
             android:checked="true"
             android:icon="@drawable/ic_baseline_home"/>
-        <item
-            android:id="@+id/nav_allCategories"
-            android:title="All categories"
-            android:checked="false"
-            android:icon="@drawable/ic_baseline_search"/>
+
         <item
             android:id="@+id/nav_favorite"
             android:title="Favorite List"
             android:icon="@drawable/ic_baseline_favorite"/>
+
+        <item
+            android:id="@+id/nav_history"
+            android:title="Booking History"
+            android:checked="false"
+            android:icon="@drawable/ic_baseline_history"/>
 
         <item
             android:id="@+id/nav_my_booking"

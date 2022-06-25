@@ -7,6 +7,7 @@ import com.example.carrental.model.SignInResponse;
 public class SessionManager {
     private static final String LOGIN_NAME="Authentication";
     private static final String LOGIN_KEY_TOKEN="Login_TOKEN";
+    private static final String LOGIN_KEY_ID="Login_ID";
     private static final String LOGIN_KEY_EMAIL="Login_EMAIL";
     private static final String LOGIN_KEY_FNAME = "Login_FNAME";
     private static final String LOGIN_KEY_LNAME = "Login_LNAME";
@@ -28,6 +29,7 @@ public class SessionManager {
         SharedPreferences sharedPreferences=context.getSharedPreferences(LOGIN_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString(LOGIN_KEY_TOKEN,user.getToken());
+        editor.putString(LOGIN_KEY_ID,user.getId());
         editor.putString(LOGIN_KEY_EMAIL,user.getEmail());
         editor.putString(LOGIN_KEY_FNAME,user.getFirstName());
         editor.putString(LOGIN_KEY_LNAME,user.getLastName());
@@ -39,6 +41,7 @@ public class SessionManager {
         SharedPreferences sharedPreferences=context.getSharedPreferences(LOGIN_NAME,Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.remove(LOGIN_KEY_TOKEN);
+        editor.remove(LOGIN_KEY_ID);
         editor.remove(LOGIN_KEY_EMAIL);
         editor.remove(LOGIN_KEY_FNAME);
         editor.remove(LOGIN_KEY_LNAME);
@@ -54,6 +57,7 @@ public class SessionManager {
         mUser.setLastName(sharedPreferences.getString(LOGIN_KEY_LNAME,null));
         mUser.setPhone(Integer.parseInt(sharedPreferences.getString(LOGIN_KEY_PHONE,"0")));
         mUser.setToken(sharedPreferences.getString(LOGIN_KEY_TOKEN,null));
+        mUser.setId(sharedPreferences.getString(LOGIN_KEY_ID,null));
         return mUser;
     }
 

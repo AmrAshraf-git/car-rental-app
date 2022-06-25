@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
@@ -23,6 +24,7 @@ public class VehicleViewModel extends ViewModel {
     private final MutableLiveData<SignInResponse> userLiveDataResponse;
     private final MutableLiveData<SignUpResponse> newUserLiveDataResponse;
     private final MutableLiveData<BookingResponse> bookingLiveDataResponse;
+    private final MutableLiveData<BookingHistoryResponse> bookingHistoryLiveDataResponse;
     private final MainRepository mainRepository;
 
     public VehicleViewModel() {
@@ -32,6 +34,7 @@ public class VehicleViewModel extends ViewModel {
         bookingLiveDataResponse = new MutableLiveData<>();
         vehicleLiveDataResponse = new MutableLiveData<>();
         vehicleSearchLiveDataResponse = new MutableLiveData<>();
+        bookingHistoryLiveDataResponse= new MutableLiveData<>();
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
@@ -54,7 +57,6 @@ public class VehicleViewModel extends ViewModel {
                 }
         );
     }
-
     public MutableLiveData<VehicleResponse> getSearchedVehicle() {
         return vehicleSearchLiveDataResponse;
     }
@@ -94,7 +96,6 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
-
     public MutableLiveData<BookingResponse> getBookingLiveDataResponse() {
         return bookingLiveDataResponse;
     }
@@ -116,7 +117,6 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
-
     public LiveData<SignInResponse> getUserResponse() {
 
         return userLiveDataResponse;
@@ -137,10 +137,29 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
-
     public LiveData<SignUpResponse> getNewUserResponse() {
 
         return newUserLiveDataResponse;
+    }
+
+    public void history(String id){
+        mainRepository.remoteBookingHistoryResponse(id, new MainRepository.OnBookingHistoryResponseListener() {
+            @Override
+            public void onResponse(BookingHistoryResponse bookingHistoryResponse) {
+                bookingHistoryLiveDataResponse.postValue(bookingHistoryResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                BookingHistoryResponse mBookingHistoryResponse = new BookingHistoryResponse();
+                mBookingHistoryResponse.setMessage(throwable.getLocalizedMessage());
+                bookingHistoryLiveDataResponse.postValue(mBookingHistoryResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<BookingHistoryResponse> getBookingHistory(){
+        return bookingHistoryLiveDataResponse;
     }
 
 

@@ -185,9 +185,9 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                     booking.setPick_upLocation("Alex");
                     booking.setReturn_Location("Alex");
                     //booking.setDateFrom(pickUpDate);
-                    booking.setDateFrom("2022-06-22");
+                    booking.setDateFrom("2022-08-09");
                     //booking.setDateTo(dropOffDate);
-                    booking.setDateTo("2022-06-23");
+                    booking.setDateTo("2022-08-10");
                     Log.e("ddd",pickUpDate);
                     Log.e("ddd",dropOffDate);
 

@@ -17,12 +17,15 @@
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/ic_layout_rounded.xml" value="0.1025" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_entry_page.xml" value="0.2030769156281062" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_home_list_row.xml" value="0.14722222222222223" />
-        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_main.xml" value="0.14722222222222223" />
-        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_nav_controller.xml" value="0.14722222222222223" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_nav_controller.xml" value="0.22" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_slider_item.xml" value="0.14722222222222223" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_about.xml" value="0.25" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_booking.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_choose_category.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_confirmation.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_history.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_history_details.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_home.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_my_booking_list.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_profile.xml" value="0.17864583333333334" />
@@ -32,7 +35,7 @@
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/nav_container.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/nav_content.xml" value="0.14722222222222223" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/nav_header.xml" value="0.23076922230466615" />
-        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/menu/nav_drawer_menu.xml" value="0.1758974358974359" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/menu/nav_drawer_menu.xml" value="0.25" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/menu/tool_bar_menu.xml" value="0.17864583333333334" />
       </map>
     </option>

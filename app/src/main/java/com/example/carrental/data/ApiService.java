@@ -2,6 +2,7 @@ package com.example.carrental.data;
 
 import com.example.carrental.constant.Credentials;
 import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
@@ -14,7 +15,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ApiService {
@@ -25,6 +28,11 @@ public interface ApiService {
 
     @GET(Credentials.SEARCHED_VEHICLES_URL)
     Call<VehicleResponse> getSearchedItems(@Query("serch") String model);
+
+
+    @GET(Credentials.BOOKING_HISTORY+"{id}")
+    Call<BookingHistoryResponse> getHistory(@Path("id") String userID);
+
 
 
     /**
@@ -46,9 +54,7 @@ public interface ApiService {
     @POST(Credentials.SIGN_IN)
     Call<SignInResponse> signIn(@Body User user);
 
-    @POST(Credentials.Booking)
+    @POST(Credentials.BOOKING)
     Call<BookingResponse> RentRequest(@Header("authorization") String token, @Body Booking booking);
-
-
 
 }

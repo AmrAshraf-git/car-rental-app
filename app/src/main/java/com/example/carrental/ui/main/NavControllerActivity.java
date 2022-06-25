@@ -1,12 +1,10 @@
 package com.example.carrental.ui.main;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +23,7 @@ import com.example.carrental.R;
 import com.example.carrental.ui.main.fragment.ChooseCategoryFragment;
 import com.example.carrental.ui.main.fragment.navigation.AboutFragment;
 import com.example.carrental.ui.main.fragment.navigation.FavoriteListFragment;
+import com.example.carrental.ui.main.fragment.navigation.HistoryFragment;
 import com.example.carrental.ui.main.fragment.navigation.HomeFragment;
 import com.example.carrental.ui.main.fragment.navigation.MyBookingListFragment;
 import com.example.carrental.ui.main.fragment.navigation.PrivacyPolicyFragment;
@@ -55,7 +54,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
     final int PRIVACY_POLICY = R.id.nav_privacy;
     final int ABOUT = R.id.nav_about;
     final int CONTACT_US = R.id.nav_cont_us;
-    final int ALL_CATEGORIES = R.id.nav_allCategories;
+    final int HISTORY = R.id.nav_history;
 
     DrawerLayout drawerLayout;
     ActionBarDrawerToggle drawerToggle;
@@ -130,16 +129,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                     fragmentManager.beginTransaction()
                             .replace(R.id.navContent_frameLayout_container, new ChooseCategoryFragment()).commit();
                 }
-
                 break;
-            case ALL_CATEGORIES:
-                if (currentNavigationDrawerItem != 1) {
-                    currentNavigationDrawerItem = 1;
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.navContent_frameLayout_container, new HomeFragment()).addToBackStack(null).commit();
-                }
-                break;
-
             case FAVORITE_LIST:
                 if (!SessionManager.getInstance(NavControllerActivity.this).isLoggedIn()) {
                     Intent intent = new Intent(NavControllerActivity.this, EntryPageActivity.class);
@@ -154,10 +144,32 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                     drawerLayout.closeDrawer(GravityCompat.START);
                     return false;
                 } else {
+                    if (currentNavigationDrawerItem != 1) {
+                        currentNavigationDrawerItem = 1;
+                        fragmentManager.beginTransaction()
+                                .replace(R.id.navContent_frameLayout_container, new FavoriteListFragment()).addToBackStack(null).commit();
+                    }
+                }
+                break;
+            case HISTORY:
+                if (!SessionManager.getInstance(NavControllerActivity.this).isLoggedIn()) {
+                    Intent intent = new Intent(NavControllerActivity.this, EntryPageActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    //overridePendingTransition(0, 0);
+                    startActivity(intent);
+                    //overridePendingTransition(0, 0);
+                    getSupportFragmentManager().popBackStack();
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                    return false;
+                }
+                else {
                     if (currentNavigationDrawerItem != 2) {
                         currentNavigationDrawerItem = 2;
                         fragmentManager.beginTransaction()
-                                .replace(R.id.navContent_frameLayout_container, new FavoriteListFragment()).addToBackStack(null).commit();
+                                .replace(R.id.navContent_frameLayout_container, new HistoryFragment()).addToBackStack(null).commit();
                     }
                 }
                 break;
@@ -438,19 +450,19 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         });
 
     }
-/*
+
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
-
+/*
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
-    }*/
-
+    }
+*/
 
     private void enableHomeUpOrHamburger() {
         boolean hamburgerBtn = (getSupportFragmentManager().getBackStackEntryCount() == 0);

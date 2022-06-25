@@ -3,6 +3,7 @@ package com.example.carrental.model;
 public class SignInResponse {
     private String message;
     private String token;
+    private String id;
     private String email;
     private String firstName;
     private String lastName;
@@ -23,6 +24,14 @@ public class SignInResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getEmail() {

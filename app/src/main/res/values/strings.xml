@@ -14,7 +14,7 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">Sign Up</string>
     <string name="continue_as_guest">Continue as guest</string>
-    <string name="welcome_to_car_rental_app">Welcome To Car Rental App</string>
+    <string name="welcome_to_car_rental_app">Welcome To Vehicle Rental App</string>
     <string name="continue_">Continue</string>
     <string name="app_logo">app_logo</string>
     <string name="content_description_for_slider_item">Car Images</string>
@@ -25,5 +25,24 @@
     <string name="drawer_close">Drawer close</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="about">
+        <ul>
+            <li><b><font color="#0052A2" size="20">About Us\n</font></b></li>
+                <p>We are connecting people to the best vehicle rental companies through our vehicle rental system, which consists of this application and <a href="https://www.example.com">our website</a> \n\n\n</p>
+            <li><b><font color="#0052A2" size="20">What we can provide for you?\n</font></b></li>
+                <p>Through these platforms, we allow you to rent your favourite vehicle for one or more days in the easiest way. You can also compare prices, specs, and more from hundreds of rental companies.\n\n\n</p>
+
+            <li><b><font color="#0052A2" size="20">Developer Team</font></b></li>\n
+                <p>We made up of talents from diverse experiences, with room for the exchange of knowledge and unique experiences, all of this while focusing on excellence and innovation.\n\n\n</p>
+
+            <li><b><font color="#0052A2" size="20">Terms And Conditions</font></b></li>\n
+                <a href="https://www.example.com/privacy">Privacy Policy</a>\n
+                <a href="https://www.example.com">Policy Terms</a>\n\n\n
+
+            <li><b><font color="#0052A2" size="20">Contact Developers</font></b></li>\n
+                <a href="mailto: AmrAshraf_inf@outlook.com">AmrAshraf_inf@outlook.com</a>\n
+                <a href="mailto: mmohamedHany@gmail.com">mmohamedHany@gmail.com</a>\n\n\n
+        </ul>
+    </string>
 
 </resources>

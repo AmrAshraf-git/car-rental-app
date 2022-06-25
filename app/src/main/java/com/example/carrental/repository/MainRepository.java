@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import com.example.carrental.data.ApiClient;
 import com.example.carrental.data.ApiService;
 import com.example.carrental.model.Booking;
+import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
@@ -44,48 +45,48 @@ public class MainRepository {
         Call<VehicleResponse> call=apiService.getSearchedItems(query);
         call.enqueue(new Callback<VehicleResponse>() {
             @Override
-            public void onResponse(Call<VehicleResponse> call, Response<VehicleResponse> response) {
+            public void onResponse(@NonNull Call<VehicleResponse> call, @NonNull Response<VehicleResponse> response) {
                 if(response.body()==null){
                     onVehiclesSearchResponseListener.onFailed(new Throwable("Message: Unreached response"+"Code: "+response.code()));
-                    Log.e("res","null");
+                    Log.e("VehicleSearchResponse", "null body");
                 }
                 else if(response.isSuccessful() && response.code()==200){
                     onVehiclesSearchResponseListener.onResponse(response.body());
-                    Log.e("res","succ");
+                    //Log.e("VehicleSearchResponse", "Successful");
                 }
                 else {
-                    Log.e("res","else");
+                    Log.e("VehicleSearchResponse", "Unexpected error");
                     onVehiclesSearchResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " + response.message() + " Code: " + response.code()));
                 }
             }
 
             @Override
-            public void onFailure(Call<VehicleResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<VehicleResponse> call, @NonNull Throwable t) {
                 onVehiclesSearchResponseListener.onFailed(t);
                 t.printStackTrace();
-                Log.e("res",t.getLocalizedMessage());
             }
         });
-
     }
 
     public void remoteVehicleData(OnVehiclesResponseListener onVehiclesResponseListener){
         Call<VehicleResponse> call=apiService.getJsonModel();
         call.enqueue(new Callback<VehicleResponse>() {
             @Override
-            public void onResponse(Call<VehicleResponse> call, Response<VehicleResponse> response) {
-                if(response.body()==null){
-                    onVehiclesResponseListener.onFailed(new Throwable("Message: Unreached response"+"Code: "+response.code()));
-                }
-                else if(response.isSuccessful() && response.code()==200){
+            public void onResponse(@NonNull Call<VehicleResponse> call, @NonNull Response<VehicleResponse> response) {
+                if (response.body() == null) {
+                    Log.e("VehicleResponse", "null body");
+                    onVehiclesResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " + response.code()));
+                } else if (response.isSuccessful() && response.code() == 200) {
+                    //Log.e("VehicleResponse","Successful");
                     onVehiclesResponseListener.onResponse(response.body());
+                } else {
+                    Log.e("VehicleResponse","Unexpected error");
+                    onVehiclesResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " + response.message() + " Code: " + response.code()));
                 }
-                else
-                    onVehiclesResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
             }
 
             @Override
-            public void onFailure(Call<VehicleResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<VehicleResponse> call, @NonNull Throwable t) {
                 onVehiclesResponseListener.onFailed(t);
                 t.printStackTrace();
             }
@@ -96,22 +97,24 @@ public class MainRepository {
         Call<SignUpResponse> call=apiService.signUp(newUser);
         call.enqueue(new Callback<SignUpResponse>() {
             @Override
-            public void onResponse(Call<SignUpResponse> call, Response<SignUpResponse> response) {
+            public void onResponse(@NonNull Call<SignUpResponse> call, @NonNull Response<SignUpResponse> response) {
                 if(response.body()==null)
                 {
-                    onSignUpResponseListener.onFailed(new Throwable(String.valueOf(response.code())));
+                    Log.e("SignUpResponse","null body");
+                    onSignUpResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
-                    //Log.e("resTest",String.valueOf(response.body()));
+                    Log.e("SignUpResponse","Successful");
                     onSignUpResponseListener.onResponse(response.body());
                 }
                 else{
-                    onSignUpResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " + response.message() + (response.body().getValidateError()!=null? response.body().getValidateError()[0]: ""  )+ "  Code: "+response.code()));
+                    Log.e("SignUpResponse","Unexpected error");
+                    onSignUpResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " + response.message() + (response.body().getValidateError()!=null? response.body().getValidateError()[0]: "  Code: "+response.code()  )));
                 }
             }
 
             @Override
-            public void onFailure(Call<SignUpResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<SignUpResponse> call, @NonNull Throwable t) {
                 onSignUpResponseListener.onFailed(t);
                 t.printStackTrace();
             }
@@ -125,14 +128,20 @@ public class MainRepository {
             public void onResponse(@NonNull Call<SignInResponse> call, @NonNull Response<SignInResponse> response) {
                 if(response.body()==null)
                 {
-                    onSignInResponseListener.onFailed(new Throwable(String.valueOf(response.code())));
+                    Log.e("SignInResponse", "null body");
+                    if(response.code()==400)
+                        onSignInResponseListener.onFailed(new Throwable("400"));
+                    else
+                        onSignInResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " + response.code()));
+
                 }
                 else if (response.isSuccessful() && response.code()==200) {
-                    //Log.e("resTest",String.valueOf(response.body()));
+                    //Log.e("SignInResponse","Successful Response");
                     onSignInResponseListener.onResponse(response.body());
                 }
                 else{
-                    onSignInResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+" Code: "+response.code()));
+                    Log.e("SignInResponse","Unexpected error");
+                    onSignInResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " + response.message() + (response.body().getMessage()!=null? response.body().getMessage(): "  Code: "+response.code())));
                 }
             }
             @Override
@@ -147,35 +156,61 @@ public class MainRepository {
         Call<com.example.carrental.model.BookingResponse> call = apiService.RentRequest(token, booking);
         call.enqueue(new Callback<BookingResponse>() {
             @Override
-            public void onResponse(Call<BookingResponse> call, Response<BookingResponse> response) {
+            public void onResponse(@NonNull Call<BookingResponse> call, @NonNull Response<BookingResponse> response) {
 
                 if(response.body()==null)
                 {
-                    Log.e("resTest","nullBody");
-                    onBookingResponseListener.onFailed(new Throwable(String.valueOf(response.code() + response.message())));
+                    Log.e("BookingResponse","null body");
+                    onBookingResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
-                    Log.e("resTest","succ");
+                    //Log.e("BookingResponse","Successful Response");
                     onBookingResponseListener.onResponse(response.body());
                 }
 
                 else{
-                    Log.e("resTest","unknown");
-                    onBookingResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+  response.body().getMessage()!=null?response.body().getMessage() :"no message" +" Code: "+response.code()));
+                    Log.e("BookingResponse","Unexpected error");
+                    onBookingResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
                 }
             }
 
             @Override
-            public void onFailure(Call<BookingResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<BookingResponse> call, @NonNull Throwable t) {
                 onBookingResponseListener.onFailed(t);
                 t.printStackTrace();
-                Log.e("resTest","failed");
             }
         });
     }
 
 
+    public void remoteBookingHistoryResponse(String userID,OnBookingHistoryResponseListener onBookingHistoryResponseListener){
+        Call<BookingHistoryResponse> call=apiService.getHistory(userID);
+        call.enqueue(new Callback<BookingHistoryResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BookingHistoryResponse> call, @NonNull Response<BookingHistoryResponse> response) {
+                if(response.body()==null)
+                {
+                    Log.e("BookingHistoryResponse","null body");
+                    onBookingHistoryResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    //Log.e("BookingResponse","Successful Response");
+                    onBookingHistoryResponseListener.onResponse(response.body());
+                }
 
+                else{
+                    Log.e("BookingHistoryResponse","Unexpected error");
+                    onBookingHistoryResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookingHistoryResponse> call, Throwable t) {
+                onBookingHistoryResponseListener.onFailed(t);
+                t.printStackTrace();
+            }
+        });
+    }
 
     public interface OnSignInResponseListener {
         void onResponse(SignInResponse signInResponse);
@@ -199,6 +234,11 @@ public class MainRepository {
 
     public interface OnVehiclesSearchResponseListener{
         void onResponse(VehicleResponse vehicleResponse);
+        void onFailed(Throwable throwable);
+    }
+
+    public interface OnBookingHistoryResponseListener {
+        void onResponse(BookingHistoryResponse bookingHistoryResponse);
         void onFailed(Throwable throwable);
     }
 

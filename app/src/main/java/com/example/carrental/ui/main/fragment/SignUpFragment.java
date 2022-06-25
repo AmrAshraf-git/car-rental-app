@@ -97,11 +97,11 @@ public class SignUpFragment extends Fragment {
                             public void onChanged(SignUpResponse signUpResponse) {
                                 //Log.e("resume2", "onChanged");
                                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && signUpResponse != mSignUpResponse) {
-                                    Log.e("resume3", "Lifecycle_RESUMED(if1)");
+                                    //Log.e("resume3", "Lifecycle_RESUMED(if1)");
                                     if (signUpResponse.getMessage() != null && signUpResponse.getMessage().equals("done")) {
                                         //Her we can receive user information (newUser[]) as a SignUpResponse object
                                         //signUpResponse.getNewUser();
-                                        Toast.makeText(getContext(), "successfully registered", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(getContext(), "successfully registered", Toast.LENGTH_SHORT).show();
                                         //Log.e("resume5", "if2");
                                         dialogSetup();
                                     } else if (signUpResponse.getMessage() != null && signUpResponse.getMessage().equals("400")) {
