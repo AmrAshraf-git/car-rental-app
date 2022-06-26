@@ -456,13 +456,16 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
         super.onPostCreate(savedInstanceState);
         drawerToggle.syncState();
     }
-/*
+
+    /*
     @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         drawerToggle.onConfigurationChanged(newConfig);
     }
-*/
+
+    */
+
 
     private void enableHomeUpOrHamburger() {
         boolean hamburgerBtn = (getSupportFragmentManager().getBackStackEntryCount() == 0);

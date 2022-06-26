@@ -221,7 +221,7 @@ public class BookingFragment extends Fragment {
                 Fragment fragment = ConfirmationFragment.newInstance(vehicle.getVehicleImgURL()[0],
                         vehicle.getVehicleModel(), vehicle.get_id(),
                         vehicle.getPrice()+" "+vehicle.getPriceLabel(),
-                        vehicle.getCompanyName(),vehicle.getCompRate());
+                        vehicle.getCompanyName(), vehicle.getCompanyAddress(),vehicle.getCompRate());
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

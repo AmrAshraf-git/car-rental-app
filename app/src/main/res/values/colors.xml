@@ -15,7 +15,7 @@
     <color name="dark_blue">#003F7E</color>
     <color name="red">#FF0000</color>
     <color name="gray">#BABABA</color>
-
+    <color name="dark_gray">#787878</color>
     <color name="main_background">#E6E6E6</color>
     <color name="list_item">#F7F7F7</color>
 

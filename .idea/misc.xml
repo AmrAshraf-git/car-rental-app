@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable-v24/ic_baseline_edit.xml" value="0.1015" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_booking.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_confirmation.xml" value="0.25" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/bg_gradient.xml" value="0.1025" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/border.xml" value="0.1025" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/border_black.xml" value="0.1025" />

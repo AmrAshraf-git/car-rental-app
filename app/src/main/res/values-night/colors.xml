@@ -15,7 +15,7 @@
     <color name="dark_blue">#27629E</color>
     <color name="red">#FF0000</color>
     <color name="gray">#393939</color>
-
+    <color name="dark_gray">#787878</color>
     <color name="main_background">#000000</color>
     <color name="list_item">#212121</color>
 
