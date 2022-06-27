@@ -1,6 +1,7 @@
 package com.example.carrental.ui.main.fragment;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
@@ -24,6 +26,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carrental.R;
+import com.example.carrental.model.ForgetPasswordResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.User;
@@ -43,13 +46,19 @@ public class SignInFragment extends Fragment {
     private FloatingActionButton floatingActionButton1;
     private FloatingActionButton floatingActionButton2;
     private FloatingActionButton floatingActionButton3;
+    private Dialog dialog;
+    private Button dialogBtn;
+    private TextView dialogTitle;
+    private TextView dialogSubTitle;
     private ProgressBar progressBar;
     private TextView loginTitle;
+    private TextView forgetPassword;
     private View view;
     private boolean mAlreadyLoaded;
     private FragmentOnClickListener fragmentOnClickListener;
     private VehicleViewModel vehicleViewModel;
     private SignInResponse mSignInResponse;
+    private ForgetPasswordResponse mForgetPasswordResponse;
     private SessionManager sessionManager;
     private Object MainActivity;
 
@@ -90,6 +99,7 @@ public class SignInFragment extends Fragment {
             password = view.findViewById(R.id.signIn_edTxt_pswd);
             signIn = view.findViewById(R.id.signIn_btn_signIn);
             loginTitle = view.findViewById(R.id.signIn_txtView_title);
+            forgetPassword=view.findViewById(R.id.signIn_txtView_forgetPswd);
             floatingActionButton1 = view.findViewById(R.id.signIn_floatBtn_1);
             floatingActionButton2 = view.findViewById(R.id.signIn_floatBtn_2);
             floatingActionButton3 = view.findViewById(R.id.signIn_floatBtn_3);
@@ -192,7 +202,58 @@ public class SignInFragment extends Fragment {
                     }*/
                 }
             });
+
+
+            forgetPassword.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (TextValidation.isEmailValid(email)) {
+                        vehicleViewModel.getForgetPassword().removeObservers(getViewLifecycleOwner());
+                        getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+                        progressBar.setVisibility(View.VISIBLE);
+                        signIn.setEnabled(false);
+
+                        vehicleViewModel.forgetPassword(email.getText().toString());
+                        vehicleViewModel.getForgetPassword().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
+                            @Override
+                            public void onChanged(ForgetPasswordResponse forgetPasswordResponse) {
+                                Log.e("resume2","onChanged");
+                                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && forgetPasswordResponse !=mForgetPasswordResponse) {
+                                    Log.e("resume3","Lifecycle_RESUMED(if1)");
+                                    if (forgetPasswordResponse.getMessage()!=null && forgetPasswordResponse.getMessage().equals("done")) {
+                                        email.setError(null);
+                                        dialogSetup();
+                                        Log.e("resume4","if2");
+
+                                    }
+                                    else if (forgetPasswordResponse.getMessage()!=null){
+                                        email.setError(forgetPasswordResponse.getMessage());
+                                        Log.e("msg",forgetPasswordResponse.getMessage());
+                                        Log.e("resume6","else if1");
+                                    }
+                                    else {
+                                        email.setError(null);
+                                        Toast.makeText(getContext(), (forgetPasswordResponse.getMessage() != null ? forgetPasswordResponse.getMessage() : "Unknown"), Toast.LENGTH_SHORT).show();
+                                        Log.e("resume7","else1");
+                                    }
+                                }
+
+                                getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+                                //vehicleViewModel.getUserResponse().removeObserver(this);
+
+                                progressBar.setVisibility(View.GONE);
+                                signIn.setEnabled(true);
+                                mForgetPasswordResponse=forgetPasswordResponse;
+                                //Log.e("resume8","end of onChanged");
+                            }
+                        });
+                    }
+                }
+            });
+
+
             actBtnAnim();
+
         }
         return view;
     }
@@ -247,7 +308,25 @@ public class SignInFragment extends Fragment {
         //requireActivity().finishAffinity();
     }
 
-
+    private void dialogSetup() {
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.layout_confirm_dialog);
+        //dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(AppCompatResources.getDrawable(getContext(), R.drawable.ic_bar_rounded));
+        dialog.setCancelable(false);
+        dialogTitle = dialog.findViewById(R.id.confDialog_txtView_title);
+        dialogSubTitle = dialog.findViewById(R.id.confDialog_txtView_subTitle);
+        dialogBtn = dialog.findViewById(R.id.confDialog_btn_ok);
+        dialogBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialogTitle.setText("E-mail has been sent successfully!");
+        dialogSubTitle.setText("Please check your E-mail to reset your password");
+        dialog.show();
+    }
 
     public interface FragmentOnClickListener {
         void onItemClick(String email);

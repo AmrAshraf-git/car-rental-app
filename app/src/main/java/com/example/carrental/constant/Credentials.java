@@ -9,6 +9,7 @@ public class Credentials {
     public static final String SIGN_IN="singin";
     public static final String BOOKING ="booking";
     public static final String BOOKING_HISTORY="userbooking/";
+    public static final String FORGET_PASSWORD="forgerpassword";
 
 
 

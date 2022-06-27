@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.carrental.model.Booking;
 import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.BookingResponse;
+import com.example.carrental.model.ForgetPasswordResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
@@ -24,6 +25,7 @@ public class VehicleViewModel extends ViewModel {
     private final MutableLiveData<SignInResponse> userLiveDataResponse;
     private final MutableLiveData<SignUpResponse> newUserLiveDataResponse;
     private final MutableLiveData<BookingResponse> bookingLiveDataResponse;
+    private final MutableLiveData<ForgetPasswordResponse> forgetPasswordLiveDataResponse;
     private final MutableLiveData<BookingHistoryResponse> bookingHistoryLiveDataResponse;
     private final MainRepository mainRepository;
 
@@ -35,6 +37,7 @@ public class VehicleViewModel extends ViewModel {
         vehicleLiveDataResponse = new MutableLiveData<>();
         vehicleSearchLiveDataResponse = new MutableLiveData<>();
         bookingHistoryLiveDataResponse= new MutableLiveData<>();
+        forgetPasswordLiveDataResponse=new MutableLiveData<>();
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
@@ -157,9 +160,26 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
-
     public MutableLiveData<BookingHistoryResponse> getBookingHistory(){
         return bookingHistoryLiveDataResponse;
+    }
+
+    public void forgetPassword(String email){
+        mainRepository.remoteForgetPassword(email, new MainRepository.OnForgetPasswordResponseListener() {
+            @Override
+            public void onResponse(ForgetPasswordResponse forgetPasswordResponse) {
+                forgetPasswordLiveDataResponse.postValue(forgetPasswordResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                ForgetPasswordResponse mForgetPasswordResponse =new ForgetPasswordResponse();
+                mForgetPasswordResponse.setMessage(throwable.getLocalizedMessage());
+            }
+        });
+    }
+    public MutableLiveData<ForgetPasswordResponse> getForgetPassword(){
+        return forgetPasswordLiveDataResponse;
     }
 
 

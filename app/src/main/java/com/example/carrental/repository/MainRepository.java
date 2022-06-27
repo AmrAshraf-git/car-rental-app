@@ -8,6 +8,7 @@ import com.example.carrental.data.ApiService;
 import com.example.carrental.model.Booking;
 import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.BookingResponse;
+import com.example.carrental.model.ForgetPasswordResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
@@ -211,6 +212,46 @@ public class MainRepository {
             }
         });
     }
+
+    public void remoteForgetPassword(String email,OnForgetPasswordResponseListener onForgetPasswordResponseListener){
+        Call<ForgetPasswordResponse> call= apiService.forgetPassword(email);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ForgetPasswordResponse> call, @NonNull Response<ForgetPasswordResponse> response) {
+                if(response.body()==null)
+                {
+                    Log.e("remoteForgetPassword","null body");
+                    onForgetPasswordResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    //Log.e("BookingResponse","Successful Response");
+                    onForgetPasswordResponseListener.onResponse(response.body());
+                }
+
+                else{
+                    Log.e("BookingHistoryResponse","Unexpected error");
+                    onForgetPasswordResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForgetPasswordResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+    public interface OnForgetPasswordResponseListener {
+        void onResponse(ForgetPasswordResponse forgetPasswordResponse);
+        void onFailed(Throwable throwable);
+    }
+
 
     public interface OnSignInResponseListener {
         void onResponse(SignInResponse signInResponse);

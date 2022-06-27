@@ -4,6 +4,7 @@ import com.example.carrental.constant.Credentials;
 import com.example.carrental.model.Booking;
 import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.BookingResponse;
+import com.example.carrental.model.ForgetPasswordResponse;
 import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
@@ -13,6 +14,8 @@ import com.example.carrental.model.VehicleResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PATCH;
@@ -56,5 +59,9 @@ public interface ApiService {
 
     @POST(Credentials.BOOKING)
     Call<BookingResponse> RentRequest(@Header("authorization") String token, @Body Booking booking);
+
+    @FormUrlEncoded
+    @POST(Credentials.FORGET_PASSWORD)
+    Call<ForgetPasswordResponse> forgetPassword(@Field("email") String email);
 
 }
