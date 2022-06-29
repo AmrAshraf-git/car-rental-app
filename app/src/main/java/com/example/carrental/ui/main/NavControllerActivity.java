@@ -24,8 +24,7 @@ import com.example.carrental.ui.main.fragment.ChooseCategoryFragment;
 import com.example.carrental.ui.main.fragment.navigation.AboutFragment;
 import com.example.carrental.ui.main.fragment.navigation.FavoriteListFragment;
 import com.example.carrental.ui.main.fragment.navigation.HistoryFragment;
-import com.example.carrental.ui.main.fragment.navigation.HomeFragment;
-import com.example.carrental.ui.main.fragment.navigation.MyBookingListFragment;
+import com.example.carrental.ui.main.fragment.navigation.MyBookingFragment;
 import com.example.carrental.ui.main.fragment.navigation.PrivacyPolicyFragment;
 import com.example.carrental.ui.main.fragment.navigation.ProfileFragment;
 import com.example.carrental.ui.main.fragment.navigation.SettingsFragment;
@@ -191,7 +190,7 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                     if (currentNavigationDrawerItem != 3) {
                         currentNavigationDrawerItem = 3;
                         fragmentManager.beginTransaction()
-                                .replace(R.id.navContent_frameLayout_container, new MyBookingListFragment()).addToBackStack(null).commit();
+                                .replace(R.id.navContent_frameLayout_container, new MyBookingFragment()).addToBackStack(null).commit();
                     }
                 }
                 break;

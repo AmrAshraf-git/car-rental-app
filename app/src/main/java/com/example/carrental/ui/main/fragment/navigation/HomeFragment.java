@@ -196,7 +196,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                 //Log.e("mResponse",String.valueOf(mVehicleResponse));
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mVehicleResponse) {
                     //Log.e("resume2","Lifecycle_RESUMED(if1)");
-                    if (vehicleResponse.getMessage() != null && vehicleResponse.getMessage().equals("done")) {
+                    if (vehicleResponse.getMessage() != null && vehicleResponse.getMessage().equals("success")) {
                         //Log.e("resume3","if2");
                         if (vehicleResponse.getData() != null) {
                             //Log.e("resume4","if3");

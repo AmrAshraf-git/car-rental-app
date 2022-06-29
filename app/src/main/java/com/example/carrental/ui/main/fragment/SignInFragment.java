@@ -125,7 +125,7 @@ public class SignInFragment extends Fragment {
                                 Log.e("resume2","onChanged");
                                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && signInResponse !=mSignInResponse) {
                                     Log.e("resume3","Lifecycle_RESUMED(if1)");
-                                    if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("done")) {
+                                    if (signInResponse.getMessage()!=null && signInResponse.getMessage().equals("success")) {
                                         email.setError(null);
                                         //Toast.makeText(getContext(), "sign-in successful " + "Message: " +  signInResponse.getToken() , Toast.LENGTH_SHORT).show();
                                         Log.e("resume4","if2");

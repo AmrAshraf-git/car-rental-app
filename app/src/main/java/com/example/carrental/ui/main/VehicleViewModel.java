@@ -27,6 +27,7 @@ public class VehicleViewModel extends ViewModel {
     private final MutableLiveData<BookingResponse> bookingLiveDataResponse;
     private final MutableLiveData<ForgetPasswordResponse> forgetPasswordLiveDataResponse;
     private final MutableLiveData<BookingHistoryResponse> bookingHistoryLiveDataResponse;
+    private final MutableLiveData<BookingHistoryResponse> availableRateLiveDataResponse;
     private final MainRepository mainRepository;
 
     public VehicleViewModel() {
@@ -36,8 +37,9 @@ public class VehicleViewModel extends ViewModel {
         bookingLiveDataResponse = new MutableLiveData<>();
         vehicleLiveDataResponse = new MutableLiveData<>();
         vehicleSearchLiveDataResponse = new MutableLiveData<>();
-        bookingHistoryLiveDataResponse= new MutableLiveData<>();
-        forgetPasswordLiveDataResponse=new MutableLiveData<>();
+        bookingHistoryLiveDataResponse = new MutableLiveData<>();
+        forgetPasswordLiveDataResponse = new MutableLiveData<>();
+        availableRateLiveDataResponse = new MutableLiveData<>();
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
@@ -51,6 +53,7 @@ public class VehicleViewModel extends ViewModel {
                         vehicleResponse.setSearch(search);
                         vehicleSearchLiveDataResponse.postValue(vehicleResponse);
                     }
+
                     @Override
                     public void onFailed(Throwable throwable) {
                         VehicleResponse mVehicleResponse = new VehicleResponse();
@@ -60,6 +63,7 @@ public class VehicleViewModel extends ViewModel {
                 }
         );
     }
+
     public MutableLiveData<VehicleResponse> getSearchedVehicle() {
         return vehicleSearchLiveDataResponse;
     }
@@ -99,6 +103,7 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
+
     public MutableLiveData<BookingResponse> getBookingLiveDataResponse() {
         return bookingLiveDataResponse;
     }
@@ -120,6 +125,7 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
+
     public LiveData<SignInResponse> getUserResponse() {
 
         return userLiveDataResponse;
@@ -140,12 +146,13 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
+
     public LiveData<SignUpResponse> getNewUserResponse() {
 
         return newUserLiveDataResponse;
     }
 
-    public void history(String id){
+    public void history(String id) {
         mainRepository.remoteBookingHistoryResponse(id, new MainRepository.OnBookingHistoryResponseListener() {
             @Override
             public void onResponse(BookingHistoryResponse bookingHistoryResponse) {
@@ -160,11 +167,12 @@ public class VehicleViewModel extends ViewModel {
             }
         });
     }
-    public MutableLiveData<BookingHistoryResponse> getBookingHistory(){
+
+    public MutableLiveData<BookingHistoryResponse> getBookingHistory() {
         return bookingHistoryLiveDataResponse;
     }
 
-    public void forgetPassword(String email){
+    public void forgetPassword(String email) {
         mainRepository.remoteForgetPassword(email, new MainRepository.OnForgetPasswordResponseListener() {
             @Override
             public void onResponse(ForgetPasswordResponse forgetPasswordResponse) {
@@ -173,13 +181,35 @@ public class VehicleViewModel extends ViewModel {
 
             @Override
             public void onFailed(Throwable throwable) {
-                ForgetPasswordResponse mForgetPasswordResponse =new ForgetPasswordResponse();
+                ForgetPasswordResponse mForgetPasswordResponse = new ForgetPasswordResponse();
                 mForgetPasswordResponse.setMessage(throwable.getLocalizedMessage());
             }
         });
     }
-    public MutableLiveData<ForgetPasswordResponse> getForgetPassword(){
+
+    public MutableLiveData<ForgetPasswordResponse> getForgetPassword() {
         return forgetPasswordLiveDataResponse;
+    }
+
+
+    public void availableRate(String id) {
+        mainRepository.remoteAvailableRateResponse(id, new MainRepository.OnBookingHistoryResponseListener() {
+            @Override
+            public void onResponse(BookingHistoryResponse bookingHistoryResponse) {
+                availableRateLiveDataResponse.postValue(bookingHistoryResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                BookingHistoryResponse mAvailableRateResponse = new BookingHistoryResponse();
+                mAvailableRateResponse.setMessage(throwable.getLocalizedMessage());
+                availableRateLiveDataResponse.postValue(mAvailableRateResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<BookingHistoryResponse> getAvailableRate() {
+        return availableRateLiveDataResponse;
     }
 
 

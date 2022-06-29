@@ -241,7 +241,34 @@ public class MainRepository {
         });
     }
 
+    public void remoteAvailableRateResponse(String userID,OnBookingHistoryResponseListener onBookingHistoryResponseListener){
+        Call<BookingHistoryResponse> call=apiService.getAvailableRate(userID);
+        call.enqueue(new Callback<BookingHistoryResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BookingHistoryResponse> call, @NonNull Response<BookingHistoryResponse> response) {
+                if(response.body()==null)
+                {
+                    Log.e("BookingHistoryResponse","null body");
+                    onBookingHistoryResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    //Log.e("BookingResponse","Successful Response");
+                    onBookingHistoryResponseListener.onResponse(response.body());
+                }
 
+                else{
+                    Log.e("BookingHistoryResponse","Unexpected error");
+                    onBookingHistoryResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookingHistoryResponse> call, Throwable t) {
+                onBookingHistoryResponseListener.onFailed(t);
+                t.printStackTrace();
+            }
+        });
+    }
 
 
 
@@ -283,7 +310,10 @@ public class MainRepository {
         void onFailed(Throwable throwable);
     }
 
-
+    public interface OnAvailableRateResponseListener {
+        void onResponse(BookingHistoryResponse bookingHistoryResponse);
+        void onFailed(Throwable throwable);
+    }
 
 
 

@@ -36,20 +36,10 @@ public interface ApiService {
     @GET(Credentials.BOOKING_HISTORY+"{id}")
     Call<BookingHistoryResponse> getHistory(@Path("id") String userID);
 
+    @GET(Credentials.AVAILABLE_RATE+"{id}")
+    Call<BookingHistoryResponse> getAvailableRate(@Path("id") String userID);
 
 
-    /**
-     * UrlEncoded
-    @FormUrlEncoded
-    @POST(Credentials.REGISTER)
-    Call<ResponseBody> signUp(@Field("firstName") String firstName,
-                              @Field("lastName") String lastName,
-                              @Field("email") String email,
-                              @Field("password") String password,
-                              @Field("cpassword") String cpassword,
-                              @Field("phone") int phone
-                                );
-    */
 
     @POST(Credentials.REGISTER)
     Call<SignUpResponse> signUp(@Body NewUser newUser);
@@ -63,5 +53,21 @@ public interface ApiService {
     @FormUrlEncoded
     @POST(Credentials.FORGET_PASSWORD)
     Call<ForgetPasswordResponse> forgetPassword(@Field("email") String email);
+
+
+
+
+    /**
+     * UrlEncoded
+     @FormUrlEncoded
+     @POST(Credentials.REGISTER)
+     Call<ResponseBody> signUp(@Field("firstName") String firstName,
+     @Field("lastName") String lastName,
+     @Field("email") String email,
+     @Field("password") String password,
+     @Field("cpassword") String cpassword,
+     @Field("phone") int phone
+     );
+     */
 
 }
