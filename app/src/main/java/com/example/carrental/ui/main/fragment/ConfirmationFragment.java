@@ -287,7 +287,7 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                 Log.e("ddd",pickUpDate);
                 Log.e("ddd",dropOffDate);
 
-                /*
+
 
                 //==============================TEST ONLY========================================
                 if (SessionManager.getInstance(getContext()).isLoggedIn()){
@@ -296,9 +296,9 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                     booking.setPick_upLocation("Alex");
                     booking.setReturn_Location("Alex");
                     //booking.setDateFrom(pickUpDate);
-                    booking.setDateFrom("2022-08-09");
+                    booking.setDateFrom("2022-08-10");
                     //booking.setDateTo(dropOffDate);
-                    booking.setDateTo("2022-08-10");
+                    booking.setDateTo("2022-08-11");
                     Log.e("ddd",pickUpDate);
                     Log.e("ddd",dropOffDate);
 
@@ -316,7 +316,7 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                     Toast.makeText(getContext(), "You must login first", Toast.LENGTH_SHORT).show();
                 //==============================TEST ONLY========================================
 
-*/
+
 
 
 

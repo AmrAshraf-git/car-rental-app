@@ -22,6 +22,7 @@ import com.example.carrental.R;
 import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.ui.main.VehicleViewModel;
+import com.example.carrental.ui.main.fragment.RatingFragment;
 import com.example.carrental.utility.SessionManager;
 import com.example.carrental.utility.adapter.HomeListAdapter;
 
@@ -170,6 +171,10 @@ public class MyBookingFragment extends Fragment implements HomeListAdapter.OnRec
 
     @Override
     public void onItemClick(int position) {
-
+        Fragment fragment= RatingFragment.newInstance(mBookingHistoryResponse.getData().get(position).getVehicleID().get_id(),mBookingHistoryResponse.getData().get(position).getCompanyID());
+        getParentFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.translate_enter, R.anim.translate_exit)
+                .addToBackStack(null)
+                .replace(R.id.navContent_frameLayout_container, fragment).commit();
     }
 }

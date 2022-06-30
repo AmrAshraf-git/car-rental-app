@@ -23,6 +23,7 @@ import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.ui.main.fragment.HistoryDetailsFragment;
+import com.example.carrental.ui.main.fragment.RatingFragment;
 import com.example.carrental.utility.SessionManager;
 import com.example.carrental.utility.adapter.HomeListAdapter;
 
@@ -168,10 +169,17 @@ public class HistoryFragment extends Fragment implements HomeListAdapter.OnRecyc
 
     @Override
     public void onItemClick(int position) {
+
         Fragment fragment=HistoryDetailsFragment.newInstance(mBookingHistoryResponse.getData().get(position));
         getParentFragmentManager().beginTransaction()
                 .setCustomAnimations(R.anim.translate_enter, R.anim.translate_exit)
                 .addToBackStack(null)
                 .replace(R.id.navContent_frameLayout_container, fragment).commit();
+        /*
+        Fragment fragment= RatingFragment.newInstance(mBookingHistoryResponse.getData().get(position).getVehicleID().get_id(),mBookingHistoryResponse.getData().get(position).getCompanyID());
+        getParentFragmentManager().beginTransaction()
+                .setCustomAnimations(R.anim.translate_enter, R.anim.translate_exit)
+                .addToBackStack(null)
+                .replace(R.id.navContent_frameLayout_container, fragment).commit();*/
     }
 }

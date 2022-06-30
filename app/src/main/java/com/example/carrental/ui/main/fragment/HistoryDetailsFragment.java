@@ -4,8 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,7 +72,7 @@ public class HistoryDetailsFragment extends Fragment {
             deliveredDate.setText(String.format("Delivered Date: %s",mBookingHistory.getDateTo()));
             pickupLoc.setText(String.format("Pickup Location: %s",mBookingHistory.getPick_upLocation()));
             returnLoc.setText(String.format("Return Location: %s",mBookingHistory.getReturn_Location()));
-            requestStatus.setText(String.format("Status: %s",String.valueOf(mBookingHistory.isStatus())));
+            requestStatus.setText(String.format("Status: %s",String.valueOf(mBookingHistory.getStatus())));
 
         }
         return view;

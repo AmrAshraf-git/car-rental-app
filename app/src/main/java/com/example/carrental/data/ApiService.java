@@ -55,8 +55,21 @@ public interface ApiService {
     Call<ForgetPasswordResponse> forgetPassword(@Field("email") String email);
 
 
+    @FormUrlEncoded
+    @POST(Credentials.UPDATE_VEHICLE_RATE+"{id}")
+    Call<ForgetPasswordResponse> updateVehicleRate(@Path("id") String userID, @Field("VehicleRate") int vehicleRate,
+                                                   @Field("VehicleID") String vehicleID);
+
+    @FormUrlEncoded
+    @POST(Credentials.UPDATE_COMPANY_RATE+"{id}")
+    Call<ForgetPasswordResponse> updateCompanyRate(@Path("id") String userID, @Field("companyRate") int companyRate,
+                                                   @Field("CompanyID") String companyID);
 
 
+/*
+    @POST(Credentials.UPDATE_VEHICLE_RATE+"{id}")
+    Call<ForgetPasswordResponse> updateVehicleRate(@Path("id") String userID, @Body UpdateRate updateRate);
+*/
     /**
      * UrlEncoded
      @FormUrlEncoded

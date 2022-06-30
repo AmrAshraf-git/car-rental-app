@@ -3,8 +3,6 @@ package com.example.carrental.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.JsonObject;
-
 public class BookingHistory implements Parcelable {
     private String _id;
     private String UserID;
@@ -12,9 +10,10 @@ public class BookingHistory implements Parcelable {
     private String return_Location;
     private String DateFrom;
     private String DateTo;
-    private boolean status;
+    private String status;
     private Vehicle VehicleID;
     private String companyID;
+
 
     protected BookingHistory(Parcel in) {
         _id = in.readString();
@@ -23,7 +22,7 @@ public class BookingHistory implements Parcelable {
         return_Location = in.readString();
         DateFrom = in.readString();
         DateTo = in.readString();
-        status = in.readByte() != 0;
+        status = in.readString();
         VehicleID = in.readParcelable(Vehicle.class.getClassLoader());
         companyID = in.readString();
     }
@@ -88,11 +87,11 @@ public class BookingHistory implements Parcelable {
         DateTo = dateTo;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -112,6 +111,7 @@ public class BookingHistory implements Parcelable {
         this.companyID = companyID;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -125,7 +125,7 @@ public class BookingHistory implements Parcelable {
         dest.writeString(return_Location);
         dest.writeString(DateFrom);
         dest.writeString(DateTo);
-        dest.writeByte((byte) (status ? 1 : 0));
+        dest.writeString(status);
         dest.writeParcelable(VehicleID, flags);
         dest.writeString(companyID);
     }

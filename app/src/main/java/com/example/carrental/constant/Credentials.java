@@ -11,8 +11,8 @@ public class Credentials {
     public static final String BOOKING_HISTORY="userbooking/";
     public static final String FORGET_PASSWORD="forgerpassword";
     public static final String AVAILABLE_RATE="userbookingRate/";
-    public static final String UPDATE_VEHICLE_RATE="updateVehicleRate";
-    public static final String UPDATE_COMPANY_RATE="updateCompanyRate";
+    public static final String UPDATE_VEHICLE_RATE="updateVehicleRate/";
+    public static final String UPDATE_COMPANY_RATE="updateCompanyRate/";
 
 
 

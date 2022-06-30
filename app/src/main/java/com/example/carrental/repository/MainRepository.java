@@ -23,15 +23,9 @@ public class MainRepository {
 
     private static MainRepository instance;
     private final ApiService apiService;
-    //private final MutableLiveData<VehicleResponse> vehicleMutableLiveData;
-    //private final MutableLiveData<SignUpResponse> newUserMutableLiveDataResponse;
-    //private final MutableLiveData<SignInResponse> userMutableLiveDataResponse;
 
 
     private MainRepository(){
-        //vehicleMutableLiveData =new MutableLiveData<>();
-        //newUserMutableLiveDataResponse=new MutableLiveData<>();
-        //userMutableLiveDataResponse=new MutableLiveData<>();
         apiService=ApiClient.getInstance().getApiService();
     }
     public static synchronized MainRepository getInstance(){
@@ -153,7 +147,7 @@ public class MainRepository {
         });
     }
 
-    public void remoteBookingResponse(String token, Booking booking, OnBookingResponseListener onBookingResponseListener){
+    public void remoteBooking(String token, Booking booking, OnBookingResponseListener onBookingResponseListener){
         Call<com.example.carrental.model.BookingResponse> call = apiService.RentRequest(token, booking);
         call.enqueue(new Callback<BookingResponse>() {
             @Override
@@ -184,7 +178,7 @@ public class MainRepository {
     }
 
 
-    public void remoteBookingHistoryResponse(String userID,OnBookingHistoryResponseListener onBookingHistoryResponseListener){
+    public void remoteBookingHistory(String userID, OnBookingHistoryResponseListener onBookingHistoryResponseListener){
         Call<BookingHistoryResponse> call=apiService.getHistory(userID);
         call.enqueue(new Callback<BookingHistoryResponse>() {
             @Override
@@ -241,36 +235,94 @@ public class MainRepository {
         });
     }
 
-    public void remoteAvailableRateResponse(String userID,OnBookingHistoryResponseListener onBookingHistoryResponseListener){
+    public void remoteAvailableRate(String userID, OnAvailableRateResponseListener onAvailableRateResponseListener){
         Call<BookingHistoryResponse> call=apiService.getAvailableRate(userID);
         call.enqueue(new Callback<BookingHistoryResponse>() {
             @Override
             public void onResponse(@NonNull Call<BookingHistoryResponse> call, @NonNull Response<BookingHistoryResponse> response) {
                 if(response.body()==null)
                 {
-                    Log.e("BookingHistoryResponse","null body");
-                    onBookingHistoryResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                    Log.e("onAvailableRateResponse","null body");
+                    onAvailableRateResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
-                    //Log.e("BookingResponse","Successful Response");
-                    onBookingHistoryResponseListener.onResponse(response.body());
+                    //Log.e("onAvailableRateResponse","Successful Response");
+                    onAvailableRateResponseListener.onResponse(response.body());
                 }
 
                 else{
-                    Log.e("BookingHistoryResponse","Unexpected error");
-                    onBookingHistoryResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                    Log.e("onAvailableRateResponse","Unexpected error");
+                    onAvailableRateResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
                 }
             }
 
             @Override
             public void onFailure(Call<BookingHistoryResponse> call, Throwable t) {
-                onBookingHistoryResponseListener.onFailed(t);
+                onAvailableRateResponseListener.onFailed(t);
                 t.printStackTrace();
             }
         });
     }
 
 
+    public void remoteUpdateVehicleRate(String userID, int rate, String vehicleID, OnUpdateVehicleRateResponseListener onUpdateVehicleRateResponseListener){
+        Call<ForgetPasswordResponse> call=apiService.updateVehicleRate(userID,rate,vehicleID);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(Call<ForgetPasswordResponse> call, Response<ForgetPasswordResponse> response) {
+                if(response.body()==null)
+                {
+                    Log.e("onUpdateVehicleRateRes","null body");
+                    onUpdateVehicleRateResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    Log.e("onUpdateVehicleRateRes","Successful Response");
+                    onUpdateVehicleRateResponseListener.onResponse(response.body());
+                }
+
+                else{
+                    Log.e("onAvailableRateResponse","Unexpected error");
+                    onUpdateVehicleRateResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ForgetPasswordResponse> call, Throwable t) {
+                onUpdateVehicleRateResponseListener.onFailed(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void remoteUpdateCompanyRate(String userID, int rate, String companyID, OnUpdateCompanyRateResponseListener onUpdateCompanyRateResponseListener){
+        Call<ForgetPasswordResponse> call=apiService.updateCompanyRate(userID,rate,companyID);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ForgetPasswordResponse> call, @NonNull Response<ForgetPasswordResponse> response) {
+                if(response.body()==null)
+                {
+                    Log.e("onUpdateVehicleRateRes","null body");
+                    onUpdateCompanyRateResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    Log.e("onUpdateVehicleRateRes","Successful Response");
+                    onUpdateCompanyRateResponseListener.onResponse(response.body());
+                }
+
+                else{
+                    Log.e("onAvailableRateResponse","Unexpected error");
+                    onUpdateCompanyRateResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ForgetPasswordResponse> call, @NonNull Throwable t) {
+                onUpdateCompanyRateResponseListener.onFailed(t);
+                t.printStackTrace();
+            }
+        });
+    }
 
 
 
@@ -315,6 +367,15 @@ public class MainRepository {
         void onFailed(Throwable throwable);
     }
 
+    public interface OnUpdateVehicleRateResponseListener {
+        void onResponse(ForgetPasswordResponse forgetPasswordResponse);
+        void onFailed(Throwable throwable);
+    }
+
+    public interface OnUpdateCompanyRateResponseListener {
+        void onResponse(ForgetPasswordResponse forgetPasswordResponse);
+        void onFailed(Throwable throwable);
+    }
 
 
     /**
