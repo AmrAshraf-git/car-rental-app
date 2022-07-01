@@ -43,9 +43,9 @@ public class SignInFragment extends Fragment {
     private EditText email;
     private EditText password;
     private Button signIn;
-    private FloatingActionButton floatingActionButton1;
-    private FloatingActionButton floatingActionButton2;
-    private FloatingActionButton floatingActionButton3;
+    //private FloatingActionButton floatingActionButton1;
+    //private FloatingActionButton floatingActionButton2;
+    //private FloatingActionButton floatingActionButton3;
     private Dialog dialog;
     private Button dialogBtn;
     private TextView dialogTitle;
@@ -100,9 +100,9 @@ public class SignInFragment extends Fragment {
             signIn = view.findViewById(R.id.signIn_btn_signIn);
             loginTitle = view.findViewById(R.id.signIn_txtView_title);
             forgetPassword=view.findViewById(R.id.signIn_txtView_forgetPswd);
-            floatingActionButton1 = view.findViewById(R.id.signIn_floatBtn_1);
-            floatingActionButton2 = view.findViewById(R.id.signIn_floatBtn_2);
-            floatingActionButton3 = view.findViewById(R.id.signIn_floatBtn_3);
+            //floatingActionButton1 = view.findViewById(R.id.signIn_floatBtn_1);
+            //floatingActionButton2 = view.findViewById(R.id.signIn_floatBtn_2);
+            //floatingActionButton3 = view.findViewById(R.id.signIn_floatBtn_3);
             progressBar = view.findViewById(R.id.signIn_progressBar);
 
 
@@ -269,6 +269,7 @@ public class SignInFragment extends Fragment {
 
     private void actBtnAnim() {
         //====================================ANIMATIONS==========================================
+        /*
         floatingActionButton1.setTranslationX(1000);
         floatingActionButton2.setTranslationX(1000);
         floatingActionButton3.setTranslationX(1000);
@@ -280,7 +281,9 @@ public class SignInFragment extends Fragment {
         floatingActionButton1.animate().translationX(0).alpha(1).setDuration(600).setStartDelay(200).start();
         floatingActionButton2.animate().translationX(0).alpha(1).setDuration(600).setStartDelay(400).start();
         floatingActionButton3.animate().translationX(0).alpha(1).setDuration(600).setStartDelay(600).start();
+        */
         //====================================ANIMATIONS==========================================
+
     }
 
 

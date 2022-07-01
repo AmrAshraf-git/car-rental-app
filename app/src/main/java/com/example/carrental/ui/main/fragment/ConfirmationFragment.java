@@ -106,6 +106,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     private static final String COMPANY_NAME = "companyNameKey";
     private static final String COMPANY_ADDRESS = "companyAddressKey";
     private static final String COMPANY_RATE = "companyRateKey";
+    private static final String COMPANY_LONGITUDE = "companyLongitudeKey";
+    private static final String COMPANY_LATITUDE = "companyLatitudeKey";
 
 
     // TODO: Rename and change types of parameters
@@ -116,6 +118,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     private String companyName;
     private String companyAddress;
     private float companyRate;
+    private String companyLongitude;
+    private String companyLatitude;
 
     public ConfirmationFragment() {
         // Required empty public constructor
@@ -124,7 +128,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     // TODO: Rename and change types and number of parameters
     public static ConfirmationFragment newInstance(String vehicleImage, String vehicleModel, @NonNull String vehicleId,
                                                    String vehiclePrice, String companyName, String companyAddress,
-                                                   float companyRate) {
+                                                   float companyRate, String longitude,
+                                                   String latitude) {
         ConfirmationFragment fragment = new ConfirmationFragment();
         Bundle args = new Bundle();
         args.putString(VEHICLE_IMAGE, vehicleImage);
@@ -133,6 +138,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         args.putString(VEHICLE_PRICE, vehiclePrice);
         args.putString(COMPANY_NAME, companyName);
         args.putString(COMPANY_ADDRESS, companyAddress);
+        args.putString(COMPANY_LONGITUDE,longitude);
+        args.putString(COMPANY_LATITUDE,latitude);
         args.putFloat(COMPANY_RATE, companyRate);
 
         fragment.setArguments(args);
@@ -152,6 +159,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
             companyName = getArguments().getString(COMPANY_NAME);
             companyAddress = getArguments().getString(COMPANY_ADDRESS);
             companyRate = getArguments().getFloat(COMPANY_RATE);
+            companyLongitude=getArguments().getString(COMPANY_LONGITUDE);
+            companyLatitude=getArguments().getString(COMPANY_LATITUDE);
         }
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
@@ -330,13 +339,20 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         mapCover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isServicesOK()) {
-                    Fragment fragment = CompanyLocationOnMapFragment.newInstance(29.983535, 31.223084);
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+                if(companyLongitude !=null && companyLatitude!=null){
+                    if(Float.parseFloat(companyLongitude)==0 && Float.parseFloat(companyLatitude)==0){
+                        Toast.makeText(getContext(), "Location is not available for this company", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        if (isServicesOK()) {
+                            Fragment fragment = CompanyLocationOnMapFragment.newInstance(Double.parseDouble(companyLatitude),Double.parseDouble(companyLongitude));
+                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
+                            fragmentTransaction.addToBackStack(null);
+                            fragmentTransaction.commit();
+                        }
+                    }
                 }
             }
         });

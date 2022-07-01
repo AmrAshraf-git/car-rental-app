@@ -221,18 +221,14 @@ public class BookingFragment extends Fragment {
                 Fragment fragment = ConfirmationFragment.newInstance(vehicle.getVehicleImgURL()[0],
                         vehicle.getVehicleModel(), vehicle.get_id(),
                         vehicle.getPrice()+" "+vehicle.getPriceLabel(),
-                        vehicle.getCompanyName(), vehicle.getCompanyAddress(),vehicle.getCompRate());
+                        vehicle.getCompanyName(), vehicle.getCompanyAddress(),vehicle.getCompRate(),
+                        vehicle.getCompanyLongitude(),vehicle.getCompanyLatitude());
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
-
-
-
-
 
             }
         });

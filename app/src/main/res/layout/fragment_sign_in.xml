@@ -123,7 +123,7 @@
                 app:layout_constraintTop_toBottomOf="@id/signIn_txtView_forgetPswd"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/signIn_floatBtn_2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="16sp"
                 android:text="@string/sign_in"
                 android:background="@drawable/ic_btn_rounded"
@@ -138,14 +138,16 @@
                 android:id="@+id/signIn_progressBar"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/signIn_btn_signIn"
-                app:layout_constraintBottom_toTopOf="@id/signIn_floatBtn_2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/signIn_btn_signIn"
                 app:layout_constraintStart_toStartOf="@id/signIn_btn_signIn">
 
             </ProgressBar>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </ScrollView>
 
-
+<!--
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/signIn_floatBtn_1"
                 android:layout_width="wrap_content"
@@ -207,5 +209,6 @@
             </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+ -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

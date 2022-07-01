@@ -129,6 +129,14 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
         return compDetails.get("CompanyName").getAsString();
     }
 
+    public String getCompanyLongitude() {
+        return compDetails.get("Longitude").getAsString();
+    }
+
+    public String getCompanyLatitude() {
+        return compDetails.get("Latitude").getAsString();
+    }
+
     public int getCompHotline() {
         return compDetails.get("Hotline").getAsInt();
     }
@@ -260,6 +268,7 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     public void setVehicleType(String vehicleType) {
         this.vehicleType = vehicleType;
     }
+
 
     @Override
     public int describeContents() {

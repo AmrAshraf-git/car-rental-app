@@ -3,6 +3,8 @@ package com.example.carrental.utility.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -91,12 +93,23 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         holder.seatingCapacity.setText(String.valueOf(getItem(position).getSeatingCapacity()));
         holder.transmission.setText(getItem(position).getAutomaticTransmission()?"Automatic":"Manual");
         holder.price.setText(String.valueOf(getItem(position).getPrice()));
+        holder.addToFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setClickable(true);
+                v.setEnabled(true);
+                v.setFocusable(true);
+
+                //notifyDataSetChanged();
+            }
+        });
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         //Vehicle vehicle;
         ImageView vehicleImage;
+        ImageButton addToFavorite;
         RatingBar compRate, carRate;
 
         TextView compLocation,companyName, vehicleModel, vehicleColor, doorsNum, seatingCapacity, transmission,priceLabel,price;
@@ -118,7 +131,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             transmission =view.findViewById(R.id.homeListRow_txtView_spec4);
             price=view.findViewById(R.id.homeListRow_txtView_price);
             priceLabel=view.findViewById(R.id.homeListRow_txtView_lbl);
-
+            addToFavorite=view.findViewById(R.id.homeListRow_btn_favorite);
 
             itemView.setOnClickListener(v -> {
                 //Log.d("click","Adapter_onItemClick");
@@ -129,6 +142,8 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
                 }
 
             });
+
+
         }
 
         /*void bind(final Vehicle vehicle){
