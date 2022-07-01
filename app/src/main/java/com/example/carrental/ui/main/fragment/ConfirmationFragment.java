@@ -1,6 +1,7 @@
 package com.example.carrental.ui.main.fragment;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentResultListener;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -30,6 +34,8 @@ import com.example.carrental.model.Booking;
 import com.example.carrental.model.BookingResponse;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.SessionManager;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +43,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
-public class ConfirmationFragment extends Fragment implements DatePickerDialog.OnDateSetListener{
+public class ConfirmationFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
     Bitmap vehicleImageAsBitmap;
     ImageView vehicleImageImgView;
@@ -68,11 +74,13 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     CardView dropOffLocationCard;
     TextView pickUpLocationTxtView;
     TextView dropOffLocationTxtView;
-
     TextView companyNameTxtView;
     TextView companyAddressTxtView;
     TextView companyPhoneTxtView;
     RatingBar companyRateRB;
+    ImageView mapCover;
+    private static final int ERROR_DIALOG_REQUEST = 9001;
+
 
     Button sendRequestBtn;
 
@@ -80,10 +88,13 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     String dayOfWeek;
     String monthOfYear;
 
+    String CustomAddressPick;
+    String CustomAddressDrop;
+    private boolean mAlreadyLoaded;
+    View view;
     private VehicleViewModel vehicleViewModel;
 
     private boolean whichFocused = false; // (false -> Pick-up) , (true -> Drop-off)
-
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -112,7 +123,7 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
 
     // TODO: Rename and change types and number of parameters
     public static ConfirmationFragment newInstance(String vehicleImage, String vehicleModel, @NonNull String vehicleId,
-                                                   String vehiclePrice, String companyName,String companyAddress,
+                                                   String vehiclePrice, String companyName, String companyAddress,
                                                    float companyRate) {
         ConfirmationFragment fragment = new ConfirmationFragment();
         Bundle args = new Bundle();
@@ -131,6 +142,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null)
+            mAlreadyLoaded = false;
         if (getArguments() != null) {
             vehicleImage = getArguments().getString(VEHICLE_IMAGE);
             vehicleModel = getArguments().getString(VEHICLE_MODEL);
@@ -140,13 +153,40 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
             companyAddress = getArguments().getString(COMPANY_ADDRESS);
             companyRate = getArguments().getFloat(COMPANY_RATE);
         }
+        getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle bundle) {
+                CustomAddressPick = bundle.getString("customAddressForPickKey");
+                CustomAddressDrop = bundle.getString("customAddressForDropKey");
+
+                if(CustomAddressPick != null && !CustomAddressPick.equals("".trim())){
+                    pickUpLocationTxtView.setText(CustomAddressPick);
+                }
+
+                if(CustomAddressDrop != null && !CustomAddressDrop.equals("".trim())){
+                    dropOffLocationTxtView.setText(CustomAddressDrop);
+                }
+
+
+            }
+        });
+
+        deliveryArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_forward);
+        returnArrow = getResources().getDrawable(R.drawable.ic_baseline_arrow_back);
+        edit = getResources().getDrawable(R.drawable.ic_baseline_edit);
+        deliveryArrow.setTint(getResources().getColor(R.color.black));
+        returnArrow.setTint(getResources().getColor(R.color.black));
+        edit.setTint(getResources().getColor(R.color.dark_gray));
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_confirmation, container, false);
+        if (!mAlreadyLoaded) {
+            mAlreadyLoaded = true;
+
+        view = inflater.inflate(R.layout.fragment_confirmation, container, false);
 
         vehicleImageImgView = view.findViewById(R.id.confirmation_imgView_imageOfVehicle);
         vehicleModelTxtView = view.findViewById(R.id.confirmation_txtView_vehicleModel);
@@ -173,6 +213,7 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         companyPhoneTxtView = view.findViewById(R.id.confirmation_txtView_companyPhoneNumber);
 
         companyRateRB = view.findViewById(R.id.confirmation_ratingBar_companyRating);
+        mapCover = view.findViewById(R.id.confirmation_imgView_mapCover);
         sendRequestBtn = view.findViewById(R.id.confirmation_btn_sendRequest);
         vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
 
@@ -181,10 +222,10 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         dropOffLocationTxtView = view.findViewById(R.id.confirmation_txtView_dropOffLocation);
         vehicleModelTxtView.setText(vehicleModel);
         vehiclePriceTxtView.setText(vehiclePrice);
-        companyNameTxtView.setText("Name: "+companyName);
+        companyNameTxtView.setText("Name: " + companyName);
         pickUpLocationTxtView.setHint(companyAddress);
         dropOffLocationTxtView.setHint(companyAddress);
-        companyAddressTxtView.setText("Address: "+companyAddress);
+        companyAddressTxtView.setText("Address: " + companyAddress);
         companyRateRB.setRating(companyRate);
 
 
@@ -204,21 +245,21 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
             }
         });
 
-        pickUpLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(deliveryArrow,null,null,null);
-        dropOffLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(returnArrow,null,null,null);
+        pickUpLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(deliveryArrow, null, null, null);
+        dropOffLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(returnArrow, null, null, null);
 
 
         pickUpLocationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     pickUpLocationTxtView.setHint("Pick-up Location");
-                    pickUpLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(deliveryArrow,null,edit,null);
+                    pickUpLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(deliveryArrow, null, edit, null);
                     pickUpLocationCard.setClickable(true);
-                }
-                else {
+                } else {
+                    pickUpLocationTxtView.setText("");
                     pickUpLocationTxtView.setHint(companyAddress);
-                    pickUpLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(deliveryArrow,null,null,null);
+                    pickUpLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(deliveryArrow, null, null, null);
                     pickUpLocationCard.setClickable(false);
                 }
             }
@@ -227,14 +268,14 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         dropOffLocationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     dropOffLocationTxtView.setHint("Drop-off Location");
-                    dropOffLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(returnArrow,null,edit,null);
+                    dropOffLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(returnArrow, null, edit, null);
                     dropOffLocationCard.setClickable(true);
-                }
-                else {
+                } else {
+                    dropOffLocationTxtView.setText("");
                     dropOffLocationTxtView.setHint(companyAddress);
-                    dropOffLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(returnArrow,null,null,null);
+                    dropOffLocationTxtView.setCompoundDrawablesWithIntrinsicBounds(returnArrow, null, null, null);
                     dropOffLocationCard.setClickable(false);
                 }
             }
@@ -246,12 +287,14 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
             public void onClick(View v) {
 
                 // This if statement NOT IMPORTANT, but added for more handling
-                if(pickUpLocationSwitch.isChecked())
-                {
-                    Toast.makeText(getContext(), "Checked", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                if (pickUpLocationSwitch.isChecked()) {
+                    Fragment fragment = ChooseDifferentLocationFragment.newInstance("Pick");
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                } else {
                     Toast.makeText(getContext(), "Please active the switch To set different address", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -263,11 +306,16 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
             public void onClick(View v) {
 
                 // This if statement NOT IMPORTANT, but added for more handling
-                if(dropOffLocationSwitch.isChecked()) {
-                    Toast.makeText(getContext(), "Checked", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                if (dropOffLocationSwitch.isChecked()) {
+                    Fragment fragment = ChooseDifferentLocationFragment.newInstance("Drop");
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+
+
+                } else {
                     Toast.makeText(getContext(), "Please active the switch To set different address", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -279,13 +327,27 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         dropOffLocationCard.setClickable(false);
 
 
+        mapCover.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isServicesOK()) {
+                    Fragment fragment = CompanyLocationOnMapFragment.newInstance(29.983535, 31.223084);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.navContent_frameLayout_container, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
+        });
+
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 IsValidDates(pickUpDate, dropOffDate);
 
-                Log.e("ddd",pickUpDate);
-                Log.e("ddd",dropOffDate);
+                Log.e("ddd", pickUpDate);
+                Log.e("ddd", dropOffDate);
 
 
 
@@ -319,8 +381,6 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
 
 
 
-
-
             }
         });
 
@@ -330,9 +390,9 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         dayOfWeek = dateConverter.getDayOfWeek();
         monthOfYear = dateConverter.getMonthOfYear();
 
-        pickUpDate = dropOffDate =  Calendar.getInstance().get(Calendar.YEAR)+
-                "-"+(Calendar.getInstance().get(Calendar.MONTH)+1)+
-                "-"+Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+        pickUpDate = dropOffDate = Calendar.getInstance().get(Calendar.YEAR) +
+                "-" + (Calendar.getInstance().get(Calendar.MONTH) + 1) +
+                "-" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 
         pickUpDayOfMonthTxtView.setText(String.valueOf(Calendar.getInstance().get(Calendar.DAY_OF_MONTH)));
         pickUpMonthTxtView.setText(monthOfYear);
@@ -343,14 +403,11 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         dropOffDayOfWeekTxtView.setText(dayOfWeek);
         //Set Current Date for (Pick-up Date and Drop-off Date) as Initialize Date
 
-
-
-
-
+        }
         return view;
     }
 
-    public void showDatePickerDialog(){
+    public void showDatePickerDialog() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 getContext(),
                 this,
@@ -366,20 +423,14 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
 
-            if(sdf.parse(start).before(sdf.parse(end)))
-            {
-                Toast.makeText(getContext(), "Rent Period is Valid", Toast.LENGTH_SHORT).show();
+            if (sdf.parse(start).before(sdf.parse(end))) {
                 return true;
-            }
-
-            else
-            {
+            } else {
                 Toast.makeText(getContext(), "Rent Period is Not Valid", Toast.LENGTH_SHORT).show();
                 return false;
             }
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Toast.makeText(getContext(), "Occurred an Error, Please Enter Rent Period Again", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -399,32 +450,44 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYearAsNumber, int dayOfMonth) {
 
-        GregorianCalendar gregorianCalendar = new GregorianCalendar(year, monthOfYearAsNumber,dayOfMonth);
+        GregorianCalendar gregorianCalendar = new GregorianCalendar(year, monthOfYearAsNumber, dayOfMonth);
         dayOfWeekAsNumber = gregorianCalendar.get(Calendar.DAY_OF_WEEK);
 
-        DateConverter dateConverter = new DateConverter(dayOfWeekAsNumber,monthOfYearAsNumber);
+        DateConverter dateConverter = new DateConverter(dayOfWeekAsNumber, monthOfYearAsNumber);
         dayOfWeek = dateConverter.getDayOfWeek();
         monthOfYear = dateConverter.getMonthOfYear();
 
-        if(!(whichFocused))
-        {
+        if (!(whichFocused)) {
             // Pick-up is Focused
             monthOfYearAsNumber++;
-            pickUpDate =  year+"-"+monthOfYearAsNumber+"-"+dayOfMonth;
+            pickUpDate = year + "-" + monthOfYearAsNumber + "-" + dayOfMonth;
             pickUpDayOfMonthTxtView.setText(String.valueOf(dayOfMonth));
             pickUpDayOfWeekTxtView.setText(dayOfWeek);
             pickUpMonthTxtView.setText(monthOfYear);
-        }
-        else
-        {
+        } else {
             // Drop-off is Focused
             monthOfYearAsNumber++;
-            dropOffDate  =  year+"-"+monthOfYearAsNumber+"-"+dayOfMonth;
+            dropOffDate = year + "-" + monthOfYearAsNumber + "-" + dayOfMonth;
             dropOffDayOfMonthTxtView.setText(String.valueOf(dayOfMonth));
             dropOffDayOfWeekTxtView.setText(dayOfWeek);
             dropOffMonthTxtView.setText(monthOfYear);
         }
 
     }
+
+
+    public boolean isServicesOK() {
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(getContext());
+        if (available == ConnectionResult.SUCCESS) {
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(getActivity(), available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+        } else {
+            Toast.makeText(getContext(), "You Cannot Make Map Request", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
 
 }

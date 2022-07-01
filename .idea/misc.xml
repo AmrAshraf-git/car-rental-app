@@ -3,6 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable-v24/ic_baseline_edit.xml" value="0.1015" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1215" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_location_on.xml" value="0.138" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_entry_page.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_user_location.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_booking.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_choose_different_location.xml" value="0.264" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_company_location_on_map.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_confirmation.xml" value="0.264" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_map.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_select_location_on_map.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/layout_confirm_dialog.xml" value="0.25" />
+        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/nav_container.xml" value="0.25" />
+=======
+>>>>>>> dcb109bb1744f0008b5cf275b42b22ab12cddd0b
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/bg_gradient.xml" value="0.1025" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/border.xml" value="0.1025" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/border_black.xml" value="0.1025" />

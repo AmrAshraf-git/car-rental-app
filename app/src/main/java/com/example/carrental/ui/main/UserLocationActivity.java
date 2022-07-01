@@ -3,6 +3,7 @@ package com.example.carrental.ui.main;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -17,6 +18,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -43,10 +45,14 @@ public class UserLocationActivity extends AppCompatActivity {
     TextView UserLocation;
     FusedLocationProviderClient mFusedLocationClient;
     double Latitude,Longitude;
-    String City,Country;
     Drawable icon = null;
     int PERMISSION_ID = 44;
-    // Test Comment to check if git hub work correctly or not.
+    String Details, subCity, Governorate, City, Country, fullAddress;
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
+    private Boolean mLocationPermissionsGranted = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +67,25 @@ public class UserLocationActivity extends AppCompatActivity {
         getMyLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getLocationPermission();
                 getLastLocation();
+                fullAddress = getMoreDetailsFromLatLng(Latitude,Longitude);
+                UserLocation.setText(fullAddress);
+                UserLocation.setCompoundDrawablesWithIntrinsicBounds(icon,null,null,null);
+                ActiveContinueBtn();
+
             }
         });
 
     }
 
     @SuppressLint("MissingPermission")
-    private void getLastLocation() {
+    public void getLastLocation() {
+        getLocationPermission();
+        Log.e("f",mLocationPermissionsGranted+"");
+
         // check if permissions are given
-        if (checkPermissions()) {
+        if(mLocationPermissionsGranted) {
 
             // check if location is enabled
             if (isLocationEnabled()) {
@@ -88,8 +103,6 @@ public class UserLocationActivity extends AppCompatActivity {
                         } else {
                             Latitude = location.getLatitude();
                             Longitude = location.getLongitude();
-                            getCityAndCountry(Latitude,Longitude);
-
                         }
                     }
                 });
@@ -98,10 +111,6 @@ public class UserLocationActivity extends AppCompatActivity {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
             }
-        } else {
-            // if permissions aren't available,
-            // request for permissions
-            requestPermissions();
         }
     }
 
@@ -122,31 +131,48 @@ public class UserLocationActivity extends AppCompatActivity {
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
     }
 
-    private LocationCallback mLocationCallback = new LocationCallback() {
 
+    private LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            getCityAndCountry(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+            getMoreDetailsFromLatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
         }
     };
 
-    // method to check for permissions
-    private boolean checkPermissions() {
-        return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    public void getLocationPermission() {
+        String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+        if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Log.e("A","A");
 
-        // If we want background location
-        // on Android 10.0 and higher,
-        // use:
-        // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
+            if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationPermissionsGranted = true;
+                Log.e("B","B");
+
+
+            } else {
+                Log.e("C","C");
+                ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+            }
+        } else {
+            Log.e("D","D");
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+
+        }
     }
 
+
+/*
     // method to request for permissions
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
     }
+*/
+
 
     // method to check
     // if location is enabled
@@ -171,30 +197,34 @@ public class UserLocationActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        if (checkPermissions()) {
+        getLocationPermission();
+        if (mLocationPermissionsGranted) {
             getLastLocation();
         }
     }
 
-    private void getCityAndCountry(double Latitude,double Longitude)
-    {
-
+    public String getMoreDetailsFromLatLng(double Latitude, double Longitude) {
         try {
             Geocoder geocoder = new Geocoder(this);
             List<Address> addresses = null;
-            addresses = geocoder.getFromLocation(Latitude,Longitude,1);
-            City = addresses.get(0).getLocality();
+            addresses = geocoder.getFromLocation(Latitude, Longitude, 1);
+
+            subCity = addresses.get(0).getLocality();
+            City = addresses.get(0).getSubAdminArea();
+            Governorate = addresses.get(0).getAdminArea();
             Country = addresses.get(0).getCountryName();
-            UserLocation.setText(Country+","+City);
-            UserLocation.setCompoundDrawablesWithIntrinsicBounds(icon,null,null,null);
-            ActiveContinueBtn();
+            Details = subCity + ", " + City + ", " + Governorate + ", " + Country;
+            return Details;
 
 
         } catch (IOException e) {
             e.printStackTrace();
+            return "Unknown";
         }
 
     }
+
+
     private void ActiveContinueBtn()
     {
         getMyLocation.setText("Continue");
@@ -205,6 +235,15 @@ public class UserLocationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+
+    public double getLatitude() {
+        return Latitude;
+    }
+
+    public double getLongitude() {
+        return Longitude;
     }
 
 }

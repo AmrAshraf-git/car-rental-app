@@ -138,27 +138,33 @@
 
                     <TextView
                         android:id="@+id/bookingActivity_txtView_color"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:gravity="center"
                         android:text="-Color-"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_baseline_color" />
 
                     <TextView
                         android:id="@+id/bookingActivity_txtView_doorsNumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:gravity="center"
                         android:text="-Doors No.-"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_baseline_door" />
 
                     <TextView
                         android:id="@+id/bookingActivity_txtView_chairsNumber"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:gravity="center"
                         android:text="-Chairs No.-"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableLeftCompat="@drawable/ic_baseline_chair" />
 
                     <RatingBar
                         android:id="@+id/bookingActivity_ratingBar_vehicleRating"
@@ -172,8 +178,9 @@
 
                     <TextView
                         android:id="@+id/bookingActivity_txtView_pricePerHour"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:gravity="center"
                         android:text="-Price Per Hour-"
                         android:textSize="16sp"
