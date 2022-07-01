@@ -39,6 +39,9 @@ public interface ApiService {
     @GET(Credentials.AVAILABLE_RATE+"{id}")
     Call<BookingHistoryResponse> getAvailableRate(@Path("id") String userID);
 
+    @GET(Credentials.FAVORITE_LIST+"{id}")
+    Call<BookingHistoryResponse> getFavorite(@Path("id") String userID);
+
 
 
     @POST(Credentials.REGISTER)
@@ -65,6 +68,9 @@ public interface ApiService {
     Call<ForgetPasswordResponse> updateCompanyRate(@Path("id") String userID, @Field("companyRate") int companyRate,
                                                    @Field("CompanyID") String companyID);
 
+    @FormUrlEncoded
+    @POST(Credentials.ADD_TO_FAVORITE_LIST+"{id}")
+    Call<ForgetPasswordResponse> AddToFavorite(@Path("id") String userID, @Field("like") boolean like, @Field("VehicleID") String VehicleID);
 
 /*
     @POST(Credentials.UPDATE_VEHICLE_RATE+"{id}")

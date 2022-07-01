@@ -230,7 +230,8 @@ public class MainRepository {
 
             @Override
             public void onFailure(Call<ForgetPasswordResponse> call, Throwable t) {
-
+                onForgetPasswordResponseListener.onFailed(t);
+                t.printStackTrace();
             }
         });
     }
@@ -324,6 +325,65 @@ public class MainRepository {
         });
     }
 
+
+    public void addToFavorite(String userID,boolean like, String vehicleID,OnForgetPasswordResponseListener onForgetPasswordResponseListener){
+        Call<ForgetPasswordResponse> call=apiService.AddToFavorite(userID,like,vehicleID);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ForgetPasswordResponse> call, @NonNull Response<ForgetPasswordResponse> response) {
+                if(response.body()==null)
+                {
+                    Log.e("remoteForgetPassword","null body");
+                    onForgetPasswordResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    //Log.e("BookingResponse","Successful Response");
+                    onForgetPasswordResponseListener.onResponse(response.body());
+                }
+
+                else{
+                    Log.e("BookingHistoryResponse","Unexpected error");
+                    onForgetPasswordResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ForgetPasswordResponse> call, @NonNull Throwable t) {
+                onForgetPasswordResponseListener.onFailed(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void remoteFavoriteList(String userID, OnBookingHistoryResponseListener onBookingHistoryResponseListener){
+        Call<BookingHistoryResponse> call=apiService.getFavorite(userID);
+        call.enqueue(new Callback<BookingHistoryResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BookingHistoryResponse> call, @NonNull Response<BookingHistoryResponse> response) {
+                if(response.body()==null)
+                {
+                    Log.e("BookingHistoryResponse","null body");
+                    onBookingHistoryResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                }
+                else if (response.isSuccessful() && response.code()==200) {
+                    //Log.e("BookingResponse","Successful Response");
+                    onBookingHistoryResponseListener.onResponse(response.body());
+                }
+
+                else{
+                    Log.e("BookingHistoryResponse","Unexpected error");
+                    onBookingHistoryResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BookingHistoryResponse> call, Throwable t) {
+                onBookingHistoryResponseListener.onFailed(t);
+                t.printStackTrace();
+            }
+        });
+    }
 
 
     public interface OnForgetPasswordResponseListener {

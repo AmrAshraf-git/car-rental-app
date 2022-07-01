@@ -13,6 +13,8 @@ public class Credentials {
     public static final String AVAILABLE_RATE="userbookingRate/";
     public static final String UPDATE_VEHICLE_RATE="updateVehicleRate/";
     public static final String UPDATE_COMPANY_RATE="updateCompanyRate/";
+    public static final String FAVORITE_LIST="getFavorite/";
+    public static final String ADD_TO_FAVORITE_LIST="addFavorite/";
 
 
 

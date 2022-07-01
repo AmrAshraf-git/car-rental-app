@@ -40,8 +40,10 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment implements HomeListAdapter.OnRecyclerViewClickListener {
 
-    //private static final String ARG_PARAM1 = "param1";
+    private static final String CATEGORY_NAME = "categoryName";
     //private static final String ARG_PARAM2 = "param2";
+    private String mCategoryName;
+    //private String mParam2;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -63,38 +65,28 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     //private ProgressDialog progressDialog;
     Handler handler;
 
-    //private String mParam1;
-    //private String mParam2;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /*
-        public static HomeFragment newInstance(String param1, String param2) {
-            HomeFragment fragment = new HomeFragment();
-            Bundle args = new Bundle();
-            args.putString(ARG_PARAM1, param1);
-            args.putString(ARG_PARAM2, param2);
-            fragment.setArguments(args);
-            return fragment;
-        }
-    */
+
+    public static HomeFragment newInstance(String categoryName) {
+        HomeFragment fragment = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putString(CATEGORY_NAME, categoryName);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         if (savedInstanceState == null)
             mAlreadyLoaded = false;
-
-
-        //if (getArguments() != null) {
-        //mParam1 = getArguments().getString(ARG_PARAM1);
-        //mParam2 = getArguments().getString(ARG_PARAM2);
-        //}
-        //homeListItemArrayList = new ArrayList<>();
-
-
+        if (getArguments() != null)
+            mCategoryName = getArguments().getString(CATEGORY_NAME);
     }
 
     @Override
@@ -123,14 +115,15 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
 
             //vehicleViewModel.getVehicles(view);
             setUpRecyclerView();
-            observeViewModel();
+            getByCategory();
 
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
                     progressBar.setVisibility(View.VISIBLE);
-                    observeViewModel();
+                    //observeViewModel();
+                    getByCategory();
                     swipeRefreshLayout.setRefreshing(false);
                 }
             });
@@ -269,7 +262,8 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
                 searchResult.setVisibility(View.GONE);
-                observeViewModel();
+                //observeViewModel();
+                getByCategory();
                 swipeRefreshLayout.setEnabled(true);
                 return true;
             }
@@ -310,6 +304,27 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             //mMenuItem.collapseActionView();
         }
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+
+    private void getByCategory(){
+        switch (mCategoryName) {
+            case "car":
+                vehicleViewModel.searchedVehicle("car");
+                observeSearchViewModel();
+                break;
+            case "bus":
+                vehicleViewModel.searchedVehicle("bus");
+                observeSearchViewModel();
+                break;
+            case "motorcycle":
+                vehicleViewModel.searchedVehicle("motorcycle");
+                observeSearchViewModel();
+                break;
+            default:
+                observeViewModel();
+                break;
+        }
     }
 
 

@@ -28,8 +28,10 @@ public class VehicleViewModel extends ViewModel {
     private final MutableLiveData<ForgetPasswordResponse> forgetPasswordLiveDataResponse;
     private final MutableLiveData<ForgetPasswordResponse> updateVehicleRateResponse;
     private final MutableLiveData<ForgetPasswordResponse> updateCompanyRateResponse;
+    private final MutableLiveData<ForgetPasswordResponse> addToFavoriteResponse;
     private final MutableLiveData<BookingHistoryResponse> bookingHistoryLiveDataResponse;
     private final MutableLiveData<BookingHistoryResponse> availableRateLiveDataResponse;
+    private final MutableLiveData<BookingHistoryResponse> favoriteListLiveDataResponse;
     private final MainRepository mainRepository;
 
     public VehicleViewModel() {
@@ -44,6 +46,8 @@ public class VehicleViewModel extends ViewModel {
         availableRateLiveDataResponse = new MutableLiveData<>();
         updateVehicleRateResponse = new MutableLiveData<>();
         updateCompanyRateResponse = new MutableLiveData<>();
+        favoriteListLiveDataResponse=new MutableLiveData<>();
+        addToFavoriteResponse=new MutableLiveData<>();
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
@@ -259,6 +263,48 @@ public class VehicleViewModel extends ViewModel {
     public MutableLiveData<ForgetPasswordResponse> getUpdateCompanyRate() {
         return updateCompanyRateResponse;
     }
+
+
+    public void favoriteList(String id) {
+        mainRepository.remoteFavoriteList(id, new MainRepository.OnBookingHistoryResponseListener() {
+            @Override
+            public void onResponse(BookingHistoryResponse bookingHistoryResponse) {
+                favoriteListLiveDataResponse.postValue(bookingHistoryResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                BookingHistoryResponse mBookingHistoryResponse = new BookingHistoryResponse();
+                mBookingHistoryResponse.setMessage(throwable.getLocalizedMessage());
+                favoriteListLiveDataResponse.postValue(mBookingHistoryResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<BookingHistoryResponse> getFavoriteList() {
+        return favoriteListLiveDataResponse;
+    }
+
+    public void addToFavorite(String userID,boolean like, String vehicleID) {
+        mainRepository.addToFavorite(userID, like, vehicleID, new MainRepository.OnForgetPasswordResponseListener() {
+            @Override
+            public void onResponse(ForgetPasswordResponse forgetPasswordResponse) {
+                addToFavoriteResponse.postValue(forgetPasswordResponse);
+            }
+
+            @Override
+            public void onFailed(Throwable throwable) {
+                ForgetPasswordResponse mForgetPasswordResponse = new ForgetPasswordResponse();
+                mForgetPasswordResponse.setMessage(throwable.getLocalizedMessage());
+                addToFavoriteResponse.postValue(mForgetPasswordResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<ForgetPasswordResponse> getAddToFavorite() {
+        return addToFavoriteResponse;
+    }
+
 
 
     /**
