@@ -112,7 +112,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         ImageButton addToFavorite;
         RatingBar compRate, carRate;
 
-        TextView compLocation,companyName, vehicleModel, vehicleColor, doorsNum, seatingCapacity, transmission,priceLabel,price;
+        TextView companyName, vehicleModel, vehicleColor, doorsNum, seatingCapacity, transmission,priceLabel,price;
 
         public ViewHolder(final View view,final OnRecyclerViewClickListener onRecyclerViewClickListener)
         {
@@ -122,7 +122,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             vehicleImage =view.findViewById(R.id.homeListRow_imgView_car);
             compRate=view.findViewById(R.id.homeListRow_ratingBar_compRate);
             carRate=view.findViewById(R.id.homeListRow_ratingBar_carRate);
-            compLocation=view.findViewById(R.id.homeListRow_txtView_compLocation);
             companyName=view.findViewById(R.id.homeListRow_txtView_compName);
             vehicleModel =view.findViewById(R.id.homeListRow_txtView_carModel);
             vehicleColor =view.findViewById(R.id.homeListRow_txtView_spec1);

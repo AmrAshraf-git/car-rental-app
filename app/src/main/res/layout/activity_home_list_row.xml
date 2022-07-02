@@ -478,22 +478,6 @@
 
 -->
 
-    <TextView
-        android:id="@+id/homeListRow_txtView_compLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="Km away from you"
-        android:textSize="14sp"
-        android:gravity="end"
-
-        app:layout_constraintHorizontal_bias="0"
-        app:drawableLeftCompat="@drawable/ic_baseline_location_on"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/homeListRow_constLayout_middle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/homeListRow_constLayout_bottom">
-    </TextView>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeListRow_constLayout_bottom"
         android:layout_width="match_parent"

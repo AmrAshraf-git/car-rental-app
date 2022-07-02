@@ -44,5 +44,17 @@
                 <a href="mailto: mmohamedHany@gmail.com">mmohamedHany@gmail.com</a>\n\n\n
         </ul>
     </string>
+    <string name="Privacy"><b><font color="#0052A2" size="20">Introduction\n</font></b>
+        <p>When you use "Vehicle Rental App", you trust us with your personal data. We’re committed to keeping that trust. That starts with helping you understand our privacy practices.  \nThis notice describes the personal data we collect, how it’s used and shared, and your choices regarding this data. We recommend that you read this along with our privacy overview, which highlights key points about our privacy practices.</p>
+        <p>\n\n\n</p><b><font color="#0052A2" size="20">Data collections\n</font></b>
+        <p>We are collect personal data provided by users to our system, such as during account creation created during use of our services, such as location, app usage, and device data. from other sources, such as other users or account owners, business partners, vendors, insurance and financial solution providers, and governmental authorities</p>
+        <p>\n\n\n</p><b><font color="#0052A2" size="20">Application Permissions\n</font></b>
+        <p>By using this application, you accept the following permissions:\n1) INTERNET\n2) LOCATION\n3) STORAGE</p>
+        <p>\n\n\n</p><b><font color="#0052A2" size="20">Updates to this notice\n</font></b>
+        <p>We may occasionally update this notice.\nWe may occasionally update this notice. If we make significant changes, we will notify users in advance of the changes through our app or through other means, such as email. We encourage users to periodically review this notice for the latest information on our privacy practices.\nUse of our services after an update constitutes consent to the updated notice to the extent permitted by law.</p>
+        <p>\n\n\n</p>
+    </string>
+
+
 
 </resources>

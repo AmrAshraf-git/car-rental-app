@@ -96,7 +96,7 @@ public class CompanyLocationOnMapFragment extends Fragment implements OnMapReady
     }
 
     public void Init() {
-        if(mLocationPermissionsGranted){
+        if (mLocationPermissionsGranted) {
             Details = getMoreDetailsFromLatLng(latitudeOfCompany, longitudeOfCompany);
             moreInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,8 +123,7 @@ public class CompanyLocationOnMapFragment extends Fragment implements OnMapReady
             ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
             if (actionBar != null)
                 actionBar.setTitle(Details);
-        }
-        else{
+        } else {
             getLocationPermission();
         }
 
@@ -180,7 +179,7 @@ public class CompanyLocationOnMapFragment extends Fragment implements OnMapReady
         String[] permissions = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (ContextCompat.checkSelfPermission(getContext(),
                 FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            if (ContextCompat.checkSelfPermission(getContext(),
+            if(ContextCompat.checkSelfPermission(getContext(),
                     COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionsGranted = true;
                 Init();

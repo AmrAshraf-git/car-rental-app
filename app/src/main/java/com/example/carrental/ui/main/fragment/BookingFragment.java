@@ -1,7 +1,17 @@
 package com.example.carrental.ui.main.fragment;
 
-import android.content.DialogInterface;
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +20,11 @@ import android.widget.Button;
 import android.widget.RatingBar;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -20,11 +33,19 @@ import com.example.carrental.model.Vehicle;
 import com.example.carrental.R;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.adapter.SliderAdapter;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.security.InvalidParameterException;
+import java.text.DecimalFormat;
 
 
 public class BookingFragment extends Fragment {
@@ -63,15 +84,17 @@ public class BookingFragment extends Fragment {
     private TextView noSmoking; //30
     private TextView Smoking; //30.1
     private TextView CC; //31
-
     private VehicleViewModel vehicleViewModel;
-
-
-
     FragmentManager fragmentManager;
     private Button bookNow;
     private Vehicle vehicle;
-    //private AlertDialog.Builder alertDialog;
+    private TextView AwayFromU;
+    double theta,dist;
+    double ValueOFDistanceBetweenUserAndCompany;
+    double Latitude, Longitude;
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
+    DecimalFormat deciFormat;
 
     //private ImageView carImage;
     //private HomeListItem homeListItem;
@@ -94,42 +117,29 @@ public class BookingFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             vehicle = getArguments().getParcelable(HOME_LIST_ITEM);
-        }
-        else throw new InvalidParameterException("Incompatible argument");
+        } else throw new InvalidParameterException("Incompatible argument");
+        deciFormat = new DecimalFormat();
+        deciFormat.setMaximumFractionDigits(1);
     }
 
+    @SuppressLint("MissingPermission")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_booking, container, false);
-
-        //alertDialog = new AlertDialog.Builder(getContext());
-
-        /*
-        carModel=view.findViewById(R.id.viewAllDetails_txtView_carModel);
-        companyName=view.findViewById(R.id.viewAllDetails_txtView_companyName);
-        //carImage=findViewById(R.id.viewAllDetails_imgView_carImage);
-        companyAddress=view.findViewById(R.id.viewAllDetails_txtView_companyAddress);
-        color=view.findViewById(R.id.viewAllDetails_txtView_color);
-        doorsNo=view.findViewById(R.id.viewAllDetails_txtView_doorsNumber);
-        chairsNo=view.findViewById(R.id.viewAllDetails_txtView_chairsNumber);
-        engine=view.findViewById(R.id.textView12);
-        price=view.findViewById(R.id.viewAllDetails_txtView_pricePerHour);
-        sliderView = view.findViewById(R.id.image_slider);*/
+        View view = inflater.inflate(R.layout.fragment_booking, container, false);
 
         //1 ->  Brand Image
-        vehicleModel=view.findViewById(R.id.bookingActivity_txtView_vehicleModel);
-        companyName=view.findViewById(R.id.bookingActivity_txtView_companyName);
-        companyAddress=view.findViewById(R.id.bookingActivity_txtView_companyAddress);
+        vehicleModel = view.findViewById(R.id.bookingActivity_txtView_vehicleModel);
+        companyName = view.findViewById(R.id.bookingActivity_txtView_companyName);
+        companyAddress = view.findViewById(R.id.bookingActivity_txtView_companyAddress);
         CompRate = view.findViewById(R.id.bookingActivity_ratingBar_companyRating);
         vehicleImg = view.findViewById(R.id.bookingActivity_imageSlider_imagesOfvehicle);
-        vehicleColor=view.findViewById(R.id.bookingActivity_txtView_color);
-        doorsNum=view.findViewById(R.id.bookingActivity_txtView_doorsNumber);
-        seatingCapacity=view.findViewById(R.id.bookingActivity_txtView_chairsNumber);
+        vehicleColor = view.findViewById(R.id.bookingActivity_txtView_color);
+        doorsNum = view.findViewById(R.id.bookingActivity_txtView_doorsNumber);
+        seatingCapacity = view.findViewById(R.id.bookingActivity_txtView_chairsNumber);
         vehicleRate = view.findViewById(R.id.bookingActivity_ratingBar_vehicleRating);
-        price=view.findViewById(R.id.bookingActivity_txtView_pricePerHour);
-
+        price = view.findViewById(R.id.bookingActivity_txtView_pricePerHour);
         airBag = view.findViewById(R.id.bookingActivity_txtView_airbag);
         seatBelts = view.findViewById(R.id.bookingActivity_txtView_seatbelts);
         ABS = view.findViewById(R.id.bookingActivity_txtView_ABS);
@@ -141,8 +151,7 @@ public class BookingFragment extends Fragment {
         remoteStart = view.findViewById(R.id.bookingActivity_txtView_remoteStart);
         AC = view.findViewById(R.id.bookingActivity_txtView_airConditioner);
         musicPlayer = view.findViewById(R.id.bookingActivity_txtView_musicPlayer);
-        automaticTransmission=view.findViewById(R.id.bookingActivity_txtView_engineType);
-
+        automaticTransmission = view.findViewById(R.id.bookingActivity_txtView_engineType);
         extraTyre = view.findViewById(R.id.bookingActivity_txtView_extraTyre);
         charger = view.findViewById(R.id.bookingActivity_txtView_charger);
         fireExtinguisher = view.findViewById(R.id.bookingActivity_txtView_fireExtinguisher);
@@ -152,6 +161,23 @@ public class BookingFragment extends Fragment {
         Smoking = view.findViewById(R.id.bookingActivity_txtView_smoking);
         CC = view.findViewById(R.id.bookingActivity_txtView_enginePerformace);
         bookNow = view.findViewById(R.id.bookingActivity_btn_bookNow);
+        AwayFromU = view.findViewById(R.id.bookingActivity_txtView_AwayFromU);
+
+        getLocation();
+        if((Latitude == 0 && Longitude == 0) ||
+                (Double.parseDouble(vehicle.getCompanyLatitude()) == 0
+                        && Double.parseDouble(vehicle.getCompanyLongitude()) == 0)) {
+            AwayFromU.setText("Unknown");
+        }
+        else{
+
+            ValueOFDistanceBetweenUserAndCompany = getDistanceBetweenUserAndCompany(Latitude,Longitude,
+                    Double.parseDouble(vehicle.getCompanyLatitude()),Double.parseDouble(vehicle.getCompanyLongitude()));
+
+            AwayFromU.setText(deciFormat.format(ValueOFDistanceBetweenUserAndCompany)+" Km away from you");
+        }
+
+
         //carImage=findViewById(R.id.viewAllDetails_imgView_carImage);
 
 
@@ -159,19 +185,18 @@ public class BookingFragment extends Fragment {
         //Bundle bundle=this.getArguments();
         //if(bundle!=null) {
 
-            //======================================DEBUG=======================================
-            //Log.d("click","data Received successfully");
-            //Log.d("id",String.valueOf(id));
-            //Log.d("ReceivedData",String.valueOf(bundle.getParcelable("listItemObject")));
-            //======================================DEBUG=======================================
+        //======================================DEBUG=======================================
+        //Log.d("click","data Received successfully");
+        //Log.d("id",String.valueOf(id));
+        //Log.d("ReceivedData",String.valueOf(bundle.getParcelable("listItemObject")));
+        //======================================DEBUG=======================================
 
-            //homeListItem=bundle.getParcelable("listItemObject");
-            //int id=bundle.getInt("id");
+        //homeListItem=bundle.getParcelable("listItemObject");
+        //int id=bundle.getInt("id");
         //}
         //else
-            //throw new InvalidParameterException("Bundle is empty");
+        //throw new InvalidParameterException("Bundle is empty");
         //====================================RECEIVE DATA=====================================
-
 
 
         // TODO: Get data from 'Vehicle' and pass them into their proper view
@@ -184,20 +209,19 @@ public class BookingFragment extends Fragment {
         doorsNum.setText(String.valueOf(vehicle.getDoorsNum()));
         seatingCapacity.setText(String.valueOf(vehicle.getSeatingCapacity()));
         vehicleRate.setRating(vehicle.getVehicleRate());
-        price.setText(String.valueOf(vehicle.getPrice())+" "+vehicle.getPriceLabel());
-        automaticTransmission.setText(vehicle.getAutomaticTransmission()?"Automatic":"Manual");
-        CC.setText("CC: "+String.valueOf(vehicle.getCC()));
+        price.setText(String.valueOf(vehicle.getPrice()) + " " + vehicle.getPriceLabel());
+        automaticTransmission.setText(vehicle.getAutomaticTransmission() ? "Automatic" : "Manual");
+        CC.setText("CC: " + String.valueOf(vehicle.getCC()));
         //carImage.setImageResource(homeListItem.getCarImg());
-
 
 
         //==================Image Slider Show=============================
         /*String[] images = {vehicle.getVehicleImgURL()[0],
                 vehicle.getVehicleImgURL()[1],
                 vehicle.getVehicleImgURL()[2]};*/
-        String[] images=new String[vehicle.getVehicleImgURL().length];
-        for(int i=0;i<images.length;i++){
-            images[i]= vehicle.getVehicleImgURL()[i];
+        String[] images = new String[vehicle.getVehicleImgURL().length];
+        for (int i = 0; i < images.length; i++) {
+            images[i] = vehicle.getVehicleImgURL()[i];
         }
 
         //==================Image Slider Show=============================
@@ -220,9 +244,9 @@ public class BookingFragment extends Fragment {
                 //Transfer Required Data from Booking fragment to Confirmation fragment
                 Fragment fragment = ConfirmationFragment.newInstance(vehicle.getVehicleImgURL()[0],
                         vehicle.getVehicleModel(), vehicle.get_id(),
-                        vehicle.getPrice()+" "+vehicle.getPriceLabel(),
-                        vehicle.getCompanyName(), vehicle.getCompanyAddress(),vehicle.getCompRate(),
-                        vehicle.getCompanyLongitude(),vehicle.getCompanyLatitude());
+                        vehicle.getPrice() + " " + vehicle.getPriceLabel(),
+                        vehicle.getCompanyName(), vehicle.getCompanyAddress(), vehicle.getCompRate(),
+                        vehicle.getCompanyLongitude(), vehicle.getCompanyLatitude());
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -234,110 +258,114 @@ public class BookingFragment extends Fragment {
         });
 
 
-
-
-
         setSpecs();
 
         return view;
     }
 
-    private void setSpecs()
-    {
+    private void setSpecs() {
 
-        if( vehicle.getAirBag() == null || !(vehicle.getAirBag()))
+        if (vehicle.getAirBag() == null || !(vehicle.getAirBag()))
             airBag.setVisibility(View.GONE);
 
-        if( vehicle.getSeatBelts() == null || !(vehicle.getSeatBelts()))
+        if (vehicle.getSeatBelts() == null || !(vehicle.getSeatBelts()))
             seatBelts.setVisibility(View.GONE);
 
-        if( vehicle.getABS() == null || !(vehicle.getABS()))
+        if (vehicle.getABS() == null || !(vehicle.getABS()))
             ABS.setVisibility(View.GONE);
 
-        if( vehicle.getSunRoof() == null || !(vehicle.getSunRoof()))
+        if (vehicle.getSunRoof() == null || !(vehicle.getSunRoof()))
             sunRoof.setVisibility(View.GONE);
 
-        if( vehicle.getParkingSensors() == null || !(vehicle.getParkingSensors()))
+        if (vehicle.getParkingSensors() == null || !(vehicle.getParkingSensors()))
             parkingSensors.setVisibility(View.GONE);
 
-        if( vehicle.getRadio() == null || !(vehicle.getRadio()))
+        if (vehicle.getRadio() == null || !(vehicle.getRadio()))
             radio.setVisibility(View.GONE);
 
-        if( vehicle.getBluetooth() == null || !(vehicle.getBluetooth()))
+        if (vehicle.getBluetooth() == null || !(vehicle.getBluetooth()))
             bluetooth.setVisibility(View.GONE);
 
-        if( vehicle.getNavSystem() == null || !(vehicle.getNavSystem()))
+        if (vehicle.getNavSystem() == null || !(vehicle.getNavSystem()))
             navSystem.setVisibility(View.GONE);
 
-        if( vehicle.getRemoteStart() == null || !(vehicle.getRemoteStart()))
+        if (vehicle.getRemoteStart() == null || !(vehicle.getRemoteStart()))
             remoteStart.setVisibility(View.GONE);
 
-        if( vehicle.getAC() == null || !(vehicle.getAC()))
+        if (vehicle.getAC() == null || !(vehicle.getAC()))
             AC.setVisibility(View.GONE);
 
-        if( vehicle.getMusicPlayer() == null || !(vehicle.getMusicPlayer()))
+        if (vehicle.getMusicPlayer() == null || !(vehicle.getMusicPlayer()))
             musicPlayer.setVisibility(View.GONE);
 
-        if( vehicle.getExtraTyre() == null || !(vehicle.getExtraTyre()))
+        if (vehicle.getExtraTyre() == null || !(vehicle.getExtraTyre()))
             extraTyre.setVisibility(View.GONE);
 
-        if( vehicle.getCharger() == null || !(vehicle.getCharger()))
+        if (vehicle.getCharger() == null || !(vehicle.getCharger()))
             charger.setVisibility(View.GONE);
 
-        if( vehicle.getFireExtinguisher() == null || !(vehicle.getFireExtinguisher()))
+        if (vehicle.getFireExtinguisher() == null || !(vehicle.getFireExtinguisher()))
             fireExtinguisher.setVisibility(View.GONE);
 
-        if( vehicle.getFirstAidKit() == null || !(vehicle.getFirstAidKit()))
+        if (vehicle.getFirstAidKit() == null || !(vehicle.getFirstAidKit()))
             firstAidKit.setVisibility(View.GONE);
 
-        if( vehicle.getCarSeat() == null || !(vehicle.getCarSeat()))
+        if (vehicle.getCarSeat() == null || !(vehicle.getCarSeat()))
             carSeat.setVisibility(View.GONE);
 
-        if(vehicle.getSmokingPreferences() == null || !(vehicle.getSmokingPreferences()))
-        {
+        if (vehicle.getSmokingPreferences() == null || !(vehicle.getSmokingPreferences())) {
             //No Smoking Action
             noSmoking.setVisibility(View.VISIBLE);
             Smoking.setVisibility(View.GONE);
-        }
-        else
-        {
+        } else {
             //Smoking Action
             noSmoking.setVisibility(View.GONE);
             Smoking.setVisibility(View.VISIBLE);
         }
 
-
     }
-/*
-    private void Confirmation(String vehicleModel,float price)
-    {
-        alertDialog.setCancelable(false);
-        alertDialog.setIcon(R.drawable.ic_baseline_check_circle_outline);
-        alertDialog.setTitle("Confirmation");
-        alertDialog.setMessage("Are you sure about renting this vehicle? \n"+
-                "Model: "+vehicle.getVehicleModel()+"\n"+
-                "Price: "+vehicle.getPrice()+" "+vehicle.getPriceLabel() +" (Per Day)");
-        alertDialog.setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //check if user logged on by his account, not as a guest.
-                //if (logged on) .. Send Request to company .. show Toast with "Request is Sent"
-                //else .. send him to Login page
-
+    public void getLocation(){
+        if (ContextCompat.checkSelfPermission(getContext(),
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(getContext(),
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                LocationManager lm = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+                Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                Longitude = location.getLongitude();
+                Latitude = location.getLatitude();
+                final LocationListener locationListener = new LocationListener() {
+                    public void onLocationChanged(Location location) {
+                        Longitude = location.getLongitude();
+                        Latitude = location.getLatitude();
+                    }
+                };
+            } else {
+                return;
             }
-        });
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        AlertDialog dialog = alertDialog.create();
-        dialog.show();
+        } else {
+            return;
+        }
     }
 
- */
+    private double getDistanceBetweenUserAndCompany(double lat1, double lon1, double lat2, double lon2) {
+        theta = lon1 - lon2;
+        dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
 
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
 
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
+    }
 
 }

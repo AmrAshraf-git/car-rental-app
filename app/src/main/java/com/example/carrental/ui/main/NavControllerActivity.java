@@ -1,6 +1,7 @@
 package com.example.carrental.ui.main;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -240,10 +241,15 @@ public class NavControllerActivity extends AppCompatActivity implements Fragment
                 break;
 
             case CONTACT_US:
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.putExtra(Intent.EXTRA_EMAIL, "example@gmail.com");
-                intent.setType("message/rfc822");
-                startActivity(Intent.createChooser(intent, "Send Email"));
+                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
+                /* Fill it with Data */
+                emailIntent.setType("plain/text");
+                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"ehabmohammed296@gmail.com"});
+                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Type title of your Message here...");
+                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Type your Message here...");
+
+                this.startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+
                 getSupportFragmentManager().popBackStack();
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return false;

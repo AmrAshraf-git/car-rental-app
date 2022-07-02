@@ -58,10 +58,10 @@ public class ProfileFragment extends Fragment {
         email =view.findViewById(R.id.profile_txtView_email);
         phone =view.findViewById(R.id.profile_txtView_phone);
         if (SessionManager.getInstance(getContext()).isLoggedIn()) {
-            fName.setText(String.format("First name: %s", SessionManager.getInstance(getContext()).getLoginSession().getFirstName()));
-            lName.setText(String.format("Last name: %s", SessionManager.getInstance(getContext()).getLoginSession().getLastName()));
-            email.setText(String.format("Email: %s", SessionManager.getInstance(getContext()).getLoginSession().getEmail()));
-            phone.setText(String.format("Phone: %d", SessionManager.getInstance(getContext()).getLoginSession().getPhone()));
+            fName.setText(String.format("%s", SessionManager.getInstance(getContext()).getLoginSession().getFirstName()));
+            lName.setText(String.format("%s", SessionManager.getInstance(getContext()).getLoginSession().getLastName()));
+            email.setText(String.format("%s", SessionManager.getInstance(getContext()).getLoginSession().getEmail()));
+            phone.setText(String.format("%d", SessionManager.getInstance(getContext()).getLoginSession().getPhone()));
         }
         return view;
     }

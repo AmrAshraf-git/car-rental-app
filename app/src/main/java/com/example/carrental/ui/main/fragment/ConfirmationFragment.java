@@ -2,11 +2,13 @@ package com.example.carrental.ui.main.fragment;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -360,42 +362,14 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         sendRequestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                IsValidDates(pickUpDate, dropOffDate);
-
-                Log.e("ddd", pickUpDate);
-                Log.e("ddd", dropOffDate);
-
-
-
-                //==============================TEST ONLY========================================
-                if (SessionManager.getInstance(getContext()).isLoggedIn()){
-                    Booking booking = new Booking();
-                    booking.setVehicleID(vehicleId);
-                    booking.setPick_upLocation("Alex");
-                    booking.setReturn_Location("Alex");
-                    //booking.setDateFrom(pickUpDate);
-                    booking.setDateFrom("2022-08-10");
-                    //booking.setDateTo(dropOffDate);
-                    booking.setDateTo("2022-08-11");
-                    Log.e("ddd",pickUpDate);
-                    Log.e("ddd",dropOffDate);
-
-                    vehicleViewModel.booking(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
-                    vehicleViewModel.getBookingLiveDataResponse().observe(getViewLifecycleOwner(), new Observer<BookingResponse>() {
-                        @Override
-                        public void onChanged(BookingResponse bookingResponse) {
-                            if (bookingResponse.getMessage() != null) {
-                                Log.e("bookingResponse", bookingResponse.getMessage());
-                            }
-                        }
-                    });
+                if(IsValidDates(pickUpDate, dropOffDate))
+                {
+                    if (SessionManager.getInstance(getContext()).isLoggedIn()){
+                        Confirmation();
+                    }
+                    else
+                        Toast.makeText(getContext(), "You must login first", Toast.LENGTH_SHORT).show();
                 }
-                else
-                    Toast.makeText(getContext(), "You must login first", Toast.LENGTH_SHORT).show();
-                //==============================TEST ONLY========================================
-
-
-
 
             }
         });
@@ -504,6 +478,52 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
         }
         return false;
     }
+
+
+    private void Confirmation()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Confirmation");
+        builder.setMessage("You can't undo this action, are you sure about renting this vehicle?");
+        builder.setCancelable(false);
+        builder.setIcon(R.drawable.ic_baseline_check_circle_outline);
+        builder.setPositiveButton("Send Request", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Booking booking = new Booking();
+                booking.setVehicleID(vehicleId);
+                booking.setPick_upLocation("Alex");
+                booking.setReturn_Location("Alex");
+                //booking.setDateFrom(pickUpDate);
+                booking.setDateFrom("2022-08-10");
+                //booking.setDateTo(dropOffDate);
+                booking.setDateTo("2022-08-11");
+                Log.e("ddd",pickUpDate);
+                Log.e("ddd",dropOffDate);
+                vehicleViewModel.booking(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
+                vehicleViewModel.getBookingLiveDataResponse().observe(getViewLifecycleOwner(), new Observer<BookingResponse>() {
+                    @Override
+                    public void onChanged(BookingResponse bookingResponse) {
+                        if (bookingResponse.getMessage() != null) {
+                            Log.e("bookingResponse", bookingResponse.getMessage());
+                        }
+                    }
+                });
+                Toast.makeText(getContext(), "Your request has been sent.", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 
 
 }

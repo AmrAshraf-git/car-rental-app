@@ -3,11 +3,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
     tools:context=".ui.main.fragment.navigation.SettingsFragment">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="    Setting Fragment" />
+        android:layout_height="wrap_content"
+        android:text="Theme" />
+
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/settings_switch_changeTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:showText="false"
+        android:text="Light Mode"
+        android:textAlignment="viewStart" />
 
 </LinearLayout>
