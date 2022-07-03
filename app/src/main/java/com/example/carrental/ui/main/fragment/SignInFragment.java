@@ -32,7 +32,6 @@ import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.User;
 import com.example.carrental.ui.main.MainActivity;
 import com.example.carrental.ui.main.NavControllerActivity;
-import com.example.carrental.ui.main.UserLocationActivity;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.SessionManager;
 import com.example.carrental.utility.TextValidation;

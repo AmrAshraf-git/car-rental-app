@@ -131,7 +131,21 @@
                     app:layout_constraintTop_toBottomOf="@+id/viewAllDetails_txtView_carModel"
                     android:src="@drawable/img_logo_test"
                     app:tint="@color/blue"/>
--->
+                    -->
+
+                <ImageButton
+                    android:id="@+id/homeListRow_btn_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:clickable="true"
+                    android:contentDescription="Add to favorite"
+                    android:focusable="true"
+                    android:padding="1dp"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_btn_favorite">
+                </ImageButton>
+
                 <com.smarteist.autoimageslider.SliderView
                     android:id="@+id/bookingActivity_imageSlider_imagesOfvehicle"
                     android:layout_width="match_parent"
@@ -629,8 +643,6 @@
                             android:gravity="center"
                             android:text="Car Seat"
                             app:drawableTopCompat="@drawable/ic_baseline_child_friendly" />
-
-
 
 
                     </LinearLayout>

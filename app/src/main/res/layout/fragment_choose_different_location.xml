@@ -22,24 +22,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/chooseDiffLocation_btn_useCustomLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/ic_btn_rounded"
         android:clickable="true"
         android:focusable="true"
         android:text="Use This Custom Location"
         android:textAllCaps="false"
-        android:textColor="@color/black"
         android:textSize="16sp"
         app:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@id/chooseDiffLocation_TextView_OR"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chooseDiffLocation_EditText_addressManually"></androidx.appcompat.widget.AppCompatButton>
+        app:layout_constraintTop_toBottomOf="@id/chooseDiffLocation_EditText_addressManually">
+    </Button>
 
     <TextView
         android:id="@+id/chooseDiffLocation_TextView_OR"
@@ -53,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chooseDiffLocation_btn_useCustomLocation" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/chooseDiffLocation_btn_useCurrentLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -64,19 +65,21 @@
         android:focusable="true"
         android:text="Use Current Location"
         android:textAllCaps="false"
-        android:textColor="@color/black"
         android:textSize="16sp"
-        app:elevation="4dp"
+        app:elevation="10dp"
         app:layout_constraintBottom_toTopOf="@id/chooseDiffLocation_TextView_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chooseDiffLocation_TextView_OR"></androidx.appcompat.widget.AppCompatButton>
+        app:layout_constraintTop_toBottomOf="@id/chooseDiffLocation_TextView_OR">
+
+    </Button>
 
 
     <TextView
         android:id="@+id/chooseDiffLocation_TextView_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:drawableStart="@drawable/ic_baseline_location_on"
         android:text="Unknown"
         app:layout_constraintEnd_toEndOf="parent"

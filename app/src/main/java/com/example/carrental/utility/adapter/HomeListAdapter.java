@@ -1,5 +1,7 @@
 package com.example.carrental.utility.adapter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,13 +10,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.R;
+import com.example.carrental.ui.main.VehicleViewModel;
+import com.example.carrental.utility.SessionManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,7 +44,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
     //Same as "getView method" but, this method includes if(view==null){Save the ViewHolder object in cached view} and else{get the ViewHolder object from cached view}.
     public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
         //final View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_list_row, parent, false);
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_list_row, parent, false), onRecyclerViewClickListener);
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_home_list_row, parent, false), onRecyclerViewClickListener,arrayList);
     }
 
     @Override
@@ -93,28 +101,19 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         holder.seatingCapacity.setText(String.valueOf(getItem(position).getSeatingCapacity()));
         holder.transmission.setText(getItem(position).getAutomaticTransmission()?"Automatic":"Manual");
         holder.price.setText(String.valueOf(getItem(position).getPrice()));
-        holder.addToFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                v.setClickable(true);
-                v.setEnabled(true);
-                v.setFocusable(true);
-
-                //notifyDataSetChanged();
-            }
-        });
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         //Vehicle vehicle;
         ImageView vehicleImage;
-        ImageButton addToFavorite;
         RatingBar compRate, carRate;
 
-        TextView companyName, vehicleModel, vehicleColor, doorsNum, seatingCapacity, transmission,priceLabel,price;
+        TextView compLocation,companyName, vehicleModel, vehicleColor, doorsNum, seatingCapacity, transmission,priceLabel,price;
 
-        public ViewHolder(final View view,final OnRecyclerViewClickListener onRecyclerViewClickListener)
+
+
+        public ViewHolder(final View view,final OnRecyclerViewClickListener onRecyclerViewClickListener,List<Vehicle> arrayList)
         {
             super(view);
 
@@ -130,7 +129,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
             transmission =view.findViewById(R.id.homeListRow_txtView_spec4);
             price=view.findViewById(R.id.homeListRow_txtView_price);
             priceLabel=view.findViewById(R.id.homeListRow_txtView_lbl);
-            addToFavorite=view.findViewById(R.id.homeListRow_btn_favorite);
 
             itemView.setOnClickListener(v -> {
                 //Log.d("click","Adapter_onItemClick");
@@ -141,7 +139,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
                 }
 
             });
-
 
         }
 

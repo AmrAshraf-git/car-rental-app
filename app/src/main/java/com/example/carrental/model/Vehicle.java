@@ -14,8 +14,9 @@ import com.squareup.picasso.Picasso;
 public class Vehicle extends VehicleSpecs implements Parcelable {
 
     private int id; //temp
-    private String _id;
+    boolean isFavorite=false;
 
+    private String _id;
     @SerializedName("model")
     @Expose
     private String vehicleModel; //2
@@ -80,6 +81,7 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
 
     protected Vehicle(Parcel in) {
         id = in.readInt();
+        isFavorite = in.readByte() != 0;
         _id = in.readString();
         vehicleModel = in.readString();
         vehicleBrand = in.readString();
@@ -117,6 +119,15 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
         this.id = id;
     }
 
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+
     public String get_id() {
         return _id;
     }
@@ -130,11 +141,13 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     }
 
     public String getCompanyLongitude() {
-        return compDetails.get("Longitude").getAsString();
+        //return compDetails.get("Longitude").getAsString();
+        return "30.071275";
     }
 
     public String getCompanyLatitude() {
-        return compDetails.get("Latitude").getAsString();
+        //return compDetails.get("Latitude").getAsString();
+        return "31.239217";
     }
 
     public int getCompHotline() {
@@ -278,6 +291,7 @@ public class Vehicle extends VehicleSpecs implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
+        dest.writeByte((byte) (isFavorite ? 1 : 0));
         dest.writeString(_id);
         dest.writeString(vehicleModel);
         dest.writeString(vehicleBrand);

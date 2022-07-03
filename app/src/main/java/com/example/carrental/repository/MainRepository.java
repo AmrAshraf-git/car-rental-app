@@ -356,30 +356,30 @@ public class MainRepository {
     }
 
 
-    public void remoteFavoriteList(String userID, OnBookingHistoryResponseListener onBookingHistoryResponseListener){
-        Call<BookingHistoryResponse> call=apiService.getFavorite(userID);
-        call.enqueue(new Callback<BookingHistoryResponse>() {
+    public void remoteFavoriteList(String userID, OnVehiclesResponseListener onVehiclesResponseListener){
+        Call<VehicleResponse> call=apiService.getFavorite(userID);
+        call.enqueue(new Callback<VehicleResponse>() {
             @Override
-            public void onResponse(@NonNull Call<BookingHistoryResponse> call, @NonNull Response<BookingHistoryResponse> response) {
+            public void onResponse(Call<VehicleResponse> call, Response<VehicleResponse> response) {
                 if(response.body()==null)
                 {
                     Log.e("BookingHistoryResponse","null body");
-                    onBookingHistoryResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
+                    onVehiclesResponseListener.onFailed(new Throwable("Message: Unreached response" + "Code: " +response.code()));
                 }
                 else if (response.isSuccessful() && response.code()==200) {
                     //Log.e("BookingResponse","Successful Response");
-                    onBookingHistoryResponseListener.onResponse(response.body());
+                    onVehiclesResponseListener.onResponse(response.body());
                 }
 
                 else{
                     Log.e("BookingHistoryResponse","Unexpected error");
-                    onBookingHistoryResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
+                    onVehiclesResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " +response.message()+ (response.body().getMessage()!=null? response.body().getMessage() :" Code: "+response.code())));
                 }
             }
 
             @Override
-            public void onFailure(Call<BookingHistoryResponse> call, Throwable t) {
-                onBookingHistoryResponseListener.onFailed(t);
+            public void onFailure(Call<VehicleResponse> call, Throwable t) {
+                onVehiclesResponseListener.onFailed(t);
                 t.printStackTrace();
             }
         });

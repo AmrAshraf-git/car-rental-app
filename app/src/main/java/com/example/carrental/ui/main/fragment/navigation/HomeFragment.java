@@ -27,9 +27,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.R;
 import com.example.carrental.model.VehicleResponse;
+import com.example.carrental.utility.SessionManager;
 import com.example.carrental.utility.adapter.HomeListAdapter;
 import com.example.carrental.ui.main.fragment.BookingFragment;
 import com.example.carrental.ui.main.VehicleViewModel;
@@ -98,7 +100,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             //Log.e("test","view");
             view = inflater.inflate(R.layout.fragment_home, container, false);
             recyclerView = view.findViewById(R.id.homePageF_recyclerView_main);
-            searchResult=view.findViewById(R.id.homePageF_txtView_searchResult);
+            searchResult = view.findViewById(R.id.homePageF_txtView_searchResult);
             //handler=new Handler();
             //handler.post(new Runnable() {
             //   @Override
@@ -112,7 +114,6 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             //homeListAdapter = new HomeListAdapter(homeItemList,this);
             linearLayoutManager = new LinearLayoutManager(getContext());
             vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
-
             //vehicleViewModel.getVehicles(view);
             setUpRecyclerView();
             getByCategory();
@@ -137,17 +138,16 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
         vehicleViewModel.getSearchedVehicle().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
             @Override
             public void onChanged(VehicleResponse vehicleResponse) {
-                Log.e("resume1","(Search)onChanged");
+                Log.e("resume1", "(Search)onChanged");
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mVehicleResponse) {
-                    Log.e("resume2","(Search)Lifecycle_RESUMED(if1)");
+                    Log.e("resume2", "(Search)Lifecycle_RESUMED(if1)");
                     if (vehicleResponse.getMessage() != null) {
                         //Log.e("resume3","(Search)if2");
                         if (vehicleResponse.getData() != null) {
-                            if(vehicleResponse.getData().isEmpty()) {
+                            if (vehicleResponse.getData().isEmpty()) {
                                 homeListAdapter.updateStatus(vehicleResponse.getData());
                                 searchResult.setVisibility(View.VISIBLE);
-                            }
-                            else {
+                            } else {
                                 searchResult.setVisibility(View.GONE);
                                 //Log.e("resume4","(Search)if3");
                                 homeListAdapter.updateStatus(vehicleResponse.getData());
@@ -192,8 +192,8 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                     if (vehicleResponse.getMessage() != null && vehicleResponse.getMessage().equals("success")) {
                         //Log.e("resume3","if2");
                         if (vehicleResponse.getData() != null) {
+                                homeListAdapter.updateStatus(vehicleResponse.getData());
                             //Log.e("resume4","if3");
-                            homeListAdapter.updateStatus(vehicleResponse.getData());
                             //homeItemList.addAll(vehicleResponse.getData());
                             //homeListAdapter.notifyDataSetChanged();
                             //handler.post(new Runnable() {
@@ -307,7 +307,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     }
 
 
-    private void getByCategory(){
+    private void getByCategory() {
         switch (mCategoryName) {
             case "car":
                 vehicleViewModel.searchedVehicle("car");

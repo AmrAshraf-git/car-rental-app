@@ -123,6 +123,10 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
     private String companyLongitude;
     private String companyLatitude;
 
+    private String userPickupLoc;
+    private String userDropLoc;
+
+
     public ConfirmationFragment() {
         // Required empty public constructor
     }
@@ -163,6 +167,9 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
             companyRate = getArguments().getFloat(COMPANY_RATE);
             companyLongitude=getArguments().getString(COMPANY_LONGITUDE);
             companyLatitude=getArguments().getString(COMPANY_LATITUDE);
+
+            userPickupLoc=companyAddress;
+            userDropLoc=companyAddress;
         }
         getParentFragmentManager().setFragmentResultListener("requestKey", this, new FragmentResultListener() {
             @Override
@@ -172,11 +179,17 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
 
                 if(CustomAddressPick != null && !CustomAddressPick.equals("".trim())){
                     pickUpLocationTxtView.setText(CustomAddressPick);
+                    userPickupLoc=CustomAddressDrop;
                 }
 
                 if(CustomAddressDrop != null && !CustomAddressDrop.equals("".trim())){
                     dropOffLocationTxtView.setText(CustomAddressDrop);
+                    userDropLoc=CustomAddressDrop;
                 }
+
+
+
+
 
 
             }
@@ -499,8 +512,8 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                 booking.setDateFrom("2022-08-10");
                 //booking.setDateTo(dropOffDate);
                 booking.setDateTo("2022-08-11");
-                Log.e("ddd",pickUpDate);
-                Log.e("ddd",dropOffDate);
+                Log.e("ddd",userPickupLoc);
+                Log.e("ddd",userDropLoc);
                 vehicleViewModel.booking(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
                 vehicleViewModel.getBookingLiveDataResponse().observe(getViewLifecycleOwner(), new Observer<BookingResponse>() {
                     @Override

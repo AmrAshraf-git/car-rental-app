@@ -32,7 +32,6 @@ import android.widget.Toast;
 
 import com.example.carrental.R;
 import com.example.carrental.ui.main.NavControllerActivity;
-import com.example.carrental.ui.main.UserLocationActivity;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -63,6 +62,7 @@ public class ChooseDifferentLocationFragment extends Fragment {
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private Boolean mLocationPermissionsGranted = false;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

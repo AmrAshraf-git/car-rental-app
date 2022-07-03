@@ -31,7 +31,7 @@ public class VehicleViewModel extends ViewModel {
     private final MutableLiveData<ForgetPasswordResponse> addToFavoriteResponse;
     private final MutableLiveData<BookingHistoryResponse> bookingHistoryLiveDataResponse;
     private final MutableLiveData<BookingHistoryResponse> availableRateLiveDataResponse;
-    private final MutableLiveData<BookingHistoryResponse> favoriteListLiveDataResponse;
+    private final MutableLiveData<VehicleResponse> favoriteListLiveDataResponse;
     private final MainRepository mainRepository;
 
     public VehicleViewModel() {
@@ -266,22 +266,22 @@ public class VehicleViewModel extends ViewModel {
 
 
     public void favoriteList(String id) {
-        mainRepository.remoteFavoriteList(id, new MainRepository.OnBookingHistoryResponseListener() {
-            @Override
-            public void onResponse(BookingHistoryResponse bookingHistoryResponse) {
-                favoriteListLiveDataResponse.postValue(bookingHistoryResponse);
-            }
+        mainRepository.remoteFavoriteList(id, new MainRepository.OnVehiclesResponseListener() {
+                    @Override
+                    public void onResponse(VehicleResponse vehicleResponse) {
+                        favoriteListLiveDataResponse.postValue(vehicleResponse);
+                    }
 
-            @Override
-            public void onFailed(Throwable throwable) {
-                BookingHistoryResponse mBookingHistoryResponse = new BookingHistoryResponse();
-                mBookingHistoryResponse.setMessage(throwable.getLocalizedMessage());
-                favoriteListLiveDataResponse.postValue(mBookingHistoryResponse);
-            }
+                    @Override
+                    public void onFailed(Throwable throwable) {
+                        VehicleResponse mVehicleResponse = new VehicleResponse();
+                        mVehicleResponse.setMessage(throwable.getLocalizedMessage());
+                        favoriteListLiveDataResponse.postValue(mVehicleResponse);
+                    }
         });
     }
 
-    public MutableLiveData<BookingHistoryResponse> getFavoriteList() {
+    public MutableLiveData<VehicleResponse> getFavoriteList() {
         return favoriteListLiveDataResponse;
     }
 

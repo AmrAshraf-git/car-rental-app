@@ -3,20 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/drawable/ic_baseline_settings.xml" value="0.134" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_home_list_row.xml" value="0.4" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_nav_controller.xml" value="0.4" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/activity_user_location.xml" value="0.25" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_about.xml" value="0.25" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_booking.xml" value="0.264" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_confirmation.xml" value="0.25" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_my_booking.xml" value="0.24615384615384617" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_privacy_policy.xml" value="0.4" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
-        <entry key="..\:/Modern/GP/car-rental-app/app/src/main/res/layout/fragment_settings.xml" value="0.4" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/drawable/ic_btn_favorite.xml" value="0.1125" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/activity_home_list_row.xml" value="0.33" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_booking.xml" value="0.25" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_choose_category.xml" value="0.16574074074074074" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_choose_different_location.xml" value="0.33" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_company_location_on_map.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_confirmation.xml" value="0.16574074074074074" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_favorite_list.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_history.xml" value="0.16574074074074074" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_history_details.xml" value="0.16574074074074074" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_home.xml" value="0.16574074074074074" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_my_booking.xml" value="0.22447916666666667" />
+        <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_privacy_policy.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_rating.xml" value="0.16574074074074074" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_settings.xml" value="0.22447916666666667" />
         <entry key="..\:/Users/3D/AndroidStudioProjects/CarRental/app/src/main/res/layout/fragment_sign_in.xml" value="0.2" />
@@ -24,5 +23,5 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
