@@ -9,6 +9,7 @@ import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.BookingResponse;
 import com.example.carrental.model.ForgetPasswordResponse;
 import com.example.carrental.model.NewUser;
+import com.example.carrental.model.OnApiResponse;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
 import com.example.carrental.model.User;
@@ -46,14 +47,14 @@ public class VehicleViewModel extends ViewModel {
         availableRateLiveDataResponse = new MutableLiveData<>();
         updateVehicleRateResponse = new MutableLiveData<>();
         updateCompanyRateResponse = new MutableLiveData<>();
-        favoriteListLiveDataResponse=new MutableLiveData<>();
-        addToFavoriteResponse=new MutableLiveData<>();
+        favoriteListLiveDataResponse = new MutableLiveData<>();
+        addToFavoriteResponse = new MutableLiveData<>();
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
     }
 
-
+/*
     public void searchedVehicle(String search) {
         mainRepository.remoteVehicleSearchData(search, new MainRepository.OnVehiclesSearchResponseListener() {
                     @Override
@@ -303,7 +304,259 @@ public class VehicleViewModel extends ViewModel {
 
     public MutableLiveData<ForgetPasswordResponse> getAddToFavorite() {
         return addToFavoriteResponse;
+    }*/
+
+    public void searchedVehicle(String search) {
+        mainRepository.remoteVehicleSearchData(search, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                VehicleResponse mVehicleResponse = (VehicleResponse) object;
+                mVehicleResponse.setSearch(search);
+                vehicleSearchLiveDataResponse.postValue(mVehicleResponse);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                VehicleResponse mVehicleResponse = new VehicleResponse();
+                mVehicleResponse.setMessage(throwable.getLocalizedMessage());
+                vehicleSearchLiveDataResponse.postValue(mVehicleResponse);
+            }
+        });
     }
+
+    public MutableLiveData<VehicleResponse> getSearchedVehicle() {
+        return vehicleSearchLiveDataResponse;
+    }
+
+
+    public LiveData<VehicleResponse> getVehicle() {
+        //return mutableLiveData;
+        //return mainRepository.getVehiclesResponse();
+        mainRepository.remoteVehicleData(new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+
+                vehicleLiveDataResponse.postValue((VehicleResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                VehicleResponse mVehicleResponse = new VehicleResponse();
+                mVehicleResponse.setMessage(throwable.getLocalizedMessage());
+                vehicleLiveDataResponse.postValue(mVehicleResponse);
+            }
+        });
+        return vehicleLiveDataResponse;
+    }
+
+    public void booking(String token, Booking booking) {
+        mainRepository.remoteBooking(token, booking, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                bookingLiveDataResponse.postValue((BookingResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                BookingResponse mBookingResponse = new BookingResponse();
+                mBookingResponse.setMessage(throwable.getLocalizedMessage());
+                bookingLiveDataResponse.postValue(mBookingResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<BookingResponse> getBookingLiveDataResponse() {
+        return bookingLiveDataResponse;
+    }
+
+    public void login(User user) {
+        mainRepository.remoteSignIn(user, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                userLiveDataResponse.postValue((SignInResponse) object);
+                //toastResponse.postValue(signInResponse.getMessage());
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                SignInResponse mSignInResponse = new SignInResponse();
+                mSignInResponse.setMessage(throwable.getLocalizedMessage());
+                userLiveDataResponse.postValue(mSignInResponse);
+                //toastResponse.postValue(throwable.getLocalizedMessage());
+            }
+        });
+    }
+
+    public LiveData<SignInResponse> getUserResponse() {
+        return userLiveDataResponse;
+    }
+
+    public void signUp(NewUser newUser) {
+        mainRepository.remoteSignUp(newUser, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                newUserLiveDataResponse.postValue((SignUpResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                SignUpResponse mSignUpResponse = new SignUpResponse();
+                mSignUpResponse.setMessage(throwable.getLocalizedMessage());
+                newUserLiveDataResponse.postValue(mSignUpResponse);
+            }
+        });
+    }
+
+    public LiveData<SignUpResponse> getNewUserResponse() {
+        return newUserLiveDataResponse;
+    }
+
+    public void history(String id) {
+        mainRepository.remoteBookingHistory(id, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                bookingHistoryLiveDataResponse.postValue((BookingHistoryResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                BookingHistoryResponse mBookingHistoryResponse = new BookingHistoryResponse();
+                mBookingHistoryResponse.setMessage(throwable.getLocalizedMessage());
+                bookingHistoryLiveDataResponse.postValue(mBookingHistoryResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<BookingHistoryResponse> getBookingHistory() {
+        return bookingHistoryLiveDataResponse;
+    }
+
+    public void forgetPassword(String email) {
+        mainRepository.remoteForgetPassword(email, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                forgetPasswordLiveDataResponse.postValue((ForgetPasswordResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                ForgetPasswordResponse mForgetPasswordResponse = new ForgetPasswordResponse();
+                mForgetPasswordResponse.setMessage(throwable.getLocalizedMessage());
+                forgetPasswordLiveDataResponse.postValue(mForgetPasswordResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<ForgetPasswordResponse> getForgetPassword() {
+        return forgetPasswordLiveDataResponse;
+    }
+
+
+    public void availableRate(String id) {
+        mainRepository.remoteAvailableRate(id, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                availableRateLiveDataResponse.postValue((BookingHistoryResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                BookingHistoryResponse mAvailableRateResponse = new BookingHistoryResponse();
+                mAvailableRateResponse.setMessage(throwable.getLocalizedMessage());
+                availableRateLiveDataResponse.postValue(mAvailableRateResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<BookingHistoryResponse> getAvailableRate() {
+        return availableRateLiveDataResponse;
+    }
+
+
+    public void updateVehicleRate(String userId, int rate, String vehicleID) {
+        mainRepository.remoteUpdateVehicleRate(userId, rate, vehicleID, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                updateVehicleRateResponse.postValue((ForgetPasswordResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                ForgetPasswordResponse mForgetPasswordResponse = new ForgetPasswordResponse();
+                mForgetPasswordResponse.setMessage(throwable.getLocalizedMessage());
+                updateVehicleRateResponse.postValue(mForgetPasswordResponse);
+            }
+        });
+    }
+
+
+    public MutableLiveData<ForgetPasswordResponse> getUpdateVehicleRate() {
+        return updateVehicleRateResponse;
+    }
+
+
+    public void updateCompanyRate(String userId, int rate, String companyID) {
+        mainRepository.remoteUpdateCompanyRate(userId, rate, companyID, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                updateCompanyRateResponse.postValue((ForgetPasswordResponse)object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                ForgetPasswordResponse mForgetPasswordResponse = new ForgetPasswordResponse();
+                mForgetPasswordResponse.setMessage(throwable.getLocalizedMessage());
+                updateCompanyRateResponse.postValue(mForgetPasswordResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<ForgetPasswordResponse> getUpdateCompanyRate() {
+        return updateCompanyRateResponse;
+    }
+
+
+    public void favoriteList(String id) {
+        mainRepository.remoteFavoriteList(id, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                favoriteListLiveDataResponse.postValue((VehicleResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                VehicleResponse mVehicleResponse = new VehicleResponse();
+                mVehicleResponse.setMessage(throwable.getLocalizedMessage());
+                favoriteListLiveDataResponse.postValue(mVehicleResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<VehicleResponse> getFavoriteList() {
+        return favoriteListLiveDataResponse;
+    }
+
+    public void addToFavorite(String userID, boolean like, String vehicleID) {
+        mainRepository.addToFavorite(userID, like, vehicleID, new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                addToFavoriteResponse.postValue((ForgetPasswordResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                ForgetPasswordResponse mForgetPasswordResponse = new ForgetPasswordResponse();
+                mForgetPasswordResponse.setMessage(throwable.getLocalizedMessage());
+                addToFavoriteResponse.postValue(mForgetPasswordResponse);
+            }
+        });
+    }
+
+    public MutableLiveData<ForgetPasswordResponse> getAddToFavorite() {
+        return addToFavoriteResponse;
+    }
+
+
 
 
 

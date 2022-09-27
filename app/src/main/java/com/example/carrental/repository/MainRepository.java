@@ -14,13 +14,13 @@ import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.SignUpResponse;
 import com.example.carrental.model.User;
 import com.example.carrental.model.VehicleResponse;
+import com.example.carrental.model.OnApiResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainRepository {
-
-
     private static MainRepository instance;
     private final ApiService apiService;
 
@@ -34,8 +34,7 @@ public class MainRepository {
         return instance;
     }
 
-
-
+    /*
     public void remoteVehicleSearchData(String query, OnVehiclesSearchResponseListener onVehiclesSearchResponseListener){
         Call<VehicleResponse> call=apiService.getSearchedItems(query);
         call.enqueue(new Callback<VehicleResponse>() {
@@ -49,9 +48,10 @@ public class MainRepository {
                     onVehiclesSearchResponseListener.onResponse(response.body());
                     //Log.e("VehicleSearchResponse", "Successful");
                 }
+
                 else {
-                    Log.e("VehicleSearchResponse", "Unexpected error");
                     onVehiclesSearchResponseListener.onFailed(new Throwable("Unexpected error occurred " + "Message: " + response.message() + " Code: " + response.code()));
+                    Log.e("VehicleSearchResponse", "Unexpected error");
                 }
             }
 
@@ -384,13 +384,13 @@ public class MainRepository {
             }
         });
     }
+    */
 
-
+/*
     public interface OnForgetPasswordResponseListener {
         void onResponse(ForgetPasswordResponse forgetPasswordResponse);
         void onFailed(Throwable throwable);
     }
-
 
     public interface OnSignInResponseListener {
         void onResponse(SignInResponse signInResponse);
@@ -435,6 +435,252 @@ public class MainRepository {
     public interface OnUpdateCompanyRateResponseListener {
         void onResponse(ForgetPasswordResponse forgetPasswordResponse);
         void onFailed(Throwable throwable);
+    }
+*/
+
+
+    public void remoteVehicleSearchData(String query, OnApiResponse onApiResponse){
+        Call<VehicleResponse> call=apiService.getSearchedItems(query);
+        call.enqueue(new Callback<VehicleResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VehicleResponse> call, @NonNull Response<VehicleResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<VehicleResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void remoteVehicleData(OnApiResponse onApiResponse){
+        Call<VehicleResponse> call=apiService.getJsonModel();
+        call.enqueue(new Callback<VehicleResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VehicleResponse> call, @NonNull Response<VehicleResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<VehicleResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void remoteSignUp(NewUser newUser, OnApiResponse onApiResponse) {
+        Call<SignUpResponse> call=apiService.signUp(newUser);
+        call.enqueue(new Callback<SignUpResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SignUpResponse> call, @NonNull Response<SignUpResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<SignUpResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void remoteSignIn(User user, OnApiResponse onApiResponse) {
+        Call<SignInResponse> call=apiService.signIn(user);
+        call.enqueue(new Callback<SignInResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<SignInResponse> call, @NonNull Response<SignInResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+            @Override
+            public void onFailure(@NonNull Call<SignInResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void remoteBooking(String token, Booking booking, OnApiResponse onApiResponse){
+        Call<com.example.carrental.model.BookingResponse> call = apiService.RentRequest(token, booking);
+        call.enqueue(new Callback<BookingResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BookingResponse> call, @NonNull Response<BookingResponse> response) {
+
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BookingResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void remoteBookingHistory(String userID, OnApiResponse onApiResponse){
+        Call<BookingHistoryResponse> call=apiService.getHistory(userID);
+        call.enqueue(new Callback<BookingHistoryResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BookingHistoryResponse> call, @NonNull Response<BookingHistoryResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BookingHistoryResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void remoteForgetPassword(String email,OnApiResponse onApiResponse){
+        Call<ForgetPasswordResponse> call= apiService.forgetPassword(email);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ForgetPasswordResponse> call, @NonNull Response<ForgetPasswordResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ForgetPasswordResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+    public void remoteAvailableRate(String userID, OnApiResponse onApiResponse){
+        Call<BookingHistoryResponse> call=apiService.getAvailableRate(userID);
+        call.enqueue(new Callback<BookingHistoryResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<BookingHistoryResponse> call, @NonNull Response<BookingHistoryResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BookingHistoryResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void remoteUpdateVehicleRate(String userID, int rate, String vehicleID, OnApiResponse onApiResponse){
+        Call<ForgetPasswordResponse> call=apiService.updateVehicleRate(userID,rate,vehicleID);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ForgetPasswordResponse> call, @NonNull Response<ForgetPasswordResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ForgetPasswordResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void remoteUpdateCompanyRate(String userID, int rate, String companyID, OnApiResponse onApiResponse){
+        Call<ForgetPasswordResponse> call=apiService.updateCompanyRate(userID,rate,companyID);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ForgetPasswordResponse> call, @NonNull Response<ForgetPasswordResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ForgetPasswordResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void addToFavorite(String userID,boolean like, String vehicleID,OnApiResponse onApiResponse){
+        Call<ForgetPasswordResponse> call=apiService.AddToFavorite(userID,like,vehicleID);
+        call.enqueue(new Callback<ForgetPasswordResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<ForgetPasswordResponse> call, @NonNull Response<ForgetPasswordResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ForgetPasswordResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+    public void remoteFavoriteList(String userID, OnApiResponse onApiResponse){
+        Call<VehicleResponse> call=apiService.getFavorite(userID);
+        call.enqueue(new Callback<VehicleResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<VehicleResponse> call, @NonNull Response<VehicleResponse> response) {
+                responseChecker(response,onApiResponse);
+                //responseChecker(new Response<VehicleResponse>,onApiResponse);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<VehicleResponse> call, @NonNull Throwable t) {
+                onApiResponse.onFailureListener(t);
+                t.printStackTrace();
+            }
+        });
+    }
+
+
+
+    private void responseChecker(@NonNull Response<?> response, OnApiResponse onApiResponse){
+        if(response.body()==null){
+            Log.e(response.getClass().getName(), "Response Failed, invalid response with a null body");
+            if(response.code()==400)
+                onApiResponse.onFailureListener(new Throwable("400"));
+            else
+                onApiResponse.onFailureListener(new Throwable("Message: Unreached response"+"Code: "+response.code()));
+        }
+        else if(response.isSuccessful() && response.code()==200){
+            Log.e(response.body().getClass().getName(), "Response success, with a responseCode==200");
+            onApiResponse.onResponseListener(response.body());
+        }
+        else if(response.isSuccessful()){
+            Log.e(response.body().getClass().getName(), "Response success, with a responseCode>200");
+            onApiResponse.onResponseListener(response.body());
+        }
+        else {
+            Log.e(response.body().getClass().getName(), "An unexpected error occurred when getting the response");
+
+            if(response.body().getClass()==SignUpResponse.class) {
+                SignUpResponse mSignUpResponse = (SignUpResponse) response.body();
+                onApiResponse.onFailureListener(new Throwable("An unexpected error occurred " + "Message: " + response.message() + (mSignUpResponse.getValidateError() != null ? mSignUpResponse.getValidateError()[0] : "  Code: " + response.code())));
+            }
+            else if(response.body().getClass()==SignInResponse.class){
+                SignInResponse mSignInResponse = (SignInResponse) response.body();
+                onApiResponse.onFailureListener(new Throwable("An unexpected error occurred " + "Message: " + response.message() + (mSignInResponse.getMessage()!=null? mSignInResponse.getMessage(): "  Code: "+response.code())));
+            }
+            else
+                onApiResponse.onFailureListener(new Throwable("An unexpected error occurred " + "Message: " + response.message() + " Code: " + response.code()));
+        }
+        onApiResponse=null;
     }
 
 
@@ -510,14 +756,6 @@ public class MainRepository {
         //======================================PARSE DATA======================================
         return vehicleMutableLiveData;
     }*/
-
-
-
-
-
-
-
-
 
 
 }

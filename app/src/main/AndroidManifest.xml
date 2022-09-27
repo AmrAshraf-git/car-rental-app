@@ -29,9 +29,6 @@
             android:value="AIzaSyC--7W39ni9unxVdN2XfKCLq8FUGeSwITY" />
         <!-- Google Maps -->
 
-        <activity
-            android:name=".ui.main.UserLocationActivity"
-            android:exported="false" />
 
         <activity
             android:name=".ui.main.NavControllerActivity"

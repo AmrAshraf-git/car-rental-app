@@ -187,11 +187,6 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                     userDropLoc=CustomAddressDrop;
                 }
 
-
-
-
-
-
             }
         });
 
@@ -506,14 +501,14 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
 
                 Booking booking = new Booking();
                 booking.setVehicleID(vehicleId);
-                booking.setPick_upLocation("Alex");
-                booking.setReturn_Location("Alex");
+                booking.setPick_upLocation(userPickupLoc);
+                booking.setReturn_Location(userDropLoc);
                 //booking.setDateFrom(pickUpDate);
                 booking.setDateFrom("2022-08-10");
                 //booking.setDateTo(dropOffDate);
                 booking.setDateTo("2022-08-11");
-                Log.e("ddd",userPickupLoc);
-                Log.e("ddd",userDropLoc);
+                //Log.e("ddd",userPickupLoc);
+                //Log.e("ddd",userDropLoc);
                 vehicleViewModel.booking(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
                 vehicleViewModel.getBookingLiveDataResponse().observe(getViewLifecycleOwner(), new Observer<BookingResponse>() {
                     @Override

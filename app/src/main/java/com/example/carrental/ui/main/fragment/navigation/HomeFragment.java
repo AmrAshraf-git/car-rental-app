@@ -54,6 +54,8 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     private HomeListAdapter homeListAdapter;
     private List<Vehicle> homeItemList = new ArrayList<>();
     private VehicleResponse mVehicleResponse;
+    private VehicleResponse mSearchVehicleResponse;
+    private VehicleResponse mSearchByCategoryVehicleResponse;
     private ProgressBar progressBar;
     private TextView searchResult;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -92,7 +94,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (!mAlreadyLoaded) {
             mAlreadyLoaded = true;
@@ -101,23 +103,17 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             view = inflater.inflate(R.layout.fragment_home, container, false);
             recyclerView = view.findViewById(R.id.homePageF_recyclerView_main);
             searchResult = view.findViewById(R.id.homePageF_txtView_searchResult);
-            //handler=new Handler();
-            //handler.post(new Runnable() {
-            //   @Override
-            // public void run() {
+
             swipeRefreshLayout = view.findViewById(R.id.homePageF_swipeRf);
             progressBar = view.findViewById(R.id.homePageF_prgrsBar);
             searchResult.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-            // }
-            // });
-            //homeListAdapter = new HomeListAdapter(homeItemList,this);
+
             linearLayoutManager = new LinearLayoutManager(getContext());
             vehicleViewModel = new ViewModelProvider(this).get(VehicleViewModel.class);
-            //vehicleViewModel.getVehicles(view);
+
             setUpRecyclerView();
             getByCategory();
-
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -139,7 +135,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             @Override
             public void onChanged(VehicleResponse vehicleResponse) {
                 Log.e("resume1", "(Search)onChanged");
-                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mVehicleResponse) {
+                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mSearchVehicleResponse) {
                     Log.e("resume2", "(Search)Lifecycle_RESUMED(if1)");
                     if (vehicleResponse.getMessage() != null) {
                         //Log.e("resume3","(Search)if2");
@@ -168,7 +164,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                     }
                 }
                 //getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-                mVehicleResponse = vehicleResponse;
+                mSearchVehicleResponse = vehicleResponse;
                 progressBar.setVisibility(View.GONE);
                 swipeRefreshLayout.setEnabled(false);
                 searchView.clearFocus();
@@ -177,6 +173,52 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             }
         });
     }
+
+    /*private void observeSearchByCategoryViewModel() {
+        vehicleViewModel.getSearchedVehicle().removeObservers(getViewLifecycleOwner());
+        getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getSearchedVehicle().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
+            @Override
+            public void onChanged(VehicleResponse vehicleResponse) {
+                Log.e("resume1", "(Search)onChanged");
+                if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mSearchByCategoryVehicleResponse) {
+                    Log.e("resume2", "(Search)Lifecycle_RESUMED(if1)");
+                    if (vehicleResponse.getMessage() != null) {
+                        //Log.e("resume3","(Search)if2");
+                        if (vehicleResponse.getData() != null) {
+                            if (vehicleResponse.getData().isEmpty()) {
+                                homeListAdapter.updateStatus(vehicleResponse.getData());
+                                searchResult.setVisibility(View.VISIBLE);
+                            } else {
+                                searchResult.setVisibility(View.GONE);
+                                //Log.e("resume4","(Search)if3");
+                                homeListAdapter.updateStatus(vehicleResponse.getData());
+                                //homeItemList.addAll(vehicleResponse.getData());
+                                //homeListAdapter.notifyDataSetChanged();
+                                //handler.post(new Runnable() {
+                                // @Override
+                                //public void run() {
+                                //}
+                                //});
+                            }
+
+                        } else
+                            Toast.makeText(getContext(), (vehicleResponse.getMessage() != null ? vehicleResponse.getMessage() : "No responding data"), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), (vehicleResponse.getMessage() != null ? vehicleResponse.getMessage() : "Unknown response, please try again"), Toast.LENGTH_SHORT).show();
+                        //Log.e("resume5","(Search)else1");
+                    }
+                }
+                //getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+                mSearchByCategoryVehicleResponse = vehicleResponse;
+                progressBar.setVisibility(View.GONE);
+                swipeRefreshLayout.setEnabled(false);
+                searchView.clearFocus();
+                //vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
+                //Log.e("resume6","(Search)end of onChanged");
+            }
+        });
+    }*/
 
     private void observeViewModel() {
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
@@ -226,6 +268,8 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(homeListAdapter);
         //} //else {
@@ -274,6 +318,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             public boolean onQueryTextSubmit(String query) {
                 progressBar.setVisibility(View.VISIBLE);
                 vehicleViewModel.searchedVehicle(query);
+                previousQuery=query;
                 observeSearchViewModel();
                 return false;
             }
@@ -284,7 +329,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
             }
         });
 
-        if (vehicleViewModel.getSearchedVehicle().getValue() != null) {
+        if (vehicleViewModel.getSearchedVehicle().getValue() != null && previousQuery!=null) {
             previousQuery = vehicleViewModel.getSearchedVehicle().getValue().getSearch();
 
             if (previousQuery != null && !previousQuery.isEmpty()) {
@@ -307,6 +352,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     }
 
 
+
     private void getByCategory() {
         switch (mCategoryName) {
             case "car":
@@ -325,6 +371,7 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
                 observeViewModel();
                 break;
         }
+        previousQuery=null;
     }
 
 
@@ -352,7 +399,6 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
     @Override
     public void onDestroy() {
         super.onDestroy();
-        //searchView.setOnQueryTextListener(null);
     }
 
     @Override
@@ -415,146 +461,5 @@ public class HomeFragment extends Fragment implements HomeListAdapter.OnRecycler
      //        homeListItemArrayList.add(vehicle2);
      //======================================DUMMY DATA======================================
      */
-
-    /**
-     * Retrofit MVC
-     Retrofit retrofit = new Retrofit.Builder().baseUrl("https://car-rental-eg.herokuapp.com/")
-     .addConverterFactory(GsonConverterFactory.create()).build();
-     ApiService apiService = retrofit.create(ApiService.class);
-     Call<JsonBridgeGetAllVehicle> call = apiService.getJsonModel();
-
-     call.enqueue(new Callback<JsonBridgeGetAllVehicle>() {
-    @Override public void onResponse(Call<JsonBridgeGetAllVehicle> call, Response<JsonBridgeGetAllVehicle> response) {
-    if (!response.isSuccessful() || response.body()==null) {
-    Toast.makeText(getContext(), String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-    return;
-    }
-    //Log.d("Jdata", String.valueOf(response.body().getData().get(10).getCompRate()));
-    //homeListItemArrayList=new ArrayList<>(Arrays.asList(response.body().getData()));
-    //homeListItemArrayList.clear();
-    //homeListItemArrayList=response.body().getData();
-    //homeListAdapter.notifyDataSetChanged();
-    homeListAdapter.updateStatus(response.body().getData());
-
-    if(progressBar.isShown())
-    progressBar.setVisibility(View.GONE);
-    //Log.d("Jdata", String.valueOf(homeListItemArrayList.get(10).getCompanyAddress()));
-    //for(int i=0;i<response.body().getData().size();i++){
-    //   homeListItemArrayList.add(response.body().getData().get(i));
-    //}
-    //homeListAdapter.notifyDataSetChanged();
-    }
-
-    @Override public void onFailure(Call<JsonBridgeGetAllVehicle> call, Throwable t) {
-    t.printStackTrace();
-    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-    }
-    });*/
-
-    /**
-     * Volley
-     SingletonClient.getSingletonClient().getJsonModel().enqueue(new Callback<JsonBridgeGetAllVehicle>() {
-    @Override public void onResponse(Call<JsonBridgeGetAllVehicle> call, Response<JsonBridgeGetAllVehicle> response) {
-    if (!response.isSuccessful() || response.body()==null) {
-    Toast.makeText(getContext(), String.valueOf(response.code()), Toast.LENGTH_SHORT).show();
-    return;
-    }
-    //Log.d("Jdata", String.valueOf(response.body().getData().get(10).getCompRate()));
-    //homeListItemArrayList=new ArrayList<>(Arrays.asList(response.body().getData()));
-    //homeListItemArrayList.clear();
-    //homeListItemArrayList=response.body().getData();
-    //homeListAdapter.notifyDataSetChanged();
-    homeListAdapter.updateStatus(response.body().getData());
-
-    if(progressBar.isShown())
-    progressBar.setVisibility(View.GONE);
-    //Log.d("Jdata", String.valueOf(homeListItemArrayList.get(10).getCompanyAddress()));
-    //for(int i=0;i<response.body().getData().size();i++){
-    //   homeListItemArrayList.add(response.body().getData().get(i));
-    //}
-    //homeListAdapter.notifyDataSetChanged();
-    }
-
-    @Override public void onFailure(Call<JsonBridgeGetAllVehicle> call, Throwable t) {
-    t.printStackTrace();
-    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_LONG).show();
-    }
-    });
-     */
-    /**
-     * Volley
-     *
-     //        //RequestQueue queue = Volley.newRequestQueue(getActivity());
-     //        JsonObjectRequest jsonObjectRequest =new JsonObjectRequest(
-     //                Request.Method.GET, URL, null, new Response.Listener<JSONObject>() {
-     //            @Override
-     //            public void onResponse(JSONObject response) {
-     //                try {
-     //                    //Log.d("JSON",response.getJSONArray("data").get(0).toString());
-     //                    JSONArray dataArray=response.getJSONArray("data");
-     //                    String[] vehicleImg;
-     //                    Vehicle vehicle;
-     //                    for (int i=0;i<dataArray.length();i++) {
-     //                        JSONObject data = dataArray.getJSONObject(i);
-     //                        vehicle= new Vehicle();
-     //                        vehicle.setVehicleModel(data.getString("model"));
-     //                        vehicle.setCompanyName(data.getJSONObject("companyID").getString("CompanyName"));
-     //                        vehicle.setPrice(Float.parseFloat(data.getString("pricePerDay")));
-     //                        vehicle.setPriceLabel(PriceLabel.EGYPTIAN_POUND);
-     //
-     //                        vehicle.setVehicleColor(data.getString("color"));
-     //                        vehicle.setDoorsNum(data.getInt("doorsNumber"));
-     //                        vehicle.setSeatingCapacity(data.getInt("chairsNumber"));
-     //                        vehicle.setVehicleRate(Float.parseFloat(data.getString("VehicleRate")));
-     //                        vehicle.setCompRate(Float.parseFloat(data.getJSONObject("companyID").getString("companyRate")));
-     //
-     //                        VehicleSpecs vehicleSpecs=new VehicleSpecs();
-     //                        vehicleSpecs.addSafetySpecs(data.getBoolean("airbag"),data.getBoolean("seatbelts"),data.getBoolean("ABS"));
-     //                        vehicleSpecs.addFeatures(data.getBoolean("sunroof"),data.getBoolean("Parking_Sensors"),data.getBoolean("Radio"),data.getBoolean("Bluetooth"),data.getBoolean("Smoking_Preferences"),data.getBoolean("Navigation_System"),data.getBoolean("Remote_Start"),data.getBoolean("AC"),data.getBoolean("Music_Player"));
-     //                        vehicleSpecs.Accessories(data.getBoolean("Extra_Tyre"),data.getBoolean("Charger"),data.getBoolean("Fire_Extinguisher"),data.getBoolean("First_Aid_Kit"),true);
-     //                        vehicleSpecs.addEngineSpecs(data.getBoolean("transmissionType"),data.getInt("CC"));
-     //                        vehicle.setVehicleSpecs(vehicleSpecs);
-     //
-     //                        vehicleImg =new String[data.getJSONArray("imageURL").length()];
-     //                        for(int j=0;j<data.getJSONArray("imageURL").length();j++)
-     //                        {
-     //                            vehicleImg[j]=data.getJSONArray("imageURL").get(j).toString();
-     //                        }
-     //                        /*
-     //                        vehicleImg[0]=data.getJSONArray("imageURL").get(0).toString();
-     //                        vehicleImg[1]=data.getJSONArray("imageURL").get(1).toString();
-     //                        vehicleImg[2]=data.getJSONArray("imageURL").get(3).toString();
-     //
-     //                        vehicle.setVehicleImgURL(vehicleImg);
-     //
-     //                        vehicle.setCompanyAddress(data.getJSONObject("companyID").getString("Street"));
-     //                        homeListItemArrayList.add(vehicle);
-     //                    }
-     //                    homeListAdapter.notifyDataSetChanged();
-     //
-     //                } catch (JSONException e) {
-     //                    Toast.makeText(getContext(), "An error occur, try again", Toast.LENGTH_SHORT).show();
-     //                    e.printStackTrace();
-     //                }
-     //            }
-     //        }, new Response.ErrorListener() {
-     //            @Override
-     //            public void onErrorResponse(VolleyError error) {
-     //                error.printStackTrace();
-     //                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-     //            }
-     //        }
-     //        );
-     //        //queue.add(jsonObjectRequest);
-     //        Singleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
-     //
-     //        handler.post(new Runnable() {
-     //            @Override
-     //            public void run() {
-     //             if (progressDialog.isShowing())
-     //                 progressDialog.dismiss();
-     //            }
-     //        });*/
-
 
 }
