@@ -99,9 +99,9 @@ public class FavoriteListFragment extends Fragment implements HomeListAdapter.On
 
     private void observeFavorite() {
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.favoriteList(SessionManager.getInstance(getContext()).getLoginSession().getId());
-        vehicleViewModel.getFavoriteList().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getFavoriteList().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
+        vehicleViewModel.favoriteListRequest(SessionManager.getInstance(getContext()).getLoginSession().getId());
+        vehicleViewModel.getFavoriteListResponse().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getFavoriteListResponse().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
             @Override
             public void onChanged(VehicleResponse vehicleResponse) {
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mVehicleResponse) {

@@ -23,7 +23,6 @@ import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.Vehicle;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.ui.main.fragment.HistoryDetailsFragment;
-import com.example.carrental.ui.main.fragment.RatingFragment;
 import com.example.carrental.utility.SessionManager;
 import com.example.carrental.utility.adapter.HomeListAdapter;
 
@@ -114,10 +113,10 @@ public class HistoryFragment extends Fragment implements HomeListAdapter.OnRecyc
     }
 
     private void observeViewModel() {
-        vehicleViewModel.history(SessionManager.getInstance(getContext()).getLoginSession().getId());
+        vehicleViewModel.historyRequest(SessionManager.getInstance(getContext()).getLoginSession().getId());
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getBookingHistory().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getBookingHistory().observe(getViewLifecycleOwner(), new Observer<BookingHistoryResponse>() {
+        vehicleViewModel.getBookingHistoryResponse().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getBookingHistoryResponse().observe(getViewLifecycleOwner(), new Observer<BookingHistoryResponse>() {
             @Override
             public void onChanged(BookingHistoryResponse bookingHistoryResponse) {
                 //Log.e("resume1","onChanged");
@@ -160,7 +159,7 @@ public class HistoryFragment extends Fragment implements HomeListAdapter.OnRecyc
                 mBookingHistoryResponse = bookingHistoryResponse;
                 getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
                 progressBar.setVisibility(View.GONE);
-                vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
+                vehicleViewModel.getAllVehicleResponse().removeObservers(getViewLifecycleOwner());
                 //Log.e("resume6","end of onChanged");
             }
         });

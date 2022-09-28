@@ -3,7 +3,6 @@ package com.example.carrental.ui.main.fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,7 +20,6 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -302,12 +300,12 @@ public class BookingFragment extends Fragment {
                     if (addToFavoriteFlag != true) {
                         addToFavorite.setImageResource(R.drawable.ic_btn_favorite_selected);
                         addToFavoriteFlag = true;
-                        vehicleViewModel.addToFavorite(SessionManager.getInstance(getContext()).getLoginSession().getId(),true,vehicle.get_id());
+                        vehicleViewModel.addToFavoriteRequest(SessionManager.getInstance(getContext()).getLoginSession().getId(),true,vehicle.get_id());
                         observeAddToFavoriteResponse();
                     } else {
                         addToFavorite.setImageResource(R.drawable.ic_btn_favorite);
                         addToFavoriteFlag = false;
-                        vehicleViewModel.addToFavorite(SessionManager.getInstance(getContext()).getLoginSession().getId(),false,vehicle.get_id());
+                        vehicleViewModel.addToFavoriteRequest(SessionManager.getInstance(getContext()).getLoginSession().getId(),false,vehicle.get_id());
                     }
                 }
                 else
@@ -389,9 +387,9 @@ public class BookingFragment extends Fragment {
 
     private void observeFavorite() {
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.favoriteList(SessionManager.getInstance(getContext()).getLoginSession().getId());
-        vehicleViewModel.getFavoriteList().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getFavoriteList().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
+        vehicleViewModel.favoriteListRequest(SessionManager.getInstance(getContext()).getLoginSession().getId());
+        vehicleViewModel.getFavoriteListResponse().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getFavoriteListResponse().observe(getViewLifecycleOwner(), new Observer<VehicleResponse>() {
             @Override
             public void onChanged(VehicleResponse vehicleResponse) {
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && vehicleResponse != mVehicleResponse) {
@@ -422,8 +420,8 @@ public class BookingFragment extends Fragment {
 
     private void observeAddToFavoriteResponse(){
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getAddToFavorite().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getAddToFavorite().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
+        vehicleViewModel.getAddToFavoriteResponse().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getAddToFavoriteResponse().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
             @Override
             public void onChanged(ForgetPasswordResponse forgetPasswordResponse) {
                 if (getViewLifecycleOwner().getLifecycle().getCurrentState() == Lifecycle.State.RESUMED && forgetPasswordResponse != mForgetPasswordResponse) {

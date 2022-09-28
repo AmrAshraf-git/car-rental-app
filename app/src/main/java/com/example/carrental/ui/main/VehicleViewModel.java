@@ -18,7 +18,9 @@ import com.example.carrental.repository.MainRepository;
 
 public class VehicleViewModel extends ViewModel {
 
+    private final MainRepository mainRepository;
     //Live data
+    /*
     //private final LiveData<VehicleResponse> mutableLiveData;
     //private final MutableLiveData<String> toastResponse;
     private final MutableLiveData<VehicleResponse> vehicleLiveDataResponse;
@@ -33,22 +35,24 @@ public class VehicleViewModel extends ViewModel {
     private final MutableLiveData<BookingHistoryResponse> bookingHistoryLiveDataResponse;
     private final MutableLiveData<BookingHistoryResponse> availableRateLiveDataResponse;
     private final MutableLiveData<VehicleResponse> favoriteListLiveDataResponse;
-    private final MainRepository mainRepository;
+    */
+
+    private MutableLiveData<VehicleResponse> vehicleLiveDataResponse;
+    private MutableLiveData<VehicleResponse> vehicleSearchLiveDataResponse;
+    private MutableLiveData<SignInResponse> userLiveDataResponse;
+    private MutableLiveData<SignUpResponse> newUserLiveDataResponse;
+    private MutableLiveData<BookingResponse> bookingLiveDataResponse;
+    private MutableLiveData<ForgetPasswordResponse> forgetPasswordLiveDataResponse;
+    private MutableLiveData<ForgetPasswordResponse> updateVehicleRateResponse;
+    private MutableLiveData<ForgetPasswordResponse> updateCompanyRateResponse;
+    private MutableLiveData<ForgetPasswordResponse> addToFavoriteResponse;
+    private MutableLiveData<BookingHistoryResponse> bookingHistoryLiveDataResponse;
+    private MutableLiveData<BookingHistoryResponse> availableRateLiveDataResponse;
+    private MutableLiveData<VehicleResponse> favoriteListLiveDataResponse;
+
 
     public VehicleViewModel() {
         mainRepository = MainRepository.getInstance();
-        userLiveDataResponse = new MutableLiveData<>();
-        newUserLiveDataResponse = new MutableLiveData<>();
-        bookingLiveDataResponse = new MutableLiveData<>();
-        vehicleLiveDataResponse = new MutableLiveData<>();
-        vehicleSearchLiveDataResponse = new MutableLiveData<>();
-        bookingHistoryLiveDataResponse = new MutableLiveData<>();
-        forgetPasswordLiveDataResponse = new MutableLiveData<>();
-        availableRateLiveDataResponse = new MutableLiveData<>();
-        updateVehicleRateResponse = new MutableLiveData<>();
-        updateCompanyRateResponse = new MutableLiveData<>();
-        favoriteListLiveDataResponse = new MutableLiveData<>();
-        addToFavoriteResponse = new MutableLiveData<>();
         //toastResponse=new MutableLiveData<>("");
         //mutableLiveData=vehicleRepo.getVehiclesResponse();
         //newUserMutableLiveDataResponse=new MutableLiveData<>();
@@ -306,7 +310,28 @@ public class VehicleViewModel extends ViewModel {
         return addToFavoriteResponse;
     }*/
 
-    public void searchedVehicle(String search) {
+    public void allVehicleRequest(){
+        vehicleLiveDataResponse = new MutableLiveData<>();
+        //return mutableLiveData;
+        //return mainRepository.getVehiclesResponse();
+        mainRepository.remoteVehicleData(new OnApiResponse() {
+            @Override
+            public void onResponseListener(Object object) {
+                vehicleLiveDataResponse.postValue((VehicleResponse) object);
+            }
+
+            @Override
+            public void onFailureListener(Throwable throwable) {
+                VehicleResponse mVehicleResponse = new VehicleResponse();
+                mVehicleResponse.setMessage(throwable.getLocalizedMessage());
+                vehicleLiveDataResponse.postValue(mVehicleResponse);
+            }
+        });
+    }
+
+
+    public void searchedVehicleRequest(String search) {
+        vehicleSearchLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteVehicleSearchData(search, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -324,32 +349,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<VehicleResponse> getSearchedVehicle() {
-        return vehicleSearchLiveDataResponse;
-    }
 
-
-    public LiveData<VehicleResponse> getVehicle() {
-        //return mutableLiveData;
-        //return mainRepository.getVehiclesResponse();
-        mainRepository.remoteVehicleData(new OnApiResponse() {
-            @Override
-            public void onResponseListener(Object object) {
-
-                vehicleLiveDataResponse.postValue((VehicleResponse) object);
-            }
-
-            @Override
-            public void onFailureListener(Throwable throwable) {
-                VehicleResponse mVehicleResponse = new VehicleResponse();
-                mVehicleResponse.setMessage(throwable.getLocalizedMessage());
-                vehicleLiveDataResponse.postValue(mVehicleResponse);
-            }
-        });
-        return vehicleLiveDataResponse;
-    }
-
-    public void booking(String token, Booking booking) {
+    public void bookingRequest(String token, Booking booking) {
+        bookingLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteBooking(token, booking, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -365,11 +367,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<BookingResponse> getBookingLiveDataResponse() {
-        return bookingLiveDataResponse;
-    }
 
-    public void login(User user) {
+    public void signInRequest(User user) {
+        userLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteSignIn(user, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -387,11 +387,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public LiveData<SignInResponse> getUserResponse() {
-        return userLiveDataResponse;
-    }
 
-    public void signUp(NewUser newUser) {
+    public void signUpRequest(NewUser newUser) {
+        newUserLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteSignUp(newUser, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -407,11 +405,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public LiveData<SignUpResponse> getNewUserResponse() {
-        return newUserLiveDataResponse;
-    }
 
-    public void history(String id) {
+    public void historyRequest(String id) {
+        bookingHistoryLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteBookingHistory(id, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -427,11 +423,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<BookingHistoryResponse> getBookingHistory() {
-        return bookingHistoryLiveDataResponse;
-    }
 
-    public void forgetPassword(String email) {
+    public void forgetPasswordRequest(String email) {
+        forgetPasswordLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteForgetPassword(email, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -447,12 +441,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<ForgetPasswordResponse> getForgetPassword() {
-        return forgetPasswordLiveDataResponse;
-    }
 
-
-    public void availableRate(String id) {
+    public void availableRateRequest(String id) {
+        availableRateLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteAvailableRate(id, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -468,12 +459,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<BookingHistoryResponse> getAvailableRate() {
-        return availableRateLiveDataResponse;
-    }
 
-
-    public void updateVehicleRate(String userId, int rate, String vehicleID) {
+    public void updateVehicleRateRequest(String userId, int rate, String vehicleID) {
+        updateVehicleRateResponse = new MutableLiveData<>();
         mainRepository.remoteUpdateVehicleRate(userId, rate, vehicleID, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -490,12 +478,8 @@ public class VehicleViewModel extends ViewModel {
     }
 
 
-    public MutableLiveData<ForgetPasswordResponse> getUpdateVehicleRate() {
-        return updateVehicleRateResponse;
-    }
-
-
-    public void updateCompanyRate(String userId, int rate, String companyID) {
+    public void updateCompanyRateRequest(String userId, int rate, String companyID) {
+        updateCompanyRateResponse = new MutableLiveData<>();
         mainRepository.remoteUpdateCompanyRate(userId, rate, companyID, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -511,12 +495,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<ForgetPasswordResponse> getUpdateCompanyRate() {
-        return updateCompanyRateResponse;
-    }
 
-
-    public void favoriteList(String id) {
+    public void favoriteListRequest(String id) {
+        favoriteListLiveDataResponse = new MutableLiveData<>();
         mainRepository.remoteFavoriteList(id, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -532,11 +513,9 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<VehicleResponse> getFavoriteList() {
-        return favoriteListLiveDataResponse;
-    }
 
-    public void addToFavorite(String userID, boolean like, String vehicleID) {
+    public void addToFavoriteRequest(String userID, boolean like, String vehicleID) {
+        addToFavoriteResponse = new MutableLiveData<>();
         mainRepository.addToFavorite(userID, like, vehicleID, new OnApiResponse() {
             @Override
             public void onResponseListener(Object object) {
@@ -552,9 +531,46 @@ public class VehicleViewModel extends ViewModel {
         });
     }
 
-    public MutableLiveData<ForgetPasswordResponse> getAddToFavorite() {
+
+
+
+    public LiveData<VehicleResponse> getAllVehicleResponse() {
+        return vehicleLiveDataResponse;
+    }
+    public MutableLiveData<BookingResponse> getBookingLiveDataResponse() {
+        return bookingLiveDataResponse;
+    }
+    public LiveData<SignInResponse> getSignInResponse() {
+        return userLiveDataResponse;
+    }
+    public LiveData<SignUpResponse> getSignUpResponse() {
+        return newUserLiveDataResponse;
+    }
+    public MutableLiveData<BookingHistoryResponse> getBookingHistoryResponse() {
+        return bookingHistoryLiveDataResponse;}
+    public MutableLiveData<ForgetPasswordResponse> getForgetPasswordResponse() {
+        return forgetPasswordLiveDataResponse;
+    }
+    public MutableLiveData<BookingHistoryResponse> getAvailableRateResponse() {
+        return availableRateLiveDataResponse;
+    }
+    public MutableLiveData<ForgetPasswordResponse> getUpdateVehicleRateResponse() {
+        return updateVehicleRateResponse;
+    }
+    public MutableLiveData<ForgetPasswordResponse> getUpdateCompanyRateResponse() {
+        return updateCompanyRateResponse;
+    }
+    public MutableLiveData<VehicleResponse> getFavoriteListResponse() {
+        return favoriteListLiveDataResponse;
+    }
+    public MutableLiveData<ForgetPasswordResponse> getAddToFavoriteResponse() {
         return addToFavoriteResponse;
     }
+    public MutableLiveData<VehicleResponse> getSearchedVehicleResponse() {
+        return vehicleSearchLiveDataResponse;
+    }
+
+
 
 
 

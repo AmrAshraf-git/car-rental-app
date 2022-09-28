@@ -20,9 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.carrental.R;
-import com.example.carrental.model.BookingHistoryResponse;
 import com.example.carrental.model.ForgetPasswordResponse;
-import com.example.carrental.model.User;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.SessionManager;
 
@@ -100,14 +98,14 @@ public class RatingFragment extends Fragment {
     private void observeViewModel() {
         isVehicleRateSuccess=false;
         isCompanyRateSuccess=false;
-        vehicleViewModel.updateVehicleRate(SessionManager.getInstance(getContext()).getLoginSession().getId(), (int) vehicleRateBar.getRating(),mVehicleID);
-        vehicleViewModel.updateCompanyRate(SessionManager.getInstance(getContext()).getLoginSession().getId(), (int) companyRateBar.getRating(),mCompanyID);
+        vehicleViewModel.updateVehicleRateRequest(SessionManager.getInstance(getContext()).getLoginSession().getId(), (int) vehicleRateBar.getRating(),mVehicleID);
+        vehicleViewModel.updateCompanyRateRequest(SessionManager.getInstance(getContext()).getLoginSession().getId(), (int) companyRateBar.getRating(),mCompanyID);
         progressBar.setVisibility(View.VISIBLE);
         submitBtn.setEnabled(false);
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getUpdateCompanyRate().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getUpdateVehicleRate().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getUpdateVehicleRate().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
+        vehicleViewModel.getUpdateCompanyRateResponse().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getUpdateVehicleRateResponse().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getUpdateVehicleRateResponse().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
             @Override
             public void onChanged(ForgetPasswordResponse forgetPasswordResponse) {
                 //Log.e("resume1","onChanged");
@@ -136,7 +134,7 @@ public class RatingFragment extends Fragment {
             }
         });
 
-        vehicleViewModel.getUpdateCompanyRate().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
+        vehicleViewModel.getUpdateCompanyRateResponse().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
             @Override
             public void onChanged(ForgetPasswordResponse forgetPasswordResponse) {
                 Log.e("resume1","onChanged");

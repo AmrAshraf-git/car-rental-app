@@ -1,7 +1,6 @@
 package com.example.carrental.ui.main.fragment.navigation;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,11 +112,11 @@ public class MyBookingFragment extends Fragment implements HomeListAdapter.OnRec
     }
 
     private void observeViewModel() {
-        vehicleViewModel.availableRate(SessionManager.getInstance(getContext()).getLoginSession().getId());
+        vehicleViewModel.availableRateRequest(SessionManager.getInstance(getContext()).getLoginSession().getId());
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-        vehicleViewModel.getAvailableRate().removeObservers(getViewLifecycleOwner());
+        vehicleViewModel.getAvailableRateResponse().removeObservers(getViewLifecycleOwner());
 
-        vehicleViewModel.getAvailableRate().observe(getViewLifecycleOwner(), new Observer<BookingHistoryResponse>() {
+        vehicleViewModel.getAvailableRateResponse().observe(getViewLifecycleOwner(), new Observer<BookingHistoryResponse>() {
             @Override
             public void onChanged(BookingHistoryResponse bookingHistoryResponse) {
 
@@ -161,7 +160,7 @@ public class MyBookingFragment extends Fragment implements HomeListAdapter.OnRec
                 mBookingHistoryResponse = bookingHistoryResponse;
                 getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
                 progressBar.setVisibility(View.GONE);
-                vehicleViewModel.getVehicle().removeObservers(getViewLifecycleOwner());
+                vehicleViewModel.getAllVehicleResponse().removeObservers(getViewLifecycleOwner());
                 //Log.e("resume6","end of onChanged");
             }
         });

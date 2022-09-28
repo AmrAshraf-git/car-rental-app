@@ -1,9 +1,7 @@
 package com.example.carrental.ui.main.fragment;
 
 import android.app.Dialog;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +23,6 @@ import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignUpResponse;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.TextValidation;
-
-import okhttp3.Response;
 
 public class SignUpFragment extends Fragment {
 
@@ -86,13 +82,14 @@ public class SignUpFragment extends Fragment {
                             TextValidation.isConfPasswordSimulate(password,confPassword)) {
 
 
+                        vehicleViewModel.signUpRequest(createNewUser());
                         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
-                        vehicleViewModel.getNewUserResponse().removeObservers(getViewLifecycleOwner());
-                        vehicleViewModel.signUp(createNewUser());
+                        vehicleViewModel.getSignUpResponse().removeObservers(getViewLifecycleOwner());
+                        //vehicleViewModel.signUpRequest(createNewUser());
                         progressBar.setVisibility(View.VISIBLE);
                         signUp.setEnabled(false);
 
-                        vehicleViewModel.getNewUserResponse().observe(getViewLifecycleOwner(), new Observer<SignUpResponse>() {
+                        vehicleViewModel.getSignUpResponse().observe(getViewLifecycleOwner(), new Observer<SignUpResponse>() {
                             @Override
                             public void onChanged(SignUpResponse signUpResponse) {
                                 //Log.e("resume2", "onChanged");

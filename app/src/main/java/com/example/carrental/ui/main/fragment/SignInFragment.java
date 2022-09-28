@@ -1,10 +1,8 @@
 package com.example.carrental.ui.main.fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,21 +19,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.carrental.R;
 import com.example.carrental.model.ForgetPasswordResponse;
-import com.example.carrental.model.NewUser;
 import com.example.carrental.model.SignInResponse;
 import com.example.carrental.model.User;
-import com.example.carrental.ui.main.MainActivity;
 import com.example.carrental.ui.main.NavControllerActivity;
 import com.example.carrental.ui.main.VehicleViewModel;
 import com.example.carrental.utility.SessionManager;
 import com.example.carrental.utility.TextValidation;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class SignInFragment extends Fragment {
@@ -88,7 +82,7 @@ public class SignInFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         if (savedInstanceState==null && !mAlreadyLoaded) {
@@ -110,15 +104,17 @@ public class SignInFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (TextValidation.isEmailValid(email)) {
-                        vehicleViewModel.getUserResponse().removeObservers(getViewLifecycleOwner());
+
+                        vehicleViewModel.signInRequest(getUser());
                         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+                        vehicleViewModel.getSignInResponse().removeObservers(getViewLifecycleOwner());
 
                         progressBar.setVisibility(View.VISIBLE);
                         signIn.setEnabled(false);
                         //User mUser=getUser();
-                        vehicleViewModel.login(getUser());
+                        //vehicleViewModel.signInRequest(getUser());
                         Log.e("resume1","onClick");
-                        vehicleViewModel.getUserResponse().observe(getViewLifecycleOwner(), new Observer<SignInResponse>() {
+                        vehicleViewModel.getSignInResponse().observe(getViewLifecycleOwner(), new Observer<SignInResponse>() {
                             @Override
                             public void onChanged(SignInResponse signInResponse) {
                                 Log.e("resume2","onChanged");
@@ -156,7 +152,6 @@ public class SignInFragment extends Fragment {
                                 mSignInResponse=signInResponse;
                                 //Log.e("resume8","end of onChanged");
                             }
-
                         });
 
                         /**
@@ -207,13 +202,14 @@ public class SignInFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (TextValidation.isEmailValid(email)) {
-                        vehicleViewModel.getForgetPassword().removeObservers(getViewLifecycleOwner());
+                        vehicleViewModel.forgetPasswordRequest(email.getText().toString());
+                        vehicleViewModel.getForgetPasswordResponse().removeObservers(getViewLifecycleOwner());
                         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
                         progressBar.setVisibility(View.VISIBLE);
                         signIn.setEnabled(false);
 
-                        vehicleViewModel.forgetPassword(email.getText().toString());
-                        vehicleViewModel.getForgetPassword().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
+                        //vehicleViewModel.forgetPasswordRequest(email.getText().toString());
+                        vehicleViewModel.getForgetPasswordResponse().observe(getViewLifecycleOwner(), new Observer<ForgetPasswordResponse>() {
                             @Override
                             public void onChanged(ForgetPasswordResponse forgetPasswordResponse) {
                                 Log.e("resume2","onChanged");
@@ -262,7 +258,7 @@ public class SignInFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        vehicleViewModel.getUserResponse().removeObservers(this);
+        vehicleViewModel.getSignInResponse().removeObservers(this);
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
     }
 

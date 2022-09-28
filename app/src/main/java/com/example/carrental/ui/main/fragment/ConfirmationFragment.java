@@ -509,7 +509,7 @@ public class ConfirmationFragment extends Fragment implements DatePickerDialog.O
                 booking.setDateTo("2022-08-11");
                 //Log.e("ddd",userPickupLoc);
                 //Log.e("ddd",userDropLoc);
-                vehicleViewModel.booking(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
+                vehicleViewModel.bookingRequest(SessionManager.getInstance(getContext()).getLoginSession().getToken(), booking);
                 vehicleViewModel.getBookingLiveDataResponse().observe(getViewLifecycleOwner(), new Observer<BookingResponse>() {
                     @Override
                     public void onChanged(BookingResponse bookingResponse) {
