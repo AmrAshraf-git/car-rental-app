@@ -258,7 +258,10 @@ public class SignInFragment extends Fragment {
     @Override
     public void onStop() {
         super.onStop();
-        vehicleViewModel.getSignInResponse().removeObservers(this);
+        if(vehicleViewModel.getSignInResponse()!=null) {
+            Log.e("SignIn->onStop()","There is a getSignInResponse() Observer");
+            vehicleViewModel.getSignInResponse().removeObservers(getViewLifecycleOwner());
+        }
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
     }
 

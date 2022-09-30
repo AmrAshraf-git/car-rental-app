@@ -540,7 +540,7 @@ public class VehicleViewModel extends ViewModel {
     public MutableLiveData<BookingResponse> getBookingLiveDataResponse() {
         return bookingLiveDataResponse;
     }
-    public LiveData<SignInResponse> getSignInResponse() {
+    public LiveData<SignInResponse> getSignInResponse() throws NullPointerException {
         return userLiveDataResponse;
     }
     public LiveData<SignUpResponse> getSignUpResponse() {
