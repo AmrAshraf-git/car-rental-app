@@ -262,6 +262,10 @@ public class SignInFragment extends Fragment {
             Log.e("SignIn->onStop()","There is a getSignInResponse() Observer");
             vehicleViewModel.getSignInResponse().removeObservers(getViewLifecycleOwner());
         }
+        if(vehicleViewModel.getForgetPasswordResponse()!=null){
+            Log.e("SignIn->onStop()","There is a getForgetPasswordResponse() Observer");
+            vehicleViewModel.getForgetPasswordResponse().removeObservers(getViewLifecycleOwner());
+        }
         getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
     }
 

@@ -108,7 +108,6 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeListAdapter.ViewHo
         //Vehicle vehicle;
         ImageView vehicleImage;
         RatingBar compRate, carRate;
-
         TextView compLocation,companyName, vehicleModel, vehicleColor, doorsNum, seatingCapacity, transmission,priceLabel,price;
 
 

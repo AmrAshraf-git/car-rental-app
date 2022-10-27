@@ -2,6 +2,7 @@ package com.example.carrental.ui.main.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -290,5 +291,16 @@ return map;
 };
 
  }*/
+
+
+@Override
+public void onStop() {
+    super.onStop();
+    if(vehicleViewModel.getSignUpResponse()!=null) {
+        Log.e("SignUp->onStop()","There is a getSignInResponse() Observer");
+        vehicleViewModel.getSignUpResponse().removeObservers(getViewLifecycleOwner());
+    }
+    getViewLifecycleOwnerLiveData().removeObservers(getViewLifecycleOwner());
+}
 
 }
