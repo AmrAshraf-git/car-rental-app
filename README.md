@@ -24,7 +24,12 @@ This client-server application is a part of an online system called **Vehicle Re
 
 
 ## Demo
-
+<p align="center">
+  <img src="Screenshots/1sr pptx _4.png" alt="Screenshot_1">
+  <img src="Screenshots/1sr pptx _2.png" alt="Screenshot_2">
+  <img src="Screenshots/1sr pptx _23p4ng.png" alt="Screenshot_3">
+  <img src="Screenshots/1sr pptx _23png.png" alt="Screenshot_4">
+</p>
 
 ## How to use
 
